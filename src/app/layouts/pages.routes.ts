@@ -30,4 +30,15 @@ export default [
       },
     ],
   },
+  {
+    path: 'administracion',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../modules/administrador/administrador-routing'),
+      },
+    ],
+  },
 ] as Routes;

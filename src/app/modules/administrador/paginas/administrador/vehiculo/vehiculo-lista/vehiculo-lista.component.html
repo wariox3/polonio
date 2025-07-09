@@ -1,0 +1,80 @@
+<div class="flex justify-end mb-4">
+  <a
+    class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
+    routerLink="/administracion/vehiculo/nuevo"
+  >
+    Nuevo
+  </a>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg shadow-sm">
+    <thead class="bg-gray-100">
+      <tr class="text-left text-sm font-semibold text-gray-700">
+        <th class="px-4 py-2">ID</th>
+        <th class="px-4 py-2">Fecha Registro</th>
+        <th class="px-4 py-2">Placa</th>
+        <th class="px-4 py-2">Modelo</th>
+        <th class="px-4 py-2">Modelo Repotenciado</th>
+        <th class="px-4 py-2">Motor</th>
+        <th class="px-4 py-2">Chasis</th>
+        <th class="px-4 py-2">Ejes</th>
+        <th class="px-4 py-2">Peso Vacío</th>
+        <th class="px-4 py-2">Capacidad</th>
+        <th class="px-4 py-2">Celular</th>
+        <th class="px-4 py-2">Póliza</th>
+        <th class="px-4 py-2">Vence Póliza</th>
+        <th class="px-4 py-2">Tecnomecánica</th>
+        <th class="px-4 py-2">Vence Tecnomecánica</th>
+        <th class="px-4 py-2">Propio</th>
+        <th class="px-4 py-2">Remolque</th>
+        <th class="px-4 py-2">Inactivo</th>
+        <th class="px-4 py-2">Revisado</th>
+        <th class="px-4 py-2">Comentario</th>
+        <th class="px-4 py-2 text-center" colspan="2"></th>
+        <td class="px-4 py-2 text-center">
+          <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
+        </td>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
+      <tr>
+        <td class="px-4 py-2">1</td>
+        <td class="px-4 py-2">2025-06-25</td>
+        <td class="px-4 py-2">ABC123</td>
+        <td class="px-4 py-2">2020</td>
+        <td class="px-4 py-2">2022</td>
+        <td class="px-4 py-2">MTR-12345</td>
+        <td class="px-4 py-2">CHS-67890</td>
+        <td class="px-4 py-2">2</td>
+        <td class="px-4 py-2">3500</td>
+        <td class="px-4 py-2">5000</td>
+        <td class="px-4 py-2">3011234567</td>
+        <td class="px-4 py-2">POL123456</td>
+        <td class="px-4 py-2">2025-12-01</td>
+        <td class="px-4 py-2">TMC-2025</td>
+        <td class="px-4 py-2">2025-11-15</td>
+        <td class="px-4 py-2">Sí</td>
+        <td class="px-4 py-2">No</td>
+        <td class="px-4 py-2">No</td>
+        <td class="px-4 py-2">Sí</td>
+        <td class="px-4 py-2">Ninguno</td>
+        <td class="px-4 py-2 text-center">
+          <button class="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500 text-xs">
+            Editar
+          </button>
+        </td>
+
+        <td class="px-4 py-2 text-center">
+          <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs">
+            Eliminar
+          </button>
+        </td>
+
+        <td class="px-4 py-2 text-center">
+          <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
