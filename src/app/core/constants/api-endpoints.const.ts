@@ -5,9 +5,9 @@ export const URL_API_SUBDOMINIO = environment.apiSubdomain;
 
 export const API_ENDPOINTS = {
   VEHICULO: {
-    LISTA: `${URL_API_SUBDOMINIO}/transporte/vehiculo/`,
+    LISTA: `transporte/vehiculo/`,
   },
   CONDUCTOR: {
-    LISTA: `${URL_API_SUBDOMINIO}/transporte/conductor/`,
+    LISTA: `transporte/conductor/`,
   },
 };
