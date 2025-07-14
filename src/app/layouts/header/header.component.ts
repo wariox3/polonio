@@ -39,13 +39,13 @@ export class HeaderComponent implements OnInit {
   public menuItems: MenuItem[] = [
     {
       titulo: 'Gestionar cuenta',
-      icono: 'ki-filled ki-user',
+      icono: 'ki-filled ki-user-edit',
       link: this.URL_REDDOC_CUENTA,
       newWindow: true,
     },
     {
       titulo: 'Mis contenedores',
-      icono: 'ki-filled ki-abstract-26',
+      icono: 'ki-filled ki-abstract-14',
       link: '/contenedor',
     },
   ];

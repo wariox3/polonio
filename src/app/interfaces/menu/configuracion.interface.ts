@@ -1,7 +1,4 @@
 import { FilterField } from 'src/app/core/interfaces/filtro.interface';
-import { Modelo } from '@comun/type/modelo.type';
-import { Serializador } from '@comun/type/serializador.type';
-import { Filtros } from '@interfaces/comunes/componentes/filtros/filtros.interface';
 
 export interface ModuloConfig {
   nombreModulo: string;
@@ -30,7 +27,7 @@ export interface ModeloAjustes {
   archivos?: Archivos;
   ui?: OpcionesVista;
   configuracionesDocumento?: {
-    operacion ?: 1 | -1;
+    operacion?: 1 | -1;
   };
 }
 
@@ -65,7 +62,7 @@ export interface ParametrosHttpConfig {
 export interface ModeloFiltro {
   lista?: Filtros[];
   importar?: Filtros[];
-  ui?: FilterField[]
+  ui?: FilterField[];
 }
 
 export interface OpcionesVista {

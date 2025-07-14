@@ -1,7 +1,3 @@
-import { AplicacionModulo } from '@comun/type/aplicacion-modulo.type';
-import { AplicacionAccion } from '@comun/type/aplicaciones-acciones.type';
-import { AplicacionUbicaciones } from '@comun/type/aplicaciones-ubicaciones.type';
-import { ArchivoImportacion } from '@interfaces/comunes/importar/archivo-importacion';
 export interface Menu {
   name?: string;
   url?: string;
@@ -21,7 +17,7 @@ export interface informacionMenuItem {
   archivoImportacionLista?: string;
   archivoImportacionNuevo?: string;
   archivoImportacionDetalle?: string;
-  tipo?: AplicacionUbicaciones;
+  tipo?: any;
   url?: string;
   urlIndependientes?: {
     lista?: string;
@@ -33,7 +29,7 @@ export interface informacionMenuItem {
   consultaHttp?: boolean;
   configuracionExtra?: boolean;
   esIndependiente?: boolean;
-  modulo?: AplicacionModulo;
+  modulo?: any;
   maestros?: Maestros[];
   data?: {
     documento_clase?: number | string;
@@ -69,5 +65,5 @@ export interface MenuItem {
   informacion: informacionMenuItem[];
   dataMapeo: any[];
   dataItem: informacionMenuItem;
-  modulos: AplicacionModulo[];
+  modulos: any[];
 }

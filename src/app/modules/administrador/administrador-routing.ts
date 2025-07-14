@@ -28,6 +28,28 @@ const routes: Route[] = [
       },
     ],
   },
+  {
+    path: 'conductor',
+    children: [
+      {
+        path: 'lista',
+        loadComponent: () =>
+          import('./paginas/administrador/conductor/conductor-lista/conductor-lista.component'),
+      },
+      {
+        path: 'nuevo',
+        loadComponent: () =>
+          import(
+            './paginas/administrador/conductor/conductor-formulario/conductor-formulario.component'
+          ),
+      },
+      {
+        path: 'editar/:id',
+        loadComponent: () =>
+          import('./paginas/administrador/conductor/conductor-lista/conductor-lista.component'),
+      },
+    ],
+  },
   { path: '', redirectTo: 'lista', pathMatch: 'full' },
   { path: '**', redirectTo: 'lista', pathMatch: 'full' },
 ];

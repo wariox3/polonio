@@ -7,4 +7,7 @@ export const API_ENDPOINTS = {
   VEHICULO: {
     LISTA: `${URL_API_SUBDOMINIO}/transporte/vehiculo/`,
   },
+  CONDUCTOR: {
+    LISTA: `${URL_API_SUBDOMINIO}/transporte/conductor/`,
+  },
 };

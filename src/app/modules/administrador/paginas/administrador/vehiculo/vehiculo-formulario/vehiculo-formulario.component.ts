@@ -28,8 +28,8 @@ import { RouterModule } from '@angular/router';
   templateUrl: './vehiculo-formulario.component.html',
 })
 export default class VehiculoFormularioComponent implements OnInit {
-  formularioVehiculo: FormGroup;
   private _formBuilder = inject(FormBuilder);
+  public formularioVehiculo: FormGroup;
 
   ngOnInit() {
     this.inicializarFormulario();

@@ -37,6 +37,10 @@ export class SidebarComponent {
           nombre: 'Vehiculo',
           link: '/administracion/vehiculo/lista',
         },
+        {
+          nombre: 'conductor',
+          link: '/administracion/conductor/lista',
+        },
       ],
     },
   ];
