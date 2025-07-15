@@ -9,7 +9,7 @@ import { Vehiculo } from '../interfaces/vehiculo';
 })
 export class VehiculoService {
   private _generalRepository = inject(GeneralRepository);
-  public arrVehiculosSignal = signal<any[]>([]);
+  public arrVehiculosSignal = signal<Vehiculo[]>([]);
 
   constructor() {}
 
@@ -23,7 +23,7 @@ export class VehiculoService {
     return this._generalRepository.create<Vehiculo>('transporte/vehiculo/', data);
   }
 
-  editar(id: number, data: any) {
+  editar(id: number, data: Vehiculo) {
     return this._generalRepository.update<Vehiculo>('transporte/vehiculo/', id, data);
   }
 

@@ -15,21 +15,16 @@
         <th class="px-4 py-2">Placa</th>
         <th class="px-4 py-2">Marca</th>
         <th class="px-4 py-2">Modelo</th>
-        <th class="px-4 py-2">Modelo Repotenciado</th>
         <th class="px-4 py-2">Motor</th>
         <th class="px-4 py-2">Chasis</th>
         <th class="px-4 py-2">Ejes</th>
-        <th class="px-4 py-2">Peso Vacío</th>
-        <th class="px-4 py-2">Capacidad</th>
         <th class="px-4 py-2">Celular</th>
         <th class="px-4 py-2">Póliza</th>
         <th class="px-4 py-2">Vence Póliza</th>
         <th class="px-4 py-2">Tecnomecánica</th>
         <th class="px-4 py-2">Vence Tecnomecánica</th>
-        <th class="px-4 py-2">Propio</th>
-        <th class="px-4 py-2">Remolque</th>
-        <th class="px-4 py-2">Inactivo</th>
         <th class="px-4 py-2">Revisado</th>
+        <th class="px-4 py-2">Inactivo</th>
         <th class="px-4 py-2 text-center" colspan="2"></th>
         <td class="px-4 py-2 text-center w-[60px]">
           <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
@@ -37,48 +32,46 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
-      <tr>
-        <td class="px-4 py-2">1</td>
-        <td class="px-4 py-2">ABC123</td>
-        <td class="px-4 py-2">2020</td>
-        <td class="px-4 py-2">2022</td>
-        <td class="px-4 py-2">MTR-12345</td>
-        <td class="px-4 py-2">CHS-67890</td>
-        <td class="px-4 py-2">2</td>
-        <td class="px-4 py-2">3500</td>
-        <td class="px-4 py-2">5000</td>
-        <td class="px-4 py-2">3011234567</td>
-        <td class="px-4 py-2">POL123456</td>
-        <td class="px-4 py-2">2025-12-01</td>
-        <td class="px-4 py-2">TMC-2025</td>
-        <td class="px-4 py-2">2025-11-15</td>
-        <td class="px-4 py-2">Sí</td>
-        <td class="px-4 py-2">No</td>
-        <td class="px-4 py-2">No</td>
-        <td class="px-4 py-2">Sí</td>
-        <td class="px-4 py-2">Ninguno</td>
-        <td class="px-4 py-2 text-center w-[60px]">
-          <a
-            class="btn btn-sm btn-icon btn-clear btn-light"
-            [routerLink]="['/administracion/vehiculo/editar/', 1]"
-          >
-            <i class="ki-filled ki-notepad-edit"></i>
-          </a>
-        </td>
+      @for (vehiculo of arrVehiculos(); track vehiculo.id) {
+        <tr>
+          <td class="px-4 py-2">{{ vehiculo.id }}</td>
+          <td class="px-4 py-2">{{ vehiculo.placa }}</td>
+          <td class="px-4 py-2">{{ vehiculo.marca__nombre }}</td>
+          <td class="px-4 py-2">{{ vehiculo.modelo }}</td>
+          <td class="px-4 py-2">{{ vehiculo.motor }}</td>
+          <td class="px-4 py-2">{{ vehiculo.chasis }}</td>
+          <td class="px-4 py-2">{{ vehiculo.ejes }}</td>
+          <td class="px-4 py-2">{{ vehiculo.celular }}</td>
+          <td class="px-4 py-2">{{ vehiculo.poliza }}</td>
+          <td class="px-4 py-2">{{ vehiculo.vence_poliza }}</td>
+          <td class="px-4 py-2">{{ vehiculo.tecnicomecanica }}</td>
+          <td class="px-4 py-2">{{ vehiculo.vence_tecnicomecanica }}</td>
+          <td class="px-4 py-2">{{ vehiculo.estado_revisado }}</td>
+          <td class="px-4 py-2">{{ vehiculo.estado_inactivo }}</td>
 
-        <td class="px-4 py-2 text-center">
-          <a
-            class="btn btn-sm btn-icon btn-clear btn-light"
-            [routerLink]="['/administracion/vehiculo/detalle/', 1]"
-          >
-            <i class="ki-filled ki-eye"></i>
-          </a>
-        </td>
+          <td class="px-4 py-2 text-center w-[60px]">
+            <a
+              class="btn btn-sm btn-icon btn-clear btn-light"
+              [routerLink]="['/administracion/vehiculo/editar/', vehiculo.id]"
+            >
+              <i class="ki-filled ki-notepad-edit"></i>
+            </a>
+          </td>
 
-        <td class="px-4 py-2 text-center">
-          <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
-        </td>
-      </tr>
+          <td class="px-4 py-2 text-center">
+            <a
+              class="btn btn-sm btn-icon btn-clear btn-light"
+              [routerLink]="['/administracion/vehiculo/detalle/', vehiculo.id]"
+            >
+              <i class="ki-filled ki-eye"></i>
+            </a>
+          </td>
+
+          <td class="px-4 py-2 text-center">
+            <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>
