@@ -41,7 +41,7 @@ export default [
       },
       {
         path: 'conductor',
-        loadChildren: () => import('../modules/conductor/conductor-routing'),
+        loadChildren: () => import('../modules/conductor/conductor.routes'),
       },
     ],
   },
