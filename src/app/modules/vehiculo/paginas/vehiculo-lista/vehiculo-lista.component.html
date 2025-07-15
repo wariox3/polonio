@@ -46,8 +46,8 @@
           <td class="px-4 py-2">{{ vehiculo.vence_poliza }}</td>
           <td class="px-4 py-2">{{ vehiculo.tecnicomecanica }}</td>
           <td class="px-4 py-2">{{ vehiculo.vence_tecnicomecanica }}</td>
-          <td class="px-4 py-2">{{ vehiculo.estado_revisado }}</td>
-          <td class="px-4 py-2">{{ vehiculo.estado_inactivo }}</td>
+          <td class="px-4 py-2 text-center">{{ vehiculo.estado_revisado ? 'SI' : 'NO' }}</td>
+          <td class="px-4 py-2 text-center">{{ vehiculo.estado_inactivo ? 'SI' : 'NO' }}</td>
 
           <td class="px-4 py-2 text-center w-[60px]">
             <a
