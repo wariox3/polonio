@@ -68,38 +68,6 @@
                   loadingText="Conectando..."
                   [isLoading]="loaders()[idx]"
                 ></app-advanced-button>
-                <div *ngIf="contenedor.rol === 'propietario'">
-                  <div
-                    class="dropdown"
-                    data-dropdown="true"
-                    data-dropdown-trigger="click"
-                    data-dropdown-dismiss="true"
-                  >
-                    <button class="dropdown-toggle btn btn-light">
-                      <i class="ki-filled ki-setting-2"></i>
-                    </button>
-                    <div class="dropdown-content w-full max-w-36 py-2">
-                      <div class="menu menu-default flex flex-col w-full">
-                        <div class="menu-item">
-                          <button class="menu-link" (click)="invitarContenedor(contenedor)">
-                            <span class="menu-icon">
-                              <i class="ki-filled ki-users"></i>
-                            </span>
-                            <span class="menu-title"> Invitar </span>
-                          </button>
-                        </div>
-                        <div class="menu-item">
-                          <button class="menu-link" (click)="eliminarContenedor(contenedor)">
-                            <span class="menu-icon">
-                              <i class="ki-filled ki-trash"></i>
-                            </span>
-                            <span class="menu-title"> Eliminar </span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </td>
           </tr>
@@ -108,18 +76,3 @@
     </table>
   </div>
 </div>
-
-<app-modal-standard title="Eliminar contenedor" size="md" modalId="eliminarContenedor">
-  @if (getModalInstaceState('eliminarContenedor') | async) {
-    <app-contenedor-eliminar
-      [contenedor]="contenedorSeleccionado()"
-      (emitirContenedorEliminado)="getContenedores()"
-    ></app-contenedor-eliminar>
-  }
-</app-modal-standard>
-
-<app-modal-standard title="Invitaciones" size="2xl" modalId="invitarContenedor">
-  @if (getModalInstaceState('invitarContenedor') | async) {
-    <app-contenedor-invitar [contenedor]="contenedorSeleccionado()"></app-contenedor-invitar>
-  }
-</app-modal-standard>
