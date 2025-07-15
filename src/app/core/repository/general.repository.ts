@@ -31,7 +31,7 @@ export class GeneralRepository {
    * @returns Observable con la respuesta tipada
    */
   getById<T>(endpoint: string, id: string | number): Observable<T> {
-    return this.getWithSubdominio<T>(`${endpoint}/${id}`);
+    return this.getWithSubdominio<T>(`${endpoint}${id}/`);
   }
 
   /**
@@ -52,7 +52,7 @@ export class GeneralRepository {
    * @returns Observable con la respuesta tipada
    */
   update<T>(endpoint: string, id: string | number, data: any): Observable<T> {
-    return this.putWithSubdominio<T>(`${endpoint}/${id}`, data);
+    return this.putWithSubdominio<T>(`${endpoint}${id}/`, data);
   }
 
   /**

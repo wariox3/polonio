@@ -22,7 +22,7 @@ const routes: Route[] = [
         loadComponent: () => import('./paginas/vehiculo-formulario/vehiculo-formulario.component'),
       },
       {
-        path: 'detalle',
+        path: 'detalle/:id',
         loadComponent: () => import('./paginas/vehiculo-detalle/vehiculo-detalle.component'),
       },
     ],

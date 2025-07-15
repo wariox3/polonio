@@ -12,8 +12,8 @@
     <thead class="bg-gray-100">
       <tr class="text-left text-sm font-semibold text-gray-700">
         <th class="px-4 py-2">ID</th>
-        <th class="px-4 py-2">Fecha Registro</th>
         <th class="px-4 py-2">Placa</th>
+        <th class="px-4 py-2">Marca</th>
         <th class="px-4 py-2">Modelo</th>
         <th class="px-4 py-2">Modelo Repotenciado</th>
         <th class="px-4 py-2">Motor</th>
@@ -30,9 +30,8 @@
         <th class="px-4 py-2">Remolque</th>
         <th class="px-4 py-2">Inactivo</th>
         <th class="px-4 py-2">Revisado</th>
-        <th class="px-4 py-2">Comentario</th>
         <th class="px-4 py-2 text-center" colspan="2"></th>
-        <td class="px-4 py-2 text-center">
+        <td class="px-4 py-2 text-center w-[60px]">
           <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
         </td>
       </tr>
@@ -40,7 +39,6 @@
     <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
       <tr>
         <td class="px-4 py-2">1</td>
-        <td class="px-4 py-2">2025-06-25</td>
         <td class="px-4 py-2">ABC123</td>
         <td class="px-4 py-2">2020</td>
         <td class="px-4 py-2">2022</td>
@@ -59,16 +57,22 @@
         <td class="px-4 py-2">No</td>
         <td class="px-4 py-2">Sí</td>
         <td class="px-4 py-2">Ninguno</td>
-        <td class="px-4 py-2 text-center">
-          <button class="bg-yellow-400 text-white px-2 py-1 rounded hover:bg-yellow-500 text-xs">
-            Editar
-          </button>
+        <td class="px-4 py-2 text-center w-[60px]">
+          <a
+            class="btn btn-sm btn-icon btn-clear btn-light"
+            [routerLink]="['/administracion/vehiculo/editar/', 1]"
+          >
+            <i class="ki-filled ki-notepad-edit"></i>
+          </a>
         </td>
 
         <td class="px-4 py-2 text-center">
-          <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-xs">
-            Eliminar
-          </button>
+          <a
+            class="btn btn-sm btn-icon btn-clear btn-light"
+            [routerLink]="['/administracion/vehiculo/detalle/', 1]"
+          >
+            <i class="ki-filled ki-eye"></i>
+          </a>
         </td>
 
         <td class="px-4 py-2 text-center">

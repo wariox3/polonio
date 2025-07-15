@@ -6,15 +6,15 @@
     Atrás
   </a>
 </div>
-<pre>{{ formularioVehiculo.value | json }}</pre>
 
 <form
   class="bg-white mb-4 p-4 rounded-lg shadow space-y-6"
   [formGroup]="formularioVehiculo"
   (ngSubmit)="onSubmit()"
 >
-  <h2 class="text-xl font-semibold text-gray-800 mb-4">Registro de vehículo</h2>
-
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">
+    {{ detalleID() > 0 ? 'Editar vehículo' : 'Registro de vehículo' }}
+  </h2>
   <h3 class="text-lg font-medium text-gray-800 mb-4">Información general</h3>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -50,7 +50,7 @@
       <app-label> Modelo Repotenciado</app-label>
       <app-input
         placeholder="Ingresa modelo repotenciado del vehiculo"
-        formControlName="placa"
+        formControlName="modelo_repotenciado"
         [type]="'text'"
         maxlength=""
         [control]="formularioVehiculo.get('modelo_repotenciado')"
@@ -62,7 +62,7 @@
     </div>
 
     <div>
-      <app-label [required]="true">Motor</app-label>
+      <app-label>Motor</app-label>
       <app-input
         placeholder="Ingresa motor del vehiculo"
         formControlName="motor"
@@ -288,7 +288,7 @@
     </div>
 
     <div>
-      <app-label [required]="true">Póliza</app-label>
+      <app-label>Póliza</app-label>
       <app-input
         placeholder="Póliza"
         formControlName="poliza"

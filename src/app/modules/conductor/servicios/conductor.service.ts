@@ -1,6 +1,5 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { GeneralRepository } from '@app/core';
-import { API_ENDPOINTS } from '@app/core/constants/api-endpoints.const';
 import { RespuestaApi } from '@app/core/interfaces/api.interface';
 import { tap } from 'rxjs';
 
@@ -15,7 +14,7 @@ export class ConductorService {
 
   lista() {
     return this._generalRepository
-      .get<RespuestaApi<any>>(API_ENDPOINTS.VEHICULO.LISTA)
+      .get<RespuestaApi<any>>('transporte/conductor/')
       .pipe(tap(respuesta => this.arrConductoresSignal.set(respuesta.results)));
   }
 }

@@ -1,8 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { GeneralRepository } from '@app/core';
-import { API_ENDPOINTS } from '@app/core/constants/api-endpoints.const';
 import { RespuestaApi } from '@app/core/interfaces/api.interface';
 import { tap } from 'rxjs';
+import { Vehiculo } from '../interfaces/vehiculo';
 
 @Injectable({
   providedIn: 'root',
@@ -15,15 +15,19 @@ export class VehiculoService {
 
   lista() {
     return this._generalRepository
-      .get<RespuestaApi<any>>(API_ENDPOINTS.VEHICULO.LISTA)
+      .get<RespuestaApi<Vehiculo>>('transporte/vehiculo/')
       .pipe(tap(respuesta => this.arrVehiculosSignal.set(respuesta.results)));
   }
 
-  nuevo(data: any) {
-    return this._generalRepository.create(API_ENDPOINTS.VEHICULO.LISTA, data).pipe(
-      tap(respuesta => {
-        console.log(respuesta);
-      })
-    );
+  nuevo(data: Vehiculo) {
+    return this._generalRepository.create<Vehiculo>('transporte/vehiculo/', data);
+  }
+
+  editar(id: number, data: any) {
+    return this._generalRepository.update<Vehiculo>('transporte/vehiculo/', id, data);
+  }
+
+  detalle(id: number) {
+    return this._generalRepository.getById<Vehiculo>('transporte/vehiculo/', id);
   }
 }
