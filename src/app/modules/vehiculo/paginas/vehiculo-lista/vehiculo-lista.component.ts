@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { VehiculoService } from '@app/modules/administrador/servicios/vehiculo.service';
+import { VehiculoService } from '../../servicios/vehiculo.service';
 
 @Component({
   selector: 'app-vehiculo-lista',
