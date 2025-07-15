@@ -37,7 +37,7 @@ export default [
     children: [
       {
         path: 'vehiculo',
-        loadChildren: () => import('../modules/vehiculo/vehiculo-routing'),
+        loadChildren: () => import('../modules/vehiculo/vehiculo.routes'),
       },
       {
         path: 'conductor',

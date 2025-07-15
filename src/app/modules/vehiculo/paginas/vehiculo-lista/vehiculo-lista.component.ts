@@ -20,4 +20,6 @@ export default class VehiculoListaComponent implements OnInit {
   consultarInformacion() {
     this._vehiculoService.lista().subscribe();
   }
+
+  eliminar() {}
 }

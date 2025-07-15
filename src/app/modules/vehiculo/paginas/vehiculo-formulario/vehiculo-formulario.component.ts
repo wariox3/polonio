@@ -19,8 +19,8 @@ import {
   TransporteRepository,
 } from '@app/common/repositories/transporte/transporte.repository';
 import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
-import { SelectSearchComponent } from '@app/common/components/ui/form/multi-select copy/select-search.component';
-import { Vehiculo } from '../../interfaces/vehiculo';
+import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
+import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 
 @Component({
