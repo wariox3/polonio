@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ConductorService } from '@app/modules/administrador/servicios/conductor.service';
+import { ConductorService } from '@app/modules/conductor/servicios/conductor.service';
 
 @Component({
   selector: 'app-conductor-lista',

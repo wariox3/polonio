@@ -12,6 +12,7 @@ import { LabelComponent } from '@app/common/components/ui/form/label/label.compo
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 import { RouterModule } from '@angular/router';
+import { VehiculoService } from '@app/modules/vehiculo/servicios/vehiculo.service';
 
 @Component({
   selector: 'app-vehiculo-formulario',
@@ -29,6 +30,7 @@ import { RouterModule } from '@angular/router';
 })
 export default class VehiculoFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
+  private _vehiculoService = inject(VehiculoService);
   public formularioVehiculo: FormGroup;
 
   ngOnInit() {
@@ -43,7 +45,7 @@ export default class VehiculoFormularioComponent implements OnInit {
     const anioActual = new Date().getFullYear();
 
     this.formularioVehiculo = this._formBuilder.group({
-      fecha_registro: [{ value: null, disabled: true }], // Campo automático
+      fecha_registro: [{ value: null, disabled: true }],
       placa: ['', [Validators.required, Validators.maxLength(6)]],
       modelo: [null, [Validators.required, Validators.min(1900), Validators.max(anioActual)]],
       modelo_repotenciado: [null, [Validators.min(1900), Validators.max(anioActual)]],
@@ -77,10 +79,11 @@ export default class VehiculoFormularioComponent implements OnInit {
   consultarInformacion() {}
 
   onSubmit() {
-    if (this.formularioVehiculo.valid) {
-    } else {
-      this.formularioVehiculo.markAllAsTouched();
-    }
+    //if (this.formularioVehiculo.valid) {
+    this._vehiculoService.nuevo(this.formularioVehiculo.value).subscribe();
+    //} else {
+    // this.formularioVehiculo.markAllAsTouched();
+    //}
   }
 
   getControl(nombre: string): FormControl {

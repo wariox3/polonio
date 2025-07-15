@@ -17,4 +17,12 @@ export class VehiculoService {
       .get(API_ENDPOINTS.VEHICULO.LISTA)
       .pipe(tap(respuesta => this.arrVehiculosSignal.set(respuesta.results)));
   }
+
+  nuevo(data: any) {
+    return this._generalRepository.create(API_ENDPOINTS.VEHICULO.LISTA, data).pipe(
+      tap(respuesta => {
+        console.log(respuesta);
+      })
+    );
+  }
 }

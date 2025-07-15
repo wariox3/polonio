@@ -36,7 +36,11 @@ export default [
     loadComponent: () => import('./admin-layout/admin-layout.component'),
     children: [
       {
-        path: '',
+        path: 'vehuculo',
+        loadChildren: () => import('../modules/administrador/administrador-routing'),
+      },
+      {
+        path: 'conductor',
         loadChildren: () => import('../modules/administrador/administrador-routing'),
       },
     ],

@@ -12,7 +12,7 @@
   [formGroup]="formularioVehiculo"
   (ngSubmit)="onSubmit()"
 >
-  <h2 class="text-xl font-semibold text-gray-800 mb-4">Registro de Vehículo</h2>
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Registro de vehículo</h2>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
@@ -32,9 +32,8 @@
       <app-label> Modelo </app-label>
       <app-input
         placeholder="Ingresa modelo del vehiculo"
-        formControlName="placa"
+        formControlName="modelo"
         [type]="'number'"
-        maxlength=""
         [control]="formularioVehiculo.get('modelo')"
         [errors]="{
           required: 'El modelo es requerido.',
@@ -121,7 +120,7 @@
       <app-label>Capacidad (kg)</app-label>
       <app-input
         placeholder="Ingresa la capacidad del vehiculo"
-        formControlName="placa"
+        formControlName="capacidad"
         [type]="'text'"
         maxlength=""
         [control]="formularioVehiculo.get('capacidad')"
