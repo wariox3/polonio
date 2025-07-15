@@ -6,17 +6,20 @@
     Atrás
   </a>
 </div>
+<pre>{{ formularioVehiculo.value | json }}</pre>
 
 <form
-  class="bg-white p-6 rounded-lg shadow space-y-6"
+  class="bg-white mb-4 p-4 rounded-lg shadow space-y-6"
   [formGroup]="formularioVehiculo"
   (ngSubmit)="onSubmit()"
 >
   <h2 class="text-xl font-semibold text-gray-800 mb-4">Registro de vehículo</h2>
 
+  <h3 class="text-lg font-medium text-gray-800 mb-4">Información general</h3>
+
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
-      <app-label> Placa </app-label>
+      <app-label [required]="true"> Placa </app-label>
       <app-input
         placeholder="Ingresa placa del vehiculo"
         formControlName="placa"
@@ -29,7 +32,7 @@
     </div>
 
     <div>
-      <app-label> Modelo </app-label>
+      <app-label [required]="true"> Modelo </app-label>
       <app-input
         placeholder="Ingresa modelo del vehiculo"
         formControlName="modelo"
@@ -59,10 +62,10 @@
     </div>
 
     <div>
-      <app-label>Motor</app-label>
+      <app-label [required]="true">Motor</app-label>
       <app-input
         placeholder="Ingresa motor del vehiculo"
-        formControlName="placa"
+        formControlName="motor"
         [type]="'text'"
         maxlength=""
         [control]="formularioVehiculo.get('motor')"
@@ -76,7 +79,7 @@
       <app-label>Chasis</app-label>
       <app-input
         placeholder="Ingresa chasis del vehiculo"
-        formControlName="placa"
+        formControlName="chasis"
         [type]="'text'"
         maxlength=""
         [control]="formularioVehiculo.get('chasis')"
@@ -87,7 +90,7 @@
     </div>
 
     <div>
-      <app-label>Ejes</app-label>
+      <app-label [required]="true">Número ejes</app-label>
       <app-input
         placeholder="Ingresa ejes del vehiculo"
         formControlName="ejes"
@@ -102,7 +105,7 @@
     </div>
 
     <div>
-      <app-label>Peso Vacío (kg)</app-label>
+      <app-label [required]="true">Peso Vacío (kg)</app-label>
       <app-input
         placeholder="Ingresa el peso del vehiculo"
         formControlName="peso_vacio"
@@ -117,7 +120,7 @@
     </div>
 
     <div>
-      <app-label>Capacidad (kg)</app-label>
+      <app-label [required]="true">Capacidad (kg)</app-label>
       <app-input
         placeholder="Ingresa la capacidad del vehiculo"
         formControlName="capacidad"
@@ -146,34 +149,6 @@
     </div>
 
     <div>
-      <app-label>Póliza</app-label>
-      <app-input
-        placeholder="Póliza"
-        formControlName="poliza"
-        [type]="'text'"
-        maxlength=""
-        [control]="formularioVehiculo.get('poliza')"
-        [errors]="{
-          maxlength: 'Máximo 30 caracteres.',
-        }"
-      ></app-input>
-    </div>
-
-    <div>
-      <app-label>Vence Póliza</app-label>
-      <app-input
-        placeholder="Póliza"
-        formControlName="vence_poliza"
-        [type]="'date'"
-        maxlength=""
-        [control]="formularioVehiculo.get('vence_poliza')"
-        [errors]="{
-          required: 'Este campo es requerido.',
-        }"
-      ></app-input>
-    </div>
-
-    <div>
       <app-label>Tecnomecánica</app-label>
       <app-input
         placeholder="Tecnomecánica"
@@ -188,7 +163,7 @@
     </div>
 
     <div>
-      <app-label>Vence Tecnomecánica</app-label>
+      <app-label [required]="true">Vence Tecnomecánica</app-label>
       <app-input
         placeholder="Póliza"
         formControlName="vence_tecnicomecanica"
@@ -201,7 +176,89 @@
       ></app-input>
     </div>
 
+    <div>
+      <app-label [required]="true">Color</app-label>
+      <app-select-search
+        [options]="arrColores()"
+        [control]="getControl('color')"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
+
+    <div>
+      <app-label [required]="true">Marca</app-label>
+      <app-select-search
+        [options]="arrMarcas()"
+        [control]="getControl('marca')"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
+    <div>
+      <app-label [required]="true">Linea</app-label>
+      <app-select-search
+        [options]="arrLinea()"
+        [control]="getControl('linea')"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
+    <div>
+      <app-label [required]="true">Combustible</app-label>
+      <app-select-search
+        [options]="arrCombustible()"
+        [control]="getControl('combustible')"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
+    <div>
+      <app-label [required]="true">Carroceria</app-label>
+      <app-select-search
+        [options]="arrCarroceria()"
+        [control]="getControl('carroceria')"
+      ></app-select-search>
+    </div>
+    <div>
+      <app-label [required]="true">Vehiculo configuracion</app-label>
+      <app-select-search
+        [options]="arrVehiculoConfiguracion()"
+        [control]="getControl('configuracion')"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
     <div></div>
+
+    <div>
+      <app-label [required]="true">Poseedor</app-label>
+      <app-select-search
+        [options]="arrPoseedor()"
+        [control]="getControl('poseedor')"
+        [label]="'nombre_corto'"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
+    <div>
+      <app-label [required]="true">Propietario</app-label>
+      <app-select-search
+        [options]="arrPropietario()"
+        [control]="getControl('propietario')"
+        [label]="'nombre_corto'"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
+
     <!-- Checkboxes -->
     <div class="flex flex-col gap-2">
       <app-switch [control]="getControl('propio')" titulo="Propio"></app-switch>
@@ -210,11 +267,53 @@
       <app-switch [control]="getControl('estado_revisado')" titulo="Revisado"></app-switch>
     </div>
   </div>
-
-  <!-- Comentario al final -->
   <div>
     <label class="block text-sm font-medium text-gray-700">Comentario</label>
     <textarea rows="2" class="input" formControlName="comentario"></textarea>
+  </div>
+
+  <h3 class="text-lg font-medium text-gray-800 mb-4">Información aseguradora</h3>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <app-label [required]="true">Aseguradora</app-label>
+      <app-select-search
+        [options]="arrAseguradora()"
+        [control]="getControl('aseguradora')"
+        [label]="'nombre_corto'"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-select-search>
+    </div>
+
+    <div>
+      <app-label [required]="true">Póliza</app-label>
+      <app-input
+        placeholder="Póliza"
+        formControlName="poliza"
+        [type]="'text'"
+        maxlength=""
+        [control]="formularioVehiculo.get('poliza')"
+        [errors]="{
+          maxlength: 'Máximo 30 caracteres.',
+        }"
+      ></app-input>
+    </div>
+
+    <div>
+      <app-label [required]="true">Vence Póliza</app-label>
+      <app-input
+        placeholder="Póliza"
+        formControlName="vence_poliza"
+        [type]="'date'"
+        maxlength=""
+        [control]="formularioVehiculo.get('vence_poliza')"
+        [errors]="{
+          required: 'Este campo es requerido.',
+        }"
+      ></app-input>
+    </div>
   </div>
 
   <div class="pt-4 text-right">
