@@ -78,7 +78,7 @@ export default class VehiculoFormularioComponent implements OnInit {
       ejes: [null, [Validators.required, Validators.min(1)]],
       peso_vacio: [null, [Validators.required, Validators.min(0)]],
       capacidad: [null, [Validators.required, Validators.min(0)]],
-      celular: ['', Validators.maxLength(50)],
+      celular: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       poliza: ['', [Validators.maxLength(30), cambiarVacioPorNulo.validar]],
       vence_poliza: [null, Validators.required],
       tecnicomecanica: [null, Validators.maxLength(30)],
