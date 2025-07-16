@@ -30,4 +30,8 @@ export class VehiculoRepository {
   detalle(id: number) {
     return this._generalRepository.getById<Vehiculo>('transporte/vehiculo/', id);
   }
+
+  eliminar(id: number) {
+    return this._generalRepository.delete<Vehiculo>('transporte/vehiculo/', id);
+  }
 }

@@ -73,7 +73,7 @@ export class GeneralRepository {
    * @returns Observable con la respuesta
    */
   delete<T>(endpoint: string, id: string | number): Observable<T> {
-    return this.deleteWithSubdominio<T>(`${endpoint}/${id}`);
+    return this.deleteWithSubdominio<T>(`${endpoint}${id}/`);
   }
 
   /**

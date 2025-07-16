@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
 import { columnasVehiculoLista } from '../../mapeo/vehiculo-lista.mapeo';
@@ -13,7 +13,7 @@ import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 })
 export default class VehiculoListaComponent implements OnInit {
   private _vehiculoService = inject(VehiculoRepository);
-
+  private arrVehiculosEliminar = signal<Vehiculo[]>([]);
   arrVehiculos = this._vehiculoService.arrVehiculosSignal;
   columnas = columnasVehiculoLista;
 
@@ -25,7 +25,15 @@ export default class VehiculoListaComponent implements OnInit {
     this._vehiculoService.lista().subscribe();
   }
 
-  eliminar() {}
+  onSeleccionVehiculos(vehiculos: Vehiculo[]) {
+    this.arrVehiculosEliminar.set(vehiculos);
+  }
 
-  onSeleccionVehiculos(vehiculos: Vehiculo[]) {}
+  eliminar() {
+    this.arrVehiculosEliminar().map(vehiculo =>
+      this._vehiculoService.eliminar(vehiculo.id).subscribe()
+    );
+    this.consultarInformacion();
+    this.arrVehiculosEliminar.set([]);
+  }
 }
