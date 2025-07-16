@@ -7,7 +7,7 @@ import { Vehiculo } from '../interfaces/vehiculo.interfeces';
 @Injectable({
   providedIn: 'root',
 })
-export class VehiculoService {
+export class VehiculoRepository {
   private _generalRepository = inject(GeneralRepository);
   public arrVehiculosSignal = signal<Vehiculo[]>([]);
 

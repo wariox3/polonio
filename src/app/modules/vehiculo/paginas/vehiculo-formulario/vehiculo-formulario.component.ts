@@ -12,7 +12,6 @@ import { LabelComponent } from '@app/common/components/ui/form/label/label.compo
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { VehiculoService } from '@app/modules/vehiculo/servicios/vehiculo.service';
 import { combineLatest, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
 import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
@@ -20,6 +19,7 @@ import { SelectSearchComponent } from '@app/common/components/ui/form/select-sea
 import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSeleccionar';
+import { VehiculoRepository } from '../../repository/vehiculo.repository';
 
 @Component({
   selector: 'app-vehiculo-formulario',
@@ -38,7 +38,7 @@ import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSelecciona
 })
 export default class VehiculoFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
-  private _vehiculoService = inject(VehiculoService);
+  private _vehiculoRepository = inject(VehiculoRepository);
   private _transporteRepository = inject(TransporteRepository);
   private _contactoRepository = inject(ContactoRepository);
   private _activatedRoute = inject(ActivatedRoute);
@@ -143,7 +143,7 @@ export default class VehiculoFormularioComponent implements OnInit {
         filter((param: any) => !!param.id),
         switchMap((param: { id: number }) => {
           this.detalleID.set(param.id);
-          return this._vehiculoService.detalle(param.id);
+          return this._vehiculoRepository.detalle(param.id);
         })
       )
       .subscribe((respuesta: Vehiculo) => {
@@ -164,7 +164,7 @@ export default class VehiculoFormularioComponent implements OnInit {
   }
 
   private _nuevoVehiculo() {
-    this._vehiculoService
+    this._vehiculoRepository
       .nuevo(this.formularioVehiculo.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(respuesta => {
@@ -173,7 +173,7 @@ export default class VehiculoFormularioComponent implements OnInit {
   }
 
   private _editarVehiculo() {
-    this._vehiculoService
+    this._vehiculoRepository
       .editar(this.detalleID(), this.formularioVehiculo.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(respuesta => {

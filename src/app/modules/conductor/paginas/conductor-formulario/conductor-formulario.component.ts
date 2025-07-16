@@ -18,8 +18,8 @@ import { RhRepository } from '@app/common/repositories/rh/rh.repository';
 import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { combineLatest, filter, Subject, switchMap, takeUntil } from 'rxjs';
-import { Conductor } from '../../interfaces/conductor';
-import { ConductorService } from '../../servicios/conductor.service';
+import { Conductor } from '../../interfaces/conductor.interface';
+import { ConductorRepository } from '../../repository/conductor.repository';
 
 @Component({
   selector: 'app-conductor-formulario',
@@ -38,7 +38,7 @@ import { ConductorService } from '../../servicios/conductor.service';
 })
 export default class ConductorFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
-  private _conductorService = inject(ConductorService);
+  private _conductorRepository = inject(ConductorRepository);
   private _rhService = inject(RhRepository);
   private _ciudadService = inject(CiudadRepository);
   private _identificacionRepository = inject(IdentificacionRepository);
@@ -124,7 +124,7 @@ export default class ConductorFormularioComponent implements OnInit {
 
   private _nuevoVehiculo() {
     this.actualizarNombreCorto();
-    this._conductorService
+    this._conductorRepository
       .nuevo(this.formularioConductor.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(respuesta => {
@@ -134,7 +134,7 @@ export default class ConductorFormularioComponent implements OnInit {
 
   private _editarVehiculo() {
     this.actualizarNombreCorto();
-    this._conductorService
+    this._conductorRepository
       .editar(this.detalleID(), this.formularioConductor.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(respuesta => {
@@ -149,7 +149,7 @@ export default class ConductorFormularioComponent implements OnInit {
         filter((param: any) => !!param.id),
         switchMap((param: { id: number }) => {
           this.detalleID.set(param.id);
-          return this._conductorService.detalle(param.id);
+          return this._conductorRepository.detalle(param.id);
         })
       )
       .subscribe((respuesta: Conductor) => {

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { VehiculoService } from '../../servicios/vehiculo.service';
+import { VehiculoRepository } from '../../repository/vehiculo.repository';
 
 @Component({
   selector: 'app-vehiculo-lista',
@@ -9,7 +9,7 @@ import { VehiculoService } from '../../servicios/vehiculo.service';
   templateUrl: './vehiculo-lista.component.html',
 })
 export default class VehiculoListaComponent implements OnInit {
-  private _vehiculoService = inject(VehiculoService);
+  private _vehiculoService = inject(VehiculoRepository);
 
   arrVehiculos = this._vehiculoService.arrVehiculosSignal;
 

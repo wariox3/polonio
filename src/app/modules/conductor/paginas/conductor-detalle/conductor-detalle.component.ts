@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
-import { ConductorService } from '../../servicios/conductor.service';
-import { Conductor } from '../../interfaces/conductor';
+import { Conductor } from '../../interfaces/conductor.interface';
+import { ConductorRepository } from '../../repository/conductor.repository';
 
 @Component({
   selector: 'app-conductor-detalle',
@@ -12,7 +12,7 @@ import { Conductor } from '../../interfaces/conductor';
   templateUrl: './conductor-detalle.component.html',
 })
 export default class conductorDetalleComponent implements OnInit {
-  private _conductorService = inject(ConductorService);
+  private _conductorRepository = inject(ConductorRepository);
   private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
   public vehiculosSignal = signal<Conductor>({
@@ -59,7 +59,7 @@ export default class conductorDetalleComponent implements OnInit {
       .pipe(
         takeUntil(this.destroy$),
         switchMap((param: { id: number }) => {
-          return this._conductorService.detalle(param.id);
+          return this._conductorRepository.detalle(param.id);
         }),
         tap(detalle => this.vehiculosSignal.set(detalle))
       )

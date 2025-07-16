@@ -1,0 +1,86 @@
+<div class="overflow-x-auto">
+  <table class="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg shadow-sm">
+    <thead class="bg-gray-100">
+      <tr class="text-left text-sm font-semibold text-gray-700">
+        <!-- Columnas de datos -->
+        <th
+          *ngFor="let columna of columnas"
+          class="px-4 py-2"
+          [style.width]="columna.ancho || 'auto'"
+        >
+          {{ columna.nombre }}
+        </th>
+
+        <!-- Columnas de acciones -->
+        <th *ngIf="mostrarAcciones" class="px-4 py-2 text-center" colspan="2"></th>
+
+        <!-- Checkbox principal con estado indeterminado -->
+        <th *ngIf="mostrarCheckbox" class="px-4 py-2 text-center">
+          <input
+            type="checkbox"
+            [checked]="seleccionTodos"
+            [indeterminate]="estadoIndeterminado"
+            (change)="alternarSeleccionTodos()"
+            class="form-checkbox h-4 w-4 text-blue-600"
+            [disabled]="!datos || datos.length === 0"
+          />
+        </th>
+      </tr>
+    </thead>
+
+    <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
+      <!-- Mensaje cuando no hay datos -->
+      <tr *ngIf="!datos || datos.length === 0">
+        <td
+          [attr.colspan]="(mostrarCheckbox ? 1 : 0) + columnas.length + (mostrarAcciones ? 2 : 0)"
+          class="px-4 py-6 text-center text-gray-500"
+        >
+          {{ textoVacio }}
+        </td>
+      </tr>
+
+      <!-- Filas con datos -->
+      <tr *ngFor="let item of datos; let i = index">
+        <!-- Celdas de datos -->
+        <td *ngFor="let columna of columnas" class="px-4 py-2">
+          {{ formatearValor(columna, item[columna.clave]) }}
+        </td>
+
+        <!-- Acciones -->
+        <td *ngIf="mostrarAcciones" class="px-4 py-2 text-center w-[60px]">
+          <a
+            class="btn btn-sm btn-icon btn-clear btn-light"
+            [routerLink]="[rutas.editar, item[claveCheckbox]]"
+          >
+            <i class="ki-filled ki-notepad-edit"></i>
+          </a>
+        </td>
+
+        <td *ngIf="mostrarAcciones" class="px-4 py-2 text-center">
+          <a
+            class="btn btn-sm btn-icon btn-clear btn-light"
+            [routerLink]="[rutas.detalle, item[claveCheckbox]]"
+          >
+            <i class="ki-filled ki-eye"></i>
+          </a>
+        </td>
+
+        <!-- Checkbox individual -->
+        <td *ngIf="mostrarCheckbox" class="px-4 py-2 text-center">
+          <input
+            type="checkbox"
+            [checked]="estaSeleccionado(item)"
+            (change)="alternarSeleccion(item, $event)"
+            class="form-checkbox h-4 w-4 text-blue-600"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Resumen de selección -->
+<div *ngIf="registrosSeleccionados.length > 0" class="mt-2 text-sm text-gray-600">
+  {{ registrosSeleccionados.length }}
+  {{ registrosSeleccionados.length === 1 ? 'registro' : 'registros' }} seleccionado(s)
+</div>

@@ -1,9 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { VehiculoService } from '../../servicios/vehiculo.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 import { CommonModule } from '@angular/common';
+import { VehiculoRepository } from '../../repository/vehiculo.repository';
 
 @Component({
   selector: 'app-vehiculo-detalle',
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './vehiculo-detalle.component.html',
 })
 export default class VehiculoDetalleComponent implements OnInit {
-  private _vehiculoService = inject(VehiculoService);
+  private _vehiculoRepository = inject(VehiculoRepository);
   private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
   public vehiculosSignal = signal<Vehiculo>({
@@ -73,7 +73,7 @@ export default class VehiculoDetalleComponent implements OnInit {
       .pipe(
         takeUntil(this.destroy$),
         switchMap((param: { id: number }) => {
-          return this._vehiculoService.detalle(param.id);
+          return this._vehiculoRepository.detalle(param.id);
         }),
         tap(detalle => this.vehiculosSignal.set(detalle))
       )
