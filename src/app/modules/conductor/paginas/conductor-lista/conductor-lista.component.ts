@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { ConductorRepository } from '../../repository/conductor.repository';
-import { columnasConductorLista } from '../../constants/conductor.mapeo';
+import { columnasConductorLista } from '../../mapeo/conductor-lista.mapeo';
 
 @Component({
   selector: 'app-conductor-lista',

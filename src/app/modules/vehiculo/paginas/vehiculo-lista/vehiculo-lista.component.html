@@ -14,71 +14,12 @@
   Elimianr
 </button>
 
-<div class="overflow-x-auto">
-  <table class="min-w-full divide-y divide-gray-200 border border-gray-300 rounded-lg shadow-sm">
-    <thead class="bg-gray-100">
-      <tr class="text-left text-sm font-semibold text-gray-700">
-        <th class="px-4 py-2">ID</th>
-        <th class="px-4 py-2">Placa</th>
-        <th class="px-4 py-2">Marca</th>
-        <th class="px-4 py-2">Modelo</th>
-        <th class="px-4 py-2">Motor</th>
-        <th class="px-4 py-2">Chasis</th>
-        <th class="px-4 py-2">Ejes</th>
-        <th class="px-4 py-2">Celular</th>
-        <th class="px-4 py-2">Póliza</th>
-        <th class="px-4 py-2">Vence Póliza</th>
-        <th class="px-4 py-2">Tecnomecánica</th>
-        <th class="px-4 py-2">Vence Tecnomecánica</th>
-        <th class="px-4 py-2">Revisado</th>
-        <th class="px-4 py-2">Inactivo</th>
-        <th class="px-4 py-2 text-center" colspan="2"></th>
-        <td class="px-4 py-2 text-center w-[60px]">
-          <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
-        </td>
-      </tr>
-    </thead>
-    <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
-      @for (vehiculo of arrVehiculos(); track vehiculo.id) {
-        <tr>
-          <td class="px-4 py-2">{{ vehiculo.id }}</td>
-          <td class="px-4 py-2">{{ vehiculo.placa }}</td>
-          <td class="px-4 py-2">{{ vehiculo.marca__nombre }}</td>
-          <td class="px-4 py-2">{{ vehiculo.modelo }}</td>
-          <td class="px-4 py-2">{{ vehiculo.motor }}</td>
-          <td class="px-4 py-2">{{ vehiculo.chasis }}</td>
-          <td class="px-4 py-2">{{ vehiculo.ejes }}</td>
-          <td class="px-4 py-2">{{ vehiculo.celular }}</td>
-          <td class="px-4 py-2">{{ vehiculo.poliza }}</td>
-          <td class="px-4 py-2">{{ vehiculo.vence_poliza }}</td>
-          <td class="px-4 py-2">{{ vehiculo.tecnicomecanica }}</td>
-          <td class="px-4 py-2">{{ vehiculo.vence_tecnicomecanica }}</td>
-          <td class="px-4 py-2 text-center">{{ vehiculo.estado_revisado ? 'SI' : 'NO' }}</td>
-          <td class="px-4 py-2 text-center">{{ vehiculo.estado_inactivo ? 'SI' : 'NO' }}</td>
-
-          <td class="px-4 py-2 text-center w-[60px]">
-            <a
-              class="btn btn-sm btn-icon btn-clear btn-light"
-              [routerLink]="['/administracion/vehiculo/editar/', vehiculo.id]"
-            >
-              <i class="ki-filled ki-notepad-edit"></i>
-            </a>
-          </td>
-
-          <td class="px-4 py-2 text-center">
-            <a
-              class="btn btn-sm btn-icon btn-clear btn-light"
-              [routerLink]="['/administracion/vehiculo/detalle/', vehiculo.id]"
-            >
-              <i class="ki-filled ki-eye"></i>
-            </a>
-          </td>
-
-          <td class="px-4 py-2 text-center">
-            <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
-          </td>
-        </tr>
-      }
-    </tbody>
-  </table>
-</div>
+<app-tabla
+  [columnas]="columnas"
+  [datos]="arrVehiculos()"
+  [rutas]="{
+    editar: '/administracion/vehiculo/editar',
+    detalle: '/administracion/vehiculo/detalle',
+  }"
+  (seleccionCambiada)="onSeleccionVehiculos($event)"
+></app-tabla>
