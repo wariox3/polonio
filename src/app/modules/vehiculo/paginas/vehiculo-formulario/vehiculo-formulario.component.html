@@ -32,7 +32,7 @@
               [control]="formularioVehiculo.get('placa')"
               [errors]="{
                 required: 'La placa es requerida.',
-                maxlength: 'Máximo 6 caracteres.',
+                maxLength: 'Máximo 6 caracteres.',
               }"
             ></app-input>
           </div>
@@ -58,7 +58,7 @@
               placeholder="Ingresa modelo repotenciado del vehiculo"
               formControlName="modelo_repotenciado"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('modelo_repotenciado')"
               [errors]="{
                 min: 'Debe ser mayor o igual a 1900.',
@@ -73,10 +73,10 @@
               placeholder="Ingresa motor del vehiculo"
               formControlName="motor"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('motor')"
               [errors]="{
-                maxlength: 'Máximo 50 caracteres.',
+                maxLength: 'Máximo 50 caracteres.',
               }"
             ></app-input>
           </div>
@@ -87,10 +87,10 @@
               placeholder="Ingresa chasis del vehiculo"
               formControlName="chasis"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('chasis')"
               [errors]="{
-                maxlength: 'Máximo 50 caracteres.',
+                maxLength: 'Máximo 50 caracteres.',
               }"
             ></app-input>
           </div>
@@ -101,7 +101,7 @@
               placeholder="Ingresa ejes del vehiculo"
               formControlName="ejes"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('ejes')"
               [errors]="{
                 required: 'Este campo es requerido.',
@@ -116,7 +116,7 @@
               placeholder="Ingresa el peso del vehiculo"
               formControlName="peso_vacio"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('peso_vacio')"
               [errors]="{
                 required: 'Este campo es requerido.',
@@ -131,7 +131,7 @@
               placeholder="Ingresa la capacidad del vehiculo"
               formControlName="capacidad"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('capacidad')"
               [errors]="{
                 required: 'Este campo es requerido.',
@@ -146,10 +146,10 @@
               placeholder="Celular"
               formControlName="celular"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('celular')"
               [errors]="{
-                maxlength: 'Máximo 50 caracteres.',
+                maxLength: 'Máximo 50 caracteres.',
               }"
             ></app-input>
           </div>
@@ -160,10 +160,10 @@
               placeholder="Tecnomecánica"
               formControlName="tecnicomecanica"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('tecnicomecanica')"
               [errors]="{
-                maxlength: 'Máximo 30 caracteres.',
+                maxLength: 'Máximo 30 caracteres.',
               }"
             ></app-input>
           </div>
@@ -174,7 +174,7 @@
               placeholder="Póliza"
               formControlName="vence_tecnicomecanica"
               [type]="'date'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('vence_tecnicomecanica')"
               [errors]="{
                 required: 'Este campo es requerido.',
@@ -303,10 +303,10 @@
               placeholder="Póliza"
               formControlName="poliza"
               [type]="'text'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('poliza')"
               [errors]="{
-                maxlength: 'Máximo 30 caracteres.',
+                maxLength: 'Máximo 30 caracteres.',
               }"
             ></app-input>
           </div>
@@ -317,7 +317,7 @@
               placeholder="Póliza"
               formControlName="vence_poliza"
               [type]="'date'"
-              maxlength=""
+              maxLength=""
               [control]="formularioVehiculo.get('vence_poliza')"
               [errors]="{
                 required: 'Este campo es requerido.',
