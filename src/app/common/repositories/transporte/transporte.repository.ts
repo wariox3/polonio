@@ -1,10 +1,6 @@
 import { inject, Injectable } from '@angular/core';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSeleccionar';
 import { GeneralRepository } from '@app/core';
-
-export interface respuestaSeleccionar {
-  id: number;
-  nombre: string;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -15,31 +11,31 @@ export class TransporteRepository {
   constructor() {}
 
   coloresSeleccionar() {
-    return this._generalRepository.get<respuestaSeleccionar[]>('transporte/color/seleccionar/');
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/color/seleccionar/');
   }
 
   marcaSeleccionar() {
-    return this._generalRepository.get<respuestaSeleccionar[]>('transporte/marca/seleccionar/');
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/marca/seleccionar/');
   }
 
   lineaSeleccionar() {
-    return this._generalRepository.get<respuestaSeleccionar[]>('transporte/linea/seleccionar/');
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/linea/seleccionar/');
   }
 
   combustibleSeleccionar() {
-    return this._generalRepository.get<respuestaSeleccionar[]>(
+    return this._generalRepository.get<RespuestaSeleccionar[]>(
       'transporte/combustible/seleccionar/'
     );
   }
 
   carroceriaSeleccionar() {
-    return this._generalRepository.get<respuestaSeleccionar[]>(
+    return this._generalRepository.get<RespuestaSeleccionar[]>(
       'transporte/carroceria/seleccionar/'
     );
   }
 
   vehiculoConfiguracionSeleccionar() {
-    return this._generalRepository.get<respuestaSeleccionar[]>(
+    return this._generalRepository.get<RespuestaSeleccionar[]>(
       'transporte/vehiculo_configuracion/seleccionar/'
     );
   }

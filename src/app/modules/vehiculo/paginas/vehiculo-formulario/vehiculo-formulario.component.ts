@@ -14,14 +14,12 @@ import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.co
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { VehiculoService } from '@app/modules/vehiculo/servicios/vehiculo.service';
 import { combineLatest, filter, Subject, switchMap, takeUntil } from 'rxjs';
-import {
-  respuestaSeleccionar,
-  TransporteRepository,
-} from '@app/common/repositories/transporte/transporte.repository';
+import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
 import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSeleccionar';
 
 @Component({
   selector: 'app-vehiculo-formulario',
@@ -47,12 +45,12 @@ export default class VehiculoFormularioComponent implements OnInit {
 
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
-  public arrColores = signal<respuestaSeleccionar[]>([]);
-  public arrMarcas = signal<respuestaSeleccionar[]>([]);
-  public arrCombustible = signal<respuestaSeleccionar[]>([]);
-  public arrLinea = signal<respuestaSeleccionar[]>([]);
-  public arrCarroceria = signal<respuestaSeleccionar[]>([]);
-  public arrVehiculoConfiguracion = signal<respuestaSeleccionar[]>([]);
+  public arrColores = signal<RespuestaSeleccionar[]>([]);
+  public arrMarcas = signal<RespuestaSeleccionar[]>([]);
+  public arrCombustible = signal<RespuestaSeleccionar[]>([]);
+  public arrLinea = signal<RespuestaSeleccionar[]>([]);
+  public arrCarroceria = signal<RespuestaSeleccionar[]>([]);
+  public arrVehiculoConfiguracion = signal<RespuestaSeleccionar[]>([]);
   public arrPoseedor = signal([]);
   public arrPropietario = signal([]);
   public arrAseguradora = signal([]);
@@ -149,7 +147,7 @@ export default class VehiculoFormularioComponent implements OnInit {
         })
       )
       .subscribe((respuesta: Vehiculo) => {
-        this.poblablarFormulario(respuesta);
+        this.poblarFormulario(respuesta);
       });
   }
 
@@ -183,7 +181,7 @@ export default class VehiculoFormularioComponent implements OnInit {
       });
   }
 
-  private poblablarFormulario(data: Vehiculo) {
+  private poblarFormulario(data: Vehiculo) {
     this.formularioVehiculo.setValue({
       id: data.id,
       fecha_registro: data.fecha_registro,
