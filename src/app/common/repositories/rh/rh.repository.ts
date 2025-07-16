@@ -5,7 +5,7 @@ import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSelecciona
 @Injectable({
   providedIn: 'root',
 })
-export class RhService {
+export class RhRepository {
   private _generalRepository = inject(GeneralRepository);
 
   constructor() {}

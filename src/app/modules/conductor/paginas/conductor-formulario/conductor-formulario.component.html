@@ -25,18 +25,13 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <app-label [required]="true"> identificación </app-label>
-          <app-input
-            placeholder="Ingresa identificación"
-            formControlName="identificacion"
-            [type]="'number'"
-            maxlength=""
-            [control]="formularioConductor.get('identificacion')"
+          <app-select-search
+            [options]="filteredIdentificacionSignal()"
+            [control]="getControl('identificacion')"
             [errors]="{
-              required: 'El modelo es requerido.',
-              min: 'Debe ser mayor o igual a 1900.',
-              max: 'No puede ser mayor al año actual.',
+              required: 'Este campo es requerido.',
             }"
-          ></app-input>
+          ></app-select-search>
         </div>
 
         <div>
@@ -47,6 +42,7 @@
             [type]="'number'"
             maxlength=""
             [control]="formularioConductor.get('numero_identificacion')"
+            (blurEvent)="calcularDigitoVerificacion()"
             [errors]="{
               required: 'El modelo es requerido.',
               min: 'Debe ser mayor o igual a 1900.',
@@ -61,6 +57,7 @@
             placeholder="Digito verificación"
             formControlName="digito_verificacion"
             [type]="'number'"
+            [attr.disabled]="true"
             maxlength=""
             [control]="formularioConductor.get('digito_verificacion')"
             [errors]="{
@@ -72,7 +69,7 @@
         </div>
 
         <div>
-          <app-label [required]="true"> Ciudad</app-label>
+          <app-label [required]="true">Ciudad</app-label>
           <app-select-search
             [options]="arrCiudad()"
             [control]="getControl('ciudad')"
@@ -85,7 +82,7 @@
         <div>
           <app-label [required]="true">Primer nombre</app-label>
           <app-input
-            placeholder="Ingresa nombre"
+            placeholder="Ingresa primer apellido"
             formControlName="nombre1"
             [type]="'text'"
             maxlength=""
@@ -111,7 +108,7 @@
         <div>
           <app-label [required]="true">Primer apellido</app-label>
           <app-input
-            placeholder="Ingresa el peso del vehiculo"
+            placeholder="Ingresa primer apellido"
             formControlName="apellido1"
             [type]="'text'"
             maxlength=""
@@ -124,9 +121,9 @@
         </div>
 
         <div>
-          <app-label>Segundo nombre</app-label>
+          <app-label>Segundo apellido</app-label>
           <app-input
-            placeholder="Ingresa la capacidad del vehiculo"
+            placeholder="Ingresa segundo apellido"
             formControlName="apellido2"
             [type]="'text'"
             maxlength=""
@@ -291,7 +288,24 @@
         </div>
 
         <div>
-
+          <app-label [required]="true">Fecha ingreso</app-label>
+          <app-input
+            formControlName="fecha_ingreso"
+            [type]="'date'"
+            maxlength=""
+            [control]="formularioConductor.get('fecha_ingreso')"
+          ></app-input>
+        </div>
+        <div></div>
+        <div>
+          <app-label [required]="true">Fecha retiro</app-label>
+          <app-input
+            placeholder="fecha retiro"
+            formControlName="fecha_retiro"
+            [type]="'date'"
+            maxlength=""
+            [control]="formularioConductor.get('fecha_retiro')"
+          ></app-input>
         </div>
       </div>
 

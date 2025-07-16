@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -12,11 +12,11 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
-import { SelectComponent } from '@app/common/components/ui/form/select/select.component';
-import { CiudadService } from '@app/common/repositories/ciudad/ciudad.service';
-import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
-import { RhService } from '@app/common/repositories/rh/rh.service';
-import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
+import { CiudadRepository } from '@app/common/repositories/ciudad/ciudad.repository';
+import { IdentificacionRepository } from '@app/common/repositories/identificacion/identificacion.repository';
+import { RhRepository } from '@app/common/repositories/rh/rh.repository';
+import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
+import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { combineLatest, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Conductor } from '../../interfaces/conductor';
 import { ConductorService } from '../../servicios/conductor.service';
@@ -31,7 +31,6 @@ import { ConductorService } from '../../servicios/conductor.service';
     LabelComponent,
     InputComponent,
     RouterModule,
-    SelectComponent,
     SelectSearchComponent,
   ],
   templateUrl: './conductor-formulario.component.html',
@@ -39,17 +38,21 @@ import { ConductorService } from '../../servicios/conductor.service';
 })
 export default class ConductorFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
-  private _contactoRepository = inject(ContactoRepository);
   private _conductorService = inject(ConductorService);
-  private _rhService = inject(RhService);
-  private _ciudadService = inject(CiudadService);
+  private _rhService = inject(RhRepository);
+  private _ciudadService = inject(CiudadRepository);
+  private _identificacionRepository = inject(IdentificacionRepository);
   private _activatedRoute = inject(ActivatedRoute);
+  private _devuelveDigitoVerificacionService = inject(DevuelveDigitoVerificacionService);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
-  private _transporteRepository = inject(TransporteRepository);
   public detalleID = signal(0);
   public arrRh = signal([]);
   public arrCiudad = signal([]);
+  public arrIdentificacion = signal([]);
+  public filteredIdentificacionSignal = computed(() =>
+    this.arrIdentificacion().filter(item => item.tipo_persona === 2)
+  );
 
   public formularioConductor: FormGroup;
 
@@ -61,18 +64,19 @@ export default class ConductorFormularioComponent implements OnInit {
 
   inicializarFormulario() {
     this.formularioConductor = this._formBuilder.group({
+      id: [],
       numero_identificacion: ['', [Validators.required, Validators.maxLength(20)]],
       digito_verificacion: ['', [Validators.maxLength(1)]],
       nombre1: ['', [Validators.required, Validators.maxLength(50)]],
-      nombre2: ['', [Validators.maxLength(50)]],
+      nombre2: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       apellido1: ['', [Validators.required, Validators.maxLength(50)]],
-      apellido2: ['', [Validators.maxLength(50)]],
+      apellido2: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       nombre_corto: ['', [Validators.required, Validators.maxLength(200)]],
       fecha_nacimiento: ['', [Validators.required]],
       direccion: ['', [Validators.required, Validators.maxLength(100)]],
-      barrio: ['', [Validators.maxLength(200)]],
+      barrio: ['', [Validators.maxLength(200), cambiarVacioPorNulo.validar]],
       telefono: ['', [Validators.required, Validators.maxLength(50)]],
-      celular: ['', [Validators.maxLength(50)]],
+      celular: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       correo: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
       numero_licencia: ['', [Validators.required, Validators.maxLength(50)]],
       categoria_licencia: ['', [Validators.required, Validators.maxLength(2)]],
@@ -83,7 +87,7 @@ export default class ConductorFormularioComponent implements OnInit {
       propio: [false],
       estado_inactivo: [false],
       estado_revisado: [false],
-      comentario: ['', [Validators.maxLength(500)]],
+      comentario: ['', [Validators.maxLength(500), cambiarVacioPorNulo.validar]],
       identificacion: [null, [Validators.required]],
       ciudad: [null, [Validators.required]],
       rh: [null, [Validators.required]],
@@ -91,11 +95,16 @@ export default class ConductorFormularioComponent implements OnInit {
   }
 
   consultarInformacion() {
-    combineLatest([this._rhService.rhSeleccionar(), this._ciudadService.ciudadSeleccionar()])
+    combineLatest([
+      this._rhService.rhSeleccionar(),
+      this._ciudadService.ciudadSeleccionar(),
+      this._identificacionRepository.identificacionSeleccionar(),
+    ])
       .pipe(takeUntil(this.destroy$))
-      .subscribe(([rhSeleccionar, ciudadSeleccionar]) => {
+      .subscribe(([rhSeleccionar, ciudadSeleccionar, identificacionSeleccionar]) => {
         this.arrRh.set(rhSeleccionar);
         this.arrCiudad.set(ciudadSeleccionar);
+        this.arrIdentificacion.set(identificacionSeleccionar);
       });
   }
 
@@ -110,12 +119,6 @@ export default class ConductorFormularioComponent implements OnInit {
       }
     } else {
       this.formularioConductor.markAllAsTouched();
-      Object.keys(this.formularioConductor.controls).forEach(campo => {
-        const control = this.formularioConductor.get(campo);
-        if (control && control.invalid) {
-          console.log(`Campo con error: ${campo}`, control.errors);
-        }
-      });
     }
   }
 
@@ -157,34 +160,32 @@ export default class ConductorFormularioComponent implements OnInit {
   private poblarFormulario(data: Conductor) {
     this.formularioConductor.setValue({
       id: data.id,
-      // fecha_registro: data.fecha_registro,
-      // placa: data.placa,
-      // modelo: data.modelo,
-      // modelo_repotenciado: data.modelo_repotenciado,
-      // motor: data.motor,
-      // chasis: data.chasis,
-      // ejes: data.ejes,
-      // peso_vacio: data.peso_vacio,
-      // capacidad: data.capacidad,
-      // celular: data.celular,
-      // poliza: data.poliza,
-      // vence_poliza: data.vence_poliza,
-      // tecnicomecanica: data.tecnicomecanica,
-      // vence_tecnicomecanica: data.vence_tecnicomecanica,
-      // propio: data.propio,
-      // remolque: data.remolque,
-      // estado_inactivo: data.estado_inactivo,
-      // estado_revisado: data.estado_revisado,
-      // comentario: data.comentario,
-      // poseedor: data.poseedor,
-      // propietario: data.propietario,
-      // aseguradora: data.aseguradora,
-      // color: data.color,
-      // marca: data.marca,
-      // linea: data.linea,
-      // combustible: data.combustible,
-      // carroceria: data.carroceria,
-      // configuracion: data.configuracion,
+      numero_identificacion: data.numero_identificacion,
+      digito_verificacion: data.digito_verificacion,
+      nombre1: data.nombre1,
+      nombre2: data.nombre2,
+      apellido1: data.apellido1,
+      apellido2: data.apellido2,
+      nombre_corto: data.nombre_corto,
+      fecha_nacimiento: data.fecha_nacimiento,
+      direccion: data.direccion,
+      barrio: data.barrio,
+      telefono: data.telefono,
+      celular: data.celular,
+      correo: data.correo,
+      numero_licencia: data.numero_licencia,
+      categoria_licencia: data.categoria_licencia,
+      fecha_vence_licencia: data.fecha_vence_licencia,
+      fecha_expedicion_licencia: data.fecha_expedicion_licencia,
+      fecha_ingreso: data.fecha_ingreso,
+      fecha_retiro: data.fecha_retiro,
+      propio: data.propio,
+      estado_inactivo: data.estado_inactivo,
+      estado_revisado: data.estado_revisado,
+      comentario: data.comentario,
+      identificacion: data.identificacion,
+      ciudad: data.ciudad,
+      rh: data.rh,
     });
   }
 
@@ -209,5 +210,14 @@ export default class ConductorFormularioComponent implements OnInit {
     }
 
     this.formularioConductor.get('nombre_corto')?.patchValue(nombreCorto, { emitEvent: false });
+  }
+
+  calcularDigitoVerificacion() {
+    const digito = this._devuelveDigitoVerificacionService.digitoVerificacion(
+      this.formularioConductor.get('numero_identificacion')?.value
+    );
+    this.formularioConductor.patchValue({
+      digito_verificacion: digito,
+    });
   }
 }

@@ -5,7 +5,7 @@ import { GeneralRepository } from '@app/core';
 @Injectable({
   providedIn: 'root',
 })
-export class CiudadService {
+export class CiudadRepository {
   private _generalRepository = inject(GeneralRepository);
 
   constructor() {}

@@ -23,7 +23,6 @@
         <th class="px-4 py-2">Propio</th>
         <th class="px-4 py-2">Inactivo</th>
         <th class="px-4 py-2">Revisado</th>
-        <th class="px-4 py-2">Comentario</th>
         <th class="px-4 py-2 text-center" colspan="2"></th>
         <td class="px-4 py-2 text-center">
           <input type="checkbox" class="form-checkbox h-4 w-4 text-blue-600" />
@@ -33,19 +32,18 @@
     <tbody class="divide-y divide-gray-200 text-sm text-gray-800">
       @for (conductor of arrConductores(); track conductor.id) {
         <tr>
-          <td class="px-4 py-2">1</td>
-          <td class="px-4 py-2">Juan Pérez</td>
-          <td class="px-4 py-2">123456789 - 5</td>
-          <td class="px-4 py-2">1234567</td>
-          <td class="px-4 py-2">3001234567</td>
-          <td class="px-4 py-2">juanexample.com</td>
-          <td class="px-4 py-2">LIC-987654</td>
-          <td class="px-4 py-2">C2</td>
-          <td class="px-4 py-2">2026-03-10</td>
-          <td class="px-4 py-2">Sí</td>
-          <td class="px-4 py-2">No</td>
-          <td class="px-4 py-2">Sí</td>
-          <td class="px-4 py-2">Sin observaciones</td>
+          <td class="px-4 py-2">{{ conductor.id }}</td>
+          <td class="px-4 py-2">{{ conductor.nombre_corto }}</td>
+          <td class="px-4 py-2">{{ conductor.numero_identificacion }}</td>
+          <td class="px-4 py-2">{{ conductor.telefono }}</td>
+          <td class="px-4 py-2">{{ conductor.celular }}</td>
+          <td class="px-4 py-2">{{ conductor.correo }}</td>
+          <td class="px-4 py-2">{{ conductor.numero_licencia }}</td>
+          <td class="px-4 py-2">{{ conductor.categoria_licencia }}</td>
+          <td class="px-4 py-2">{{ conductor.fecha_vence_licencia }}</td>
+          <td class="px-4 py-2">{{ conductor.propio ? 'SI' : 'NO' }}</td>
+          <td class="px-4 py-2">{{ conductor.estado_inactivo ? 'SI' : 'NO' }}</td>
+          <td class="px-4 py-2">{{ conductor.estado_revisado ? 'SI' : 'NO' }}</td>
           <td class="px-4 py-2 text-center w-[60px]">
             <a
               class="btn btn-sm btn-icon btn-clear btn-light"
