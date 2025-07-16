@@ -1,6 +1,6 @@
 // src/app/shared/ui/input/input.component.ts
 import { NgIf } from '@angular/common';
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, Output, EventEmitter } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -50,6 +50,8 @@ export class InputComponent implements ControlValueAccessor {
   @Input() touched: boolean | undefined = false;
   @Input() control: AbstractControl | null = null; // Nuevo input para recibir el control del formulario
 
+  @Output() blurEvent = new EventEmitter<void>(); // Nuevo output para emitir evento de blur
+
   value: string = ''; // Valor interno del input
   onChange: any = () => {}; // Función para notificar cambios
   onTouched: any = () => {}; // Función para notificar que el input fue tocado
@@ -80,6 +82,7 @@ export class InputComponent implements ControlValueAccessor {
   // Maneja el evento de blur
   onBlur(): void {
     this.onTouched(); // Notifica que el input fue tocado
+    this.blurEvent.emit(); // Emite el evento de blur para componentes padres
   }
 
   // Determina si se deben mostrar los errores
