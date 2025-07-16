@@ -21,7 +21,7 @@ export class SidebarComponent {
 
   public sidebarMenu: any[] = [
     {
-      nombre: 'Home',
+      nombre: 'Inicio',
       link: '/dashboard',
       iconoClase: 'ki-filled ki-home',
       activo: false,
@@ -38,7 +38,7 @@ export class SidebarComponent {
           link: '/administracion/vehiculo/lista',
         },
         {
-          nombre: 'conductor',
+          nombre: 'Conductor',
           link: '/administracion/conductor/lista',
         },
       ],
