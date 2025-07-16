@@ -5,6 +5,12 @@
   >
     Nuevo
   </a>
+  <button
+    class="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 transition"
+    (click)="eliminar()"
+  >
+    Eliminar
+  </button>
 </div>
 <app-tabla
   [columnas]="columnas"

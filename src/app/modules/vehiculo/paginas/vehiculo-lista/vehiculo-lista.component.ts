@@ -13,7 +13,7 @@ import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 })
 export default class VehiculoListaComponent implements OnInit {
   private _vehiculoService = inject(VehiculoRepository);
-  private arrVehiculosEliminar = signal<Vehiculo[]>([]);
+  private arrVehiculosSeleccionados = signal<Vehiculo[]>([]);
   arrVehiculos = this._vehiculoService.arrVehiculosSignal;
   columnas = columnasVehiculoLista;
 
@@ -26,14 +26,14 @@ export default class VehiculoListaComponent implements OnInit {
   }
 
   onSeleccionVehiculos(vehiculos: Vehiculo[]) {
-    this.arrVehiculosEliminar.set(vehiculos);
+    this.arrVehiculosSeleccionados.set(vehiculos);
   }
 
   eliminar() {
-    this.arrVehiculosEliminar().map(vehiculo =>
+    this.arrVehiculosSeleccionados().map(vehiculo =>
       this._vehiculoService.eliminar(vehiculo.id).subscribe()
     );
     this.consultarInformacion();
-    this.arrVehiculosEliminar.set([]);
+    this.arrVehiculosSeleccionados.set([]);
   }
 }

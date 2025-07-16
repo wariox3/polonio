@@ -30,4 +30,8 @@ export class ConductorRepository {
   detalle(id: number) {
     return this._generalRepository.getById<Conductor>('transporte/conductor/', id);
   }
+
+  eliminar(id: number) {
+    return this._generalRepository.delete('transporte/conductor/', id);
+  }
 }
