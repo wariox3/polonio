@@ -9,7 +9,7 @@ export const columnasConductorLista: ColumnaTabla[] = [
   { clave: 'correo', nombre: 'Correo' },
   { clave: 'numero_licencia', nombre: 'Licencia' },
   { clave: 'categoria_licencia', nombre: 'Categoría' },
-  { clave: 'fecha_vence_licencia', nombre: 'Vence Licencia' },
+  { clave: 'fecha_vence_licencia', nombre: 'Vence licencia' },
   {
     clave: 'propio',
     nombre: 'Propio',

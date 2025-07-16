@@ -10,9 +10,9 @@ export const columnasVehiculoLista: ColumnaTabla[] = [
   { clave: 'ejes', nombre: 'Ejes' },
   { clave: 'celular', nombre: 'Celular' },
   { clave: 'poliza', nombre: 'Póliza' },
-  { clave: 'vence_poliza', nombre: 'Vence Póliza' },
+  { clave: 'vence_poliza', nombre: 'Vence póliza' },
   { clave: 'tecnicomecanica', nombre: 'Tecnomecánica' },
-  { clave: 'vence_tecnicomecanica', nombre: 'Vence Tecnomecánica' },
+  { clave: 'vence_tecnicomecanica', nombre: 'Vence tecnomecánica' },
   {
     clave: 'estado_revisado',
     nombre: 'Revisado',
