@@ -12,7 +12,7 @@ import { ConductorService } from '@app/modules/conductor/servicios/conductor.ser
 export default class ConductorListaComponent implements OnInit {
   private _conductorService = inject(ConductorService);
 
-  arrConductores = this._conductorService.arrConductoresSignal;
+  arrConductores = this._conductorService.arrConductorsSignal;
   ngOnInit(): void {
     this.consultarInformacion();
   }

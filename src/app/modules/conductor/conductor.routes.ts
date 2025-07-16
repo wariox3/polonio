@@ -24,7 +24,7 @@ const routes: Route[] = [
           import('./paginas/conductor-formulario/conductor-formulario.component'),
       },
       {
-        path: 'detalle',
+        path: 'detalle/:id',
         loadComponent: () => import('./paginas/conductor-detalle/conductor-detalle.component'),
       },
     ],
