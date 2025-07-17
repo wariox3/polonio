@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
 import { columnasVehiculoLista } from '../../mapeo/vehiculo-lista.mapeo';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
-import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
+import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { forkJoin } from 'rxjs';
 
 @Component({

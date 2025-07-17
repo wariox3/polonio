@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
-import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
+import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { CommonModule } from '@angular/common';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
 
