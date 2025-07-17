@@ -18,7 +18,7 @@ import { ContactoRepository } from '@app/common/repositories/contacto/contacto.r
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSeleccionar';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
 
 @Component({

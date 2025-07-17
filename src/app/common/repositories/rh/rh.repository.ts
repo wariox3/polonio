@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSeleccionar';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar';
 
 @Injectable({
   providedIn: 'root',

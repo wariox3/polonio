@@ -19,7 +19,7 @@ import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.co
 import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
 import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
 import { CiudadRepository } from '@app/common/repositories/ciudad/ciudad.repository';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuestaSeleccionar';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar';
 
 @Component({
   selector: 'app-guia-formulario',
