@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { ConductorRepository } from '../../repository/conductor.repository';
 import { columnasConductorLista } from '../../mapeo/conductor-lista.mapeo';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-conductor-lista',
@@ -33,10 +34,18 @@ export default class ConductorListaComponent implements OnInit {
   }
 
   eliminar() {
-    this.arrConductoresSeleccionados().map(conductor =>
-      this._conductorRepository.eliminar(conductor.id).subscribe()
+    const eliminaciones$ = this.arrConductoresSeleccionados().map(conductor =>
+      this._conductorRepository.eliminar(conductor.id)
     );
-    this.consultarInformacion();
-    this.arrConductoresSeleccionados.set([]);
+
+    forkJoin(eliminaciones$).subscribe({
+      next: () => {
+        this.consultarInformacion();
+        this.arrConductoresSeleccionados.set([]);
+      },
+      error: err => {
+        console.error('Error al eliminar conductor:', err);
+      },
+    });
   }
 }

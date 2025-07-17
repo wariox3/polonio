@@ -4,6 +4,7 @@ import { VehiculoRepository } from '../../repository/vehiculo.repository';
 import { columnasVehiculoLista } from '../../mapeo/vehiculo-lista.mapeo';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-vehiculo-lista',
@@ -31,10 +32,18 @@ export default class VehiculoListaComponent implements OnInit {
   }
 
   eliminar() {
-    this.arrVehiculosSeleccionados().map(vehiculo =>
-      this._vehiculoService.eliminar(vehiculo.id).subscribe()
+    const eliminaciones$ = this.arrVehiculosSeleccionados().map(vehiculo =>
+      this._vehiculoService.eliminar(vehiculo.id)
     );
-    this.consultarInformacion();
-    this.arrVehiculosSeleccionados.set([]);
+
+    forkJoin(eliminaciones$).subscribe({
+      next: () => {
+        this.consultarInformacion();
+        this.arrVehiculosSeleccionados.set([]);
+      },
+      error: err => {
+        console.error('Error al eliminar vehículos:', err);
+      },
+    });
   }
 }

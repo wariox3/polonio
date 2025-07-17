@@ -1,7 +1,6 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
 import { RespuestaApi } from '@app/core/interfaces/api.interface';
-import { tap } from 'rxjs';
 import { Conductor } from '../interfaces/conductor.interface';
 
 @Injectable({
@@ -9,7 +8,6 @@ import { Conductor } from '../interfaces/conductor.interface';
 })
 export class ConductorRepository {
   private _generalRepository = inject(GeneralRepository);
-  public arrConductorsSignal = signal<Conductor[]>([]);
 
   constructor() {}
 
