@@ -15,16 +15,17 @@ import { columnasConductorLista } from '../../mapeo/conductor-lista.mapeo';
 export default class ConductorListaComponent implements OnInit {
   private _conductorRepository = inject(ConductorRepository);
   private arrConductoresSeleccionados = signal<Conductor[]>([]);
-
+  public arrConductores = signal<Conductor[]>([]);
   columnas = columnasConductorLista;
 
-  arrConductores = this._conductorRepository.arrConductorsSignal;
   ngOnInit(): void {
     this.consultarInformacion();
   }
 
   consultarInformacion() {
-    this._conductorRepository.lista().subscribe();
+    this._conductorRepository
+      .lista()
+      .subscribe(respuesta => this.arrConductores.set(respuesta.results));
   }
 
   onSeleccionConductores(conductor: Conductor[]) {

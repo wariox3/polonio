@@ -27,6 +27,19 @@ export class SidebarComponent {
       activo: false,
     },
     {
+      nombre: 'Movimiento',
+      link: '/movimiento',
+      iconoClase: 'ki-filled ki-abstract-26',
+      activo: false,
+      tipoAcordion: true,
+      children: [
+        {
+          nombre: 'Guía',
+          link: '/movimiento/guia/lista',
+        },
+      ],
+    },
+    {
       nombre: 'Administrador',
       link: '/administracion',
       iconoClase: 'ki-filled ki-setting-2',

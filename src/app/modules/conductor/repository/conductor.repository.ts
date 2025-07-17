@@ -14,9 +14,7 @@ export class ConductorRepository {
   constructor() {}
 
   lista() {
-    return this._generalRepository
-      .get<RespuestaApi<Conductor>>('transporte/conductor/')
-      .pipe(tap(respuesta => this.arrConductorsSignal.set(respuesta.results)));
+    return this._generalRepository.get<RespuestaApi<Conductor>>('transporte/conductor/');
   }
 
   nuevo(data: Conductor) {

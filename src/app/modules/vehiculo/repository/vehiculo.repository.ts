@@ -9,14 +9,11 @@ import { Vehiculo } from '../interfaces/vehiculo.interfeces';
 })
 export class VehiculoRepository {
   private _generalRepository = inject(GeneralRepository);
-  public arrVehiculosSignal = signal<Vehiculo[]>([]);
 
   constructor() {}
 
   lista() {
-    return this._generalRepository
-      .get<RespuestaApi<Vehiculo>>('transporte/vehiculo/')
-      .pipe(tap(respuesta => this.arrVehiculosSignal.set(respuesta.results)));
+    return this._generalRepository.get<RespuestaApi<Vehiculo>>('transporte/vehiculo/');
   }
 
   nuevo(data: Vehiculo) {

@@ -14,7 +14,8 @@ import { Vehiculo } from '../../interfaces/vehiculo.interfeces';
 export default class VehiculoListaComponent implements OnInit {
   private _vehiculoService = inject(VehiculoRepository);
   private arrVehiculosSeleccionados = signal<Vehiculo[]>([]);
-  arrVehiculos = this._vehiculoService.arrVehiculosSignal;
+  public arrVehiculos = signal<Vehiculo[]>([]);
+
   columnas = columnasVehiculoLista;
 
   ngOnInit(): void {
@@ -22,7 +23,7 @@ export default class VehiculoListaComponent implements OnInit {
   }
 
   consultarInformacion() {
-    this._vehiculoService.lista().subscribe();
+    this._vehiculoService.lista().subscribe(respuesta => this.arrVehiculos.set(respuesta.results));
   }
 
   onSeleccionVehiculos(vehiculos: Vehiculo[]) {
