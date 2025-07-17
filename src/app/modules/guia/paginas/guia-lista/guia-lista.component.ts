@@ -3,11 +3,13 @@ import { Guia } from '../../interfaces/guia.interface';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { GuiaRepository } from '../../repository/guia.repository';
 import { columnasGuiaLista } from '../../mapeo/guia-lista.mapeo';
+import { forkJoin } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-guia-lista',
   standalone: true,
-  imports: [TablaComponent],
+  imports: [RouterModule, TablaComponent],
   templateUrl: './guia-lista.component.html',
   styleUrl: './guia-lista.component.scss',
 })
@@ -31,10 +33,18 @@ export default class GuiaListaComponent implements OnInit {
   }
 
   eliminar() {
-    this.arrGuiasSeleccionadas().map(vehiculo =>
-      this._guiaRepository.eliminar(vehiculo.id).subscribe()
+    const eliminaciones$ = this.arrGuiasSeleccionadas().map(guia =>
+      this._guiaRepository.eliminar(guia.id)
     );
-    this.consultarInformacion();
-    this.arrGuiasSeleccionadas.set([]);
+
+    forkJoin(eliminaciones$).subscribe({
+      next: () => {
+        this.consultarInformacion();
+        this.arrGuiasSeleccionadas.set([]);
+      },
+      error: err => {
+        console.error('Error al eliminar guia:', err);
+      },
+    });
   }
 }

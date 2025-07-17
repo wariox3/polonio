@@ -22,6 +22,34 @@ export class TransporteRepository {
     return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/linea/seleccionar/');
   }
 
+  operacionSeleccionar() {
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/operacion/seleccionar/');
+  }
+
+  despacho() {
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/despacho/');
+  }
+
+  servicioSeleccionar() {
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/servicio/seleccionar/');
+  }
+
+  productoSeleccionar() {
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/producto/seleccionar/');
+  }
+
+  empaqueSeleccionar() {
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/empaque/seleccionar/');
+  }
+
+  rutaSeleccionar() {
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/ruta/seleccionar/');
+  }
+
+  zonaSeleccionar() {
+    return this._generalRepository.get<RespuestaSeleccionar[]>('transporte/zona/seleccionar/');
+  }
+
   combustibleSeleccionar() {
     return this._generalRepository.get<RespuestaSeleccionar[]>(
       'transporte/combustible/seleccionar/'

@@ -9,6 +9,18 @@ export class ContactoRepository {
 
   constructor() {}
 
+  contacto() {
+    return this._generalRepository.get<any>('general/contacto/');
+  }
+
+  cliente() {
+    return this._generalRepository.get<any>('general/contacto/');
+  }
+
+  destinatario() {
+    return this._generalRepository.get<any>('general/contacto/');
+  }
+
   poseedor() {
     return this._generalRepository.get<any>('general/contacto/');
   }
