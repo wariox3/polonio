@@ -6,14 +6,137 @@
     Atrás
   </a>
 </div>
+
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Detalle vehículo - {{ guiaSignal().id }}</h3>
+    <h3 class="card-title">Detalle Guía - {{ guiaSignal().documento }}</h3>
   </div>
   <div class="card-body">
     <div class="overflow-x-auto">
       <table class="table-auto border border-gray-300 text-sm w-full">
-        <tbody></tbody>
+        <tbody>
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Fecha</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().fecha }}</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Documento</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().documento }}</td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Remitente</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().remitente_nombre }}</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Destinatario</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().destinatario_nombre }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Dirección</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().destinatario_direccion }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Teléfono</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().destinatario_telefono }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Correo</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().destinatario_correo }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Unidades</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().unidades }}</td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Peso</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().peso }} kg</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Volumen</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().volumen }} m³</td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Peso facturado</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().peso_facturado }} kg</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Valor declarado
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().declara | currency: '$' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Flete</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().flete | currency: '$' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Manejo</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().manejo | currency: '$' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Recaudo</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().recaudo | currency: '$' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Cobro entrega</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().cobro_entrega | currency: '$' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Ciudad origen</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().ciudad_origen__nombre }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Ciudad destino</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().ciudad_destino__nombre }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Servicio</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().servicio__nombre }}</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Producto</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().producto__nombre }}</td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Empaque</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().empaque__nombre }}</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Ruta</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().ruta__nombre }}</td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Zona</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().zona__nombre }}</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Liquidación</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().liquidacion }}</td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Fecha ingreso</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().fecha_ingreso }}</td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Fecha entrega</td>
+            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().fecha_entrega }}</td>
+          </tr>
+
+          <tr>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Comentario</td>
+            <td colspan="3" class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().comentario }}
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

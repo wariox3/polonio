@@ -199,7 +199,7 @@ export default class GuiaFormularioComponent implements OnInit {
       .nuevo(this.formularioGuia.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(respuesta => {
-        this._router.navigate(['administracion/guia/detalle/', respuesta.id]);
+        this._router.navigate(['movimiento/guia/detalle/', respuesta.id]);
       });
   }
 
@@ -208,17 +208,72 @@ export default class GuiaFormularioComponent implements OnInit {
       .editar(this.detalleID(), this.formularioGuia.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(respuesta => {
-        this._router.navigate(['administracion/guia/detalle/', respuesta.id]);
+        this._router.navigate(['movimiento/guia/detalle/', respuesta.id]);
       });
   }
 
   private poblarFormulario(data: Guia) {
-    this.formularioGuia.setValue({
-      id: data.id,
+    this.formularioGuia.patchValue({
+      fecha: data.fecha,
+      fecha_recogida: this.formatearFechaISO(data.fecha_recogida),
+      fecha_ingreso: this.formatearFechaISO(data.fecha_ingreso),
+      fecha_despacho: this.formatearFechaISO(data.fecha_despacho),
+      fecha_entrega: this.formatearFechaISO(data.fecha_entrega),
+      fecha_soporte: this.formatearFechaISO(data.fecha_soporte),
+      documento: data.documento,
+      numero_rndc: data.numero_rndc,
+      remitente_nombre: data.remitente_nombre,
+      destinatario_nombre: data.destinatario_nombre,
+      destinatario_direccion: data.destinatario_direccion,
+      destinatario_telefono: data.destinatario_telefono,
+      destinatario_correo: data.destinatario_correo,
+      unidades: data.unidades,
+      peso: data.peso,
+      volumen: data.volumen,
+      peso_facturado: data.peso_facturado,
+      declara: data.declara,
+      flete: data.flete,
+      manejo: data.manejo,
+      recaudo: data.recaudo,
+      cobro_entrega: data.cobro_entrega,
+      estado_recogido: data.estado_recogido,
+      estado_ingreso: data.estado_ingreso,
+      estado_embarcado: data.estado_embarcado,
+      estado_despachado: data.estado_despachado,
+      estado_entregado: data.estado_entregado,
+      estado_soporte: data.estado_soporte,
+      estado_novedad: data.estado_novedad,
+      estado_novedad_solucionada: data.estado_novedad_solucionada,
+      estado_rndc: data.estado_rndc,
+      contenido_verificado: data.contenido_verificado,
+      mercancia_peligrosa: data.mercancia_peligrosa,
+      requiere_cita: data.requiere_cita,
+      liquidacion: data.liquidacion,
+      comentario: data.comentario,
+      contacto: data.contacto,
+      cliente: data.cliente,
+      destinatario: data.destinatario,
+      operacion_ingreso: data.operacion_ingreso,
+      operacion_cargo: data.operacion_cargo,
+      ciudad_origen: data.ciudad_origen,
+      ciudad_destino: data.ciudad_destino,
+      despacho: data.despacho,
+      servicio: data.servicio,
+      producto: data.producto,
+      empaque: data.empaque,
+      ruta: data.ruta,
+      zona: data.zona,
     });
   }
 
   getControl(nombre: string): FormControl {
     return this.formularioGuia.get(nombre) as FormControl;
+  }
+
+  private formatearFechaISO(fecha: string | null | undefined): string | null {
+    if (!fecha) return null;
+
+    const fechaValida = new Date(fecha);
+    return isNaN(fechaValida.getTime()) ? null : fechaValida.toISOString().split('T')[0];
   }
 }

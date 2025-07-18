@@ -25,7 +25,15 @@ export default class GuiaListaComponent implements OnInit {
   }
 
   consultarInformacion() {
-    this._guiaRepository.lista().subscribe(respuesta => this.arrGuiasSignal.set(respuesta.results));
+    this._guiaRepository.lista().subscribe(respuesta => {
+      const guias = respuesta.results.map((guia: Guia) => {
+        return {
+          ...guia,
+          total: guia.flete + guia.manejo,
+        };
+      });
+      this.arrGuiasSignal.set(guias);
+    });
   }
 
   onSeleccionGuias(vehiculos: Guia[]) {
