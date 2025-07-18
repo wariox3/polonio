@@ -217,101 +217,187 @@
         <div>
           <app-label [required]="true">Contacto</app-label>
           <app-select-search
-            [options]="arrContacto()"
             [control]="getControl('contacto')"
             [label]="'nombre_corto'"
             [errors]="{
               required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('contacto__nombre').value,
+              limit: 10,
             }"
           ></app-select-search>
         </div>
         <div>
           <app-label [required]="true">Cliente</app-label>
           <app-select-search
-            [options]="arrContacto()"
             [control]="getControl('cliente')"
             [label]="'nombre_corto'"
             [errors]="{
               required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('cliente__nombre_corto').value,
+              limit: 10,
             }"
           ></app-select-search>
         </div>
         <div>
           <app-label [required]="true">Destinatario</app-label>
           <app-select-search
-            [options]="arrContacto()"
             [control]="getControl('destinatario')"
             [label]="'nombre_corto'"
             [errors]="{
               required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('destinatario__nombre').value,
+              limit: 10,
             }"
           ></app-select-search>
         </div>
         <div>
           <app-label [required]="true">Ciudad origen</app-label>
           <app-select-search
-            [options]="arrCiudades()"
             [control]="getControl('ciudad_origen')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('ciudad_origen__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
 
         <div>
           <app-label [required]="true">Ciudad destino</app-label>
           <app-select-search
-            [options]="arrCiudades()"
             [control]="getControl('ciudad_destino')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('ciudad_destino__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
         <div>
-          <app-label  [required]="true">Servicio</app-label>
-
+          <app-label [required]="true">Servicio</app-label>
           <app-select-search
-            [options]="arrServicio()"
             [control]="getControl('servicio')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/servicio/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('servicio__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
         <div>
-          <app-label  [required]="true">Producto</app-label>
+          <app-label [required]="true">Producto</app-label>
           <app-select-search
-            [options]="arrProducto()"
             [control]="getControl('producto')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/producto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('producto__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
 
         <div>
-          <app-label  [required]="true">Empaque</app-label>
+          <app-label [required]="true">Empaque</app-label>
           <app-select-search
-            [options]="arrEmpaque()"
             [control]="getControl('empaque')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/empaque/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('empaque__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
 
         <div>
-          <app-label  [required]="true">Ruta</app-label>
+          <app-label [required]="true">Ruta</app-label>
           <app-select-search
-            [options]="arrRuta()"
             [control]="getControl('ruta')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/ruta/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('ruta__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
         <div>
-          <app-label  [required]="true">Zona</app-label>
+          <app-label [required]="true">Zona</app-label>
           <app-select-search
-            [options]="arrZona()"
             [control]="getControl('zona')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/zona/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('zona__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
         <div>
           <app-label [required]="true">Operación cargo</app-label>
           <app-select-search
-            [options]="arrOperacionCargo()"
             [control]="getControl('operacion_cargo')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/operacion/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('operacion_cargo__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
         <div>
           <app-label [required]="true">Operación ingreso</app-label>
           <app-select-search
-            [options]="arrOperacionIngreso()"
             [control]="getControl('operacion_ingreso')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/operacion/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('operacion_ingreso__nombre').value,
+              limit: 10,
+            }"
           ></app-select-search>
         </div>
         <div class="flex flex-col gap-2">

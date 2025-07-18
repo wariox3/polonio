@@ -76,7 +76,12 @@ export default class GuiaDetalleComponent implements OnInit {
     empaque__nombre: '',
     producto__nombre: '',
     ruta__nombre: '',
-    zona__nombre: ''
+    zona__nombre: '',
+    cliente__nombre_corto: '',
+    destinatario__nombre_corto: '',
+    destinatario__correo: '',
+    destinatario__direccion: '',
+    destinatario__telefono: '',
   });
   ngOnInit(): void {
     this.consultarInformacion();

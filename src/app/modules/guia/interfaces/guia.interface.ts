@@ -2,11 +2,16 @@ export interface Guia {
   id: number;
   fecha: string;
   destinatario: number;
+  destinatario__nombre_corto: string;
+  destinatario__correo: string;
+  destinatario__direccion: string;
+  destinatario__telefono: string;
   ciudad_destino: number;
   ciudad_destino__nombre: string;
   ciudad_origen: number;
   ciudad_origen__nombre: string;
   cliente: number;
+  cliente__nombre_corto: string;
   contacto: number;
   contacto__nombre_corto: string;
   empaque: number;

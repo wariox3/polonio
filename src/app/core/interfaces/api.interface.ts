@@ -11,5 +11,5 @@ export interface RespuestaApi<T> {
 }
 
 export interface QueryParams {
-  [key: string]: any;
+  [key: string]: string | number;
 }

@@ -9,7 +9,7 @@
 
 <div class="card">
   <div class="card-header">
-    <h3 class="card-title">Detalle Guía - {{ guiaSignal().documento }}</h3>
+    <h3 class="card-title">Detalle Guía - {{ guiaSignal().id }}</h3>
   </div>
   <div class="card-body">
     <div class="overflow-x-auto">
@@ -27,25 +27,25 @@
             <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().remitente_nombre }}</td>
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Destinatario</td>
             <td class="px-4 py-3 border-r border-gray-300">
-              {{ guiaSignal().destinatario_nombre }}
+              {{ guiaSignal().destinatario__nombre_corto }}
             </td>
           </tr>
 
           <tr class="border-b border-gray-300">
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Dirección</td>
             <td class="px-4 py-3 border-r border-gray-300">
-              {{ guiaSignal().destinatario_direccion }}
+              {{ guiaSignal().destinatario__direccion }}
             </td>
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Teléfono</td>
             <td class="px-4 py-3 border-r border-gray-300">
-              {{ guiaSignal().destinatario_telefono }}
+              {{ guiaSignal().destinatario__telefono }}
             </td>
           </tr>
 
           <tr class="border-b border-gray-300">
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Correo</td>
             <td class="px-4 py-3 border-r border-gray-300">
-              {{ guiaSignal().destinatario_correo }}
+              {{ guiaSignal().destinatario__correo }}
             </td>
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Unidades</td>
             <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().unidades }}</td>
@@ -125,11 +125,97 @@
 
           <tr class="border-b border-gray-300">
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Fecha ingreso</td>
-            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().fecha_ingreso }}</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().fecha_ingreso | date: 'yyyy-MM-dd' }}
+            </td>
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Fecha entrega</td>
-            <td class="px-4 py-3 border-r border-gray-300">{{ guiaSignal().fecha_entrega }}</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().fecha_entrega | date: 'yyyy-MM-dd' }}
+            </td>
           </tr>
 
+          <!-- Campos booleanos -->
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Contenido verificado
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().contenido_verificado ? 'SI' : 'NO' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Mercancía peligrosa
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().mercancia_peligrosa ? 'SI' : 'NO' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Requiere cita</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().requiere_cita ? 'SI' : 'NO' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Estado recogido
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_recogido ? 'SI' : 'NO' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Estado ingreso</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_ingreso ? 'SI' : 'NO' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Estado embarcado
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_embarcado ? 'SI' : 'NO' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Estado despachado
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_despachado ? 'SI' : 'NO' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Estado entregado
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_entregado ? 'SI' : 'NO' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Estado soporte</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_soporte ? 'SI' : 'NO' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Estado novedad</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_novedad ? 'SI' : 'NO' }}
+            </td>
+          </tr>
+
+          <tr class="border-b border-gray-300">
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">
+              Novedad solucionada
+            </td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_novedad_solucionada ? 'SI' : 'NO' }}
+            </td>
+            <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Estado RNDC</td>
+            <td class="px-4 py-3 border-r border-gray-300">
+              {{ guiaSignal().estado_rndc ? 'SI' : 'NO' }}
+            </td>
+          </tr>
+
+          <!-- Comentario -->
           <tr>
             <td class="bg-gray-100 font-bold px-4 py-3 border-r border-gray-300">Comentario</td>
             <td colspan="3" class="px-4 py-3 border-r border-gray-300">

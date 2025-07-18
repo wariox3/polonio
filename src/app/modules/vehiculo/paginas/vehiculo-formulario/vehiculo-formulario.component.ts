@@ -8,18 +8,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
-import { InputComponent } from '@app/common/components/ui/form/input/input.component';
-import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { combineLatest, filter, Subject, switchMap, takeUntil } from 'rxjs';
-import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
-import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
+import { InputComponent } from '@app/common/components/ui/form/input/input.component';
+import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
-import { Vehiculo } from '../../interfaces/vehiculo.interface';
+import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
+import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
+import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar';
+import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 
 @Component({
   selector: 'app-vehiculo-formulario',
@@ -58,7 +58,6 @@ export default class VehiculoFormularioComponent implements OnInit {
   public formularioVehiculo: FormGroup;
 
   ngOnInit() {
-    this.consultarInformacion();
     this.inicializarFormulario();
     this.consultardetalle();
   }
@@ -87,53 +86,24 @@ export default class VehiculoFormularioComponent implements OnInit {
       estado_revisado: [false],
       comentario: ['', [Validators.maxLength(500), cambiarVacioPorNulo.validar]],
       poseedor: [null, Validators.required],
+      poseedor__nombre_corto: [null],
       propietario: [null, Validators.required],
+      propietario__nombre_corto: [null],
       aseguradora: [null, Validators.required],
+      aseguradora__nombre_corto: [null],
       color: [null, Validators.required],
+      color__nombre: [null],
       marca: [null, Validators.required],
+      marca__nombre: [null],
       linea: [null, Validators.required],
+      linea__nombre: [null],
       combustible: [null, Validators.required],
+      combustible__nombre: [null],
       carroceria: [null, Validators.required],
+      carroceria__nombre: [null],
       configuracion: [null, Validators.required],
+      configuracion__nombre: [null],
     });
-  }
-
-  consultarInformacion() {
-    combineLatest([
-      this._transporteRepository.coloresSeleccionar(),
-      this._transporteRepository.marcaSeleccionar(),
-      this._transporteRepository.combustibleSeleccionar(),
-      this._transporteRepository.lineaSeleccionar(),
-      this._transporteRepository.carroceriaSeleccionar(),
-      this._transporteRepository.vehiculoConfiguracionSeleccionar(),
-      this._contactoRepository.aseguradora(),
-      this._contactoRepository.poseedor(),
-      this._contactoRepository.propietario(),
-    ])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        ([
-          coloresSeleccionar,
-          marcaSeleccionar,
-          combustibleSeleccionar,
-          lineaSeleccionar,
-          carroceriaSeleccionar,
-          vehiculoConfiguracionSeleccionar,
-          aseguradora,
-          poseedor,
-          propietario,
-        ]) => {
-          this.arrColores.set(coloresSeleccionar);
-          this.arrMarcas.set(marcaSeleccionar);
-          this.arrLinea.set(lineaSeleccionar);
-          this.arrCombustible.set(combustibleSeleccionar);
-          this.arrCarroceria.set(carroceriaSeleccionar);
-          this.arrVehiculoConfiguracion.set(vehiculoConfiguracionSeleccionar);
-          this.arrAseguradora.set(aseguradora.results);
-          this.arrPoseedor.set(poseedor.results);
-          this.arrPropietario.set(propietario.results);
-        }
-      );
   }
 
   consultardetalle() {
@@ -160,6 +130,12 @@ export default class VehiculoFormularioComponent implements OnInit {
       }
     } else {
       this.formularioVehiculo.markAllAsTouched();
+      Object.keys(this.formularioVehiculo.controls).forEach(campo => {
+        const control = this.formularioVehiculo.get(campo);
+        if (control && control.invalid) {
+          console.log(`Error en el campo "${campo}":`, control.errors);
+        }
+      });
     }
   }
 
@@ -204,14 +180,23 @@ export default class VehiculoFormularioComponent implements OnInit {
       estado_revisado: data.estado_revisado,
       comentario: data.comentario,
       poseedor: data.poseedor,
+      poseedor__nombre_corto: data.poseedor__nombre_corto,
       propietario: data.propietario,
+      propietario__nombre_corto: data.propietario__nombre_corto,
       aseguradora: data.aseguradora,
+      aseguradora__nombre_corto: data.aseguradora__nombre_corto,
       color: data.color,
+      color__nombre: data.color__nombre,
       marca: data.marca,
+      marca__nombre: data.marca__nombre,
       linea: data.linea,
+      linea__nombre: data.linea__nombre,
       combustible: data.combustible,
+      combustible__nombre: data.combustible__nombre,
       carroceria: data.carroceria,
+      carroceria__nombre: data.carroceria__nombre,
       configuracion: data.configuracion,
+      configuracion__nombre: data.configuracion__nombre,
     });
   }
 

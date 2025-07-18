@@ -1,11 +1,15 @@
 <ng-select
-  [items]="options"
+  [items]="options()"
   [multiple]="multiSelect"
   [bindLabel]="label"
   [bindValue]="value"
-  (change)="emitirSeleccion()"
   [notFoundText]="notFoundText"
+  [loading]="loading()"
+  [loadingText]="'Buscando...'"
   [placeholder]="placeholder"
+  (keyup)="buscarPorValor($event)"
+  (clear)="busquedaInicial()"
+  (focus)="busquedaInicial()"
   [formControl]="control"
   class="border border-gray-300 rounded-lg focus:border-primary hover:border-gray-400 transition-colors"
 >

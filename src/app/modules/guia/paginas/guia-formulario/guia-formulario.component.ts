@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
@@ -8,18 +9,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { combineLatest, filter, Subject, switchMap, takeUntil } from 'rxjs';
-import { Guia } from '../../interfaces/guia.interface';
-import { GuiaRepository } from '../../repository/guia.repository';
-import { CommonModule } from '@angular/common';
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
-import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
-import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 import { CiudadRepository } from '@app/common/repositories/ciudad/ciudad.repository';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar';
+import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
+import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
+import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { Guia } from '../../interfaces/guia.interface';
+import { GuiaRepository } from '../../repository/guia.repository';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -61,7 +61,6 @@ export default class GuiaFormularioComponent implements OnInit {
   public arrCiudades = signal<RespuestaSeleccionar[]>([]);
 
   ngOnInit() {
-    this.consultarInformacion();
     this.inicializarFormulario();
     this.consultardetalle();
   }
@@ -107,57 +106,31 @@ export default class GuiaFormularioComponent implements OnInit {
       liquidacion: [null, [Validators.required, Validators.maxLength(1)]],
       comentario: [null, [Validators.maxLength(500)]],
       contacto: [null, Validators.required],
+      contacto__nombre: [null],
       cliente: [null, Validators.required],
+      cliente__nombre_corto: [null],
       destinatario: [null, Validators.required],
+      destinatario__nombre: [null],
       operacion_ingreso: [null, Validators.required],
+      operacion_ingreso__nombre: [null],
       operacion_cargo: [null, Validators.required],
+      operacion_cargo__nombre: [null],
       ciudad_origen: [null, Validators.required],
+      ciudad_origen__nombre: [null],
       ciudad_destino: [null, Validators.required],
+      ciudad_destino__nombre: [null],
       despacho: [null],
       servicio: [null, Validators.required],
+      servicio__nombre: [null],
       producto: [null, Validators.required],
+      producto__nombre: [null],
       empaque: [null, Validators.required],
+      empaque__nombre: [null],
       ruta: [null],
+      ruta__nombre: [null],
       zona: [null],
+      zona__nombre: [null],
     });
-  }
-
-  consultarInformacion() {
-    combineLatest([
-      this._contactoRepository.cliente(),
-      this._ciudadRepository.ciudadSeleccionar(),
-      this._transporteRepository.operacionSeleccionar(),
-      this._transporteRepository.servicioSeleccionar(),
-      this._transporteRepository.productoSeleccionar(),
-      this._transporteRepository.empaqueSeleccionar(),
-      this._transporteRepository.rutaSeleccionar(),
-      this._transporteRepository.zonaSeleccionar(),
-    ])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        ([
-          cliente,
-          ciudadSeleccionar,
-          operacionSeleccionar,
-          servicioSeleccionar,
-          productoSeleccionar,
-          empaqueSeleccionar,
-          rutaSeleccionar,
-          zonaSeleccionar,
-        ]) => {
-          this.arrCliente.set(cliente.results);
-          this.arrContacto.set(cliente.results);
-          this.arrDestinatario.set(cliente.results);
-          this.arrCiudades.set(ciudadSeleccionar);
-          this.arrOperacionIngreso.set(operacionSeleccionar);
-          this.arrOperacionCargo.set(operacionSeleccionar);
-          this.arrServicio.set(servicioSeleccionar);
-          this.arrProducto.set(productoSeleccionar);
-          this.arrEmpaque.set(empaqueSeleccionar);
-          this.arrRuta.set(rutaSeleccionar);
-          this.arrZona.set(zonaSeleccionar);
-        }
-      );
   }
 
   consultardetalle() {
@@ -223,10 +196,10 @@ export default class GuiaFormularioComponent implements OnInit {
       documento: data.documento,
       numero_rndc: data.numero_rndc,
       remitente_nombre: data.remitente_nombre,
-      destinatario_nombre: data.destinatario_nombre,
-      destinatario_direccion: data.destinatario_direccion,
-      destinatario_telefono: data.destinatario_telefono,
-      destinatario_correo: data.destinatario_correo,
+      destinatario_nombre: data.destinatario__nombre_corto,
+      destinatario_direccion: data.destinatario__direccion,
+      destinatario_telefono: data.destinatario__telefono,
+      destinatario_correo: data.destinatario__correo,
       unidades: data.unidades,
       peso: data.peso,
       volumen: data.volumen,
@@ -251,18 +224,30 @@ export default class GuiaFormularioComponent implements OnInit {
       liquidacion: data.liquidacion,
       comentario: data.comentario,
       contacto: data.contacto,
+      contacto__nombre: data.contacto,
       cliente: data.cliente,
+      cliente__nombre_corto: data.cliente__nombre_corto,
       destinatario: data.destinatario,
+      destinatario__nombre: data.destinatario__nombre_corto,
       operacion_ingreso: data.operacion_ingreso,
+      operacion_ingreso__nombre: data.operacion_ingreso__nombre,
       operacion_cargo: data.operacion_cargo,
+      operacion_cargo__nombre: data.operacion_cargo__nombre,
       ciudad_origen: data.ciudad_origen,
+      ciudad_origen__nombre: data.ciudad_origen__nombre,
       ciudad_destino: data.ciudad_destino,
+      ciudad_destino__nombre: data.ciudad_destino__nombre,
       despacho: data.despacho,
       servicio: data.servicio,
+      servicio__nombre: data.servicio__nombre,
       producto: data.producto,
+      producto__nombre: data.producto__nombre,
       empaque: data.empaque,
+      empaque__nombre: data.empaque__nombre,
       ruta: data.ruta,
+      ruta__nombre: data.ruta__nombre,
       zona: data.zona,
+      zona__nombre: data.zona__nombre,
     });
   }
 

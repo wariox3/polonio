@@ -17,7 +17,7 @@ import { IdentificacionRepository } from '@app/common/repositories/identificacio
 import { RhRepository } from '@app/common/repositories/rh/rh.repository';
 import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
-import { combineLatest, filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Conductor } from '../../interfaces/conductor.interface';
 import { ConductorRepository } from '../../repository/conductor.repository';
 
@@ -57,7 +57,6 @@ export default class ConductorFormularioComponent implements OnInit {
   public formularioConductor: FormGroup;
 
   ngOnInit() {
-    this.consultarInformacion();
     this.inicializarFormulario();
     this.consultardetalle();
   }
@@ -89,23 +88,12 @@ export default class ConductorFormularioComponent implements OnInit {
       estado_revisado: [false],
       comentario: ['', [Validators.maxLength(500), cambiarVacioPorNulo.validar]],
       identificacion: [null, [Validators.required]],
+      identificacion__nombre: [null],
       ciudad: [null, [Validators.required]],
+      ciudad__nombre: [null],
       rh: [null, [Validators.required]],
+      rh__nombre: [null],
     });
-  }
-
-  consultarInformacion() {
-    combineLatest([
-      this._rhService.rhSeleccionar(),
-      this._ciudadService.ciudadSeleccionar(),
-      this._identificacionRepository.identificacionSeleccionar(),
-    ])
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(([rhSeleccionar, ciudadSeleccionar, identificacionSeleccionar]) => {
-        this.arrRh.set(rhSeleccionar);
-        this.arrCiudad.set(ciudadSeleccionar);
-        this.arrIdentificacion.set(identificacionSeleccionar);
-      });
   }
 
   onSubmit() {
@@ -184,8 +172,11 @@ export default class ConductorFormularioComponent implements OnInit {
       estado_revisado: data.estado_revisado,
       comentario: data.comentario,
       identificacion: data.identificacion,
+      identificacion__nombre: data.identificacion__nombre,
       ciudad: data.ciudad,
+      ciudad__nombre: data.ciudad__nombre,
       rh: data.rh,
+      rh__nombre: data.rh__nombre,
     });
   }
 
