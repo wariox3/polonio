@@ -130,12 +130,6 @@ export default class VehiculoFormularioComponent implements OnInit {
       }
     } else {
       this.formularioVehiculo.markAllAsTouched();
-      Object.keys(this.formularioVehiculo.controls).forEach(campo => {
-        const control = this.formularioVehiculo.get(campo);
-        if (control && control.invalid) {
-          console.log(`Error en el campo "${campo}":`, control.errors);
-        }
-      });
     }
   }
 

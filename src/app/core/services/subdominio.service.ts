@@ -23,7 +23,7 @@ export class SubdominioService {
    * @returns Observable con la URL completa del subdominio
    */
   getSubdominioUrl(): Observable<string> {
-    return of(`${this.API_SUBDOMAIN.replace('subdominio', this.subdominio || '')}`);
+    return of(`${this.API_SUBDOMAIN.replace('subdomain', this.subdominio || '')}`);
   }
 
   /**
