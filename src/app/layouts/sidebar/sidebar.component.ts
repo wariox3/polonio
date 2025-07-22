@@ -32,6 +32,7 @@ export class SidebarComponent {
       iconoClase: 'ki-filled ki-abstract-26',
       activo: false,
       tipoAcordion: true,
+      abierto: true,
       children: [
         {
           nombre: 'Guía',
