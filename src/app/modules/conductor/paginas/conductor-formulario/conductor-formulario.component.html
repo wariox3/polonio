@@ -1,18 +1,8 @@
 <form [formGroup]="formularioConductor" (ngSubmit)="onSubmit()">
   <div class="flex gap-2 mb-4">
-    <a
-      class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
-      routerLink="/administracion/conductor/lista"
-    >
-      Atrás
-    </a>
+    <a class="btn btn-secondary" routerLink="/administracion/conductor/lista"> Atrás </a>
 
-    <button
-      type="submit"
-      class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
-    >
-      Guardar
-    </button>
+    <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 
   <div class="card">

@@ -1,16 +1,6 @@
-<div class="flex justify-end mb-4">
-  <a
-    class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition"
-    routerLink="/administracion/vehiculo/nuevo"
-  >
-    Nuevo
-  </a>
-  <button
-    class="bg-red-600 text-white px-4 py-2 rounded-lg shadow hover:bg-red-700 transition"
-    (click)="eliminar()"
-  >
-    Eliminar
-  </button>
+<div class="flex justify-end mb-4 gap-2">
+  <a class="btn btn-primary" routerLink="/administracion/vehiculo/nuevo"> Nuevo </a>
+  <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
 </div>
 
 <app-tabla
