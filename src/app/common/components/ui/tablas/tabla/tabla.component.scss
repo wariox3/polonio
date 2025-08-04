@@ -1,3 +1,8 @@
+/* Aplicar la fuente Geist al componente de tabla */
+:host {
+  font-family: "Geist", "Geist Fallback", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* Estilos para scrollbar delgada y discreta */
 .custom-scrollbar {
   &::-webkit-scrollbar {
