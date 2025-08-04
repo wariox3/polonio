@@ -13,5 +13,4 @@ export class CiudadRepository {
   ciudadSeleccionar() {
     return this._generalRepository.get<RespuestaSeleccionar[]>('general/ciudad/seleccionar/');
   }
-
 }

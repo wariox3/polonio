@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { QueryParams, RespuestaApi } from '../interfaces/api.interface';
+import { QueryParams } from '../interfaces/api.interface';
 import { SubdominioService } from '../services/subdominio.service';
 import { HttpBaseRepository } from './http-base.repository';
 

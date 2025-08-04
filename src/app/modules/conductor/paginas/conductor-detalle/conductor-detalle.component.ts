@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Conductor } from '../../interfaces/conductor.interface';
@@ -11,7 +11,7 @@ import { ConductorRepository } from '../../repository/conductor.repository';
   imports: [CommonModule, RouterModule],
   templateUrl: './conductor-detalle.component.html',
 })
-export default class conductorDetalleComponent implements OnInit {
+export default class conductorDetalleComponent implements OnInit, OnDestroy {
   private _conductorRepository = inject(ConductorRepository);
   private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
@@ -52,6 +52,11 @@ export default class conductorDetalleComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultarInformacion();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   consultarInformacion() {
