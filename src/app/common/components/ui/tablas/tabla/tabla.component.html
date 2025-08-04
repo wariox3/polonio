@@ -31,7 +31,7 @@
             [checked]="seleccionTodos"
             [indeterminate]="estadoIndeterminado"
             (change)="alternarSeleccionTodos()"
-            class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out rounded border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out rounded border-gray-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             [disabled]="!datos || datos.length === 0"
           />
         </th>
@@ -78,7 +78,7 @@
         <!-- Acciones -->
         <td *ngIf="mostrarAcciones" class="px-6 py-4 whitespace-nowrap text-center w-[60px]">
           <a
-            class="inline-flex items-center justify-center p-2 rounded-full text-blue-600 hover:text-blue-800 hover:bg-blue-100 transition-colors duration-150"
+            class="inline-flex items-center justify-center p-2 rounded-full hover:text-blue-800 hover:bg-blue-100 transition-colors duration-150"
             [routerLink]="[rutas.editar, item[claveCheckbox]]"
             title="Editar"
           >
@@ -88,7 +88,7 @@
 
         <td *ngIf="mostrarAcciones" class="px-6 py-4 whitespace-nowrap text-center">
           <a
-            class="inline-flex items-center justify-center p-2 rounded-full text-indigo-600 hover:text-indigo-800 hover:bg-indigo-100 transition-colors duration-150"
+            class="inline-flex items-center justify-center p-2 rounded-full hover:text-indigo-800 hover:bg-indigo-100 transition-colors duration-150"
             [routerLink]="[rutas.detalle, item[claveCheckbox]]"
             title="Ver detalles"
           >
@@ -102,34 +102,10 @@
             type="checkbox"
             [checked]="estaSeleccionado(item)"
             (change)="alternarSeleccion(item, $event)"
-            class="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out rounded border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            class="form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out rounded border-gray-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           />
         </td>
       </tr>
     </tbody>
   </table>
-</div>
-
-<!-- Resumen de selección con badge -->
-<div *ngIf="registrosSeleccionados.length > 0" class="mt-3 flex items-center">
-  <span
-    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-4 w-4 mr-1"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-      />
-    </svg>
-    {{ registrosSeleccionados.length }}
-    {{ registrosSeleccionados.length === 1 ? 'registro' : 'registros' }} seleccionado(s)
-  </span>
 </div>
