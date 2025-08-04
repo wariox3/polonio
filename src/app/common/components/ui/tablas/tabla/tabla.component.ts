@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './tabla.component.html',
+  styleUrls: ['./tabla.component.scss'],
 })
 export class TablaComponent {
   // Propiedades de entrada
