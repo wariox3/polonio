@@ -79,9 +79,34 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(logout),
         tap(() => {
-          this.cookieService.delete(LOCALSTORAGE_KEYS.USER);
-          this.cookieService.delete(LOCALSTORAGE_KEYS.AUTH_TOKEN);
-          this.cookieService.delete(LOCALSTORAGE_KEYS.REFRESH_TOKEN);
+          // Obtener las mismas opciones de dominio y path que se usaron al crear las cookies
+          const cookieOptions = {
+            path: '/',
+            domain: this.cookieService.getDomainForCookies(),
+          };
+
+          // Eliminar cookies con las opciones correctas
+          this.cookieService.delete(
+            LOCALSTORAGE_KEYS.USER,
+            cookieOptions.path,
+            cookieOptions.domain
+          );
+          this.cookieService.delete(
+            LOCALSTORAGE_KEYS.AUTH_TOKEN,
+            cookieOptions.path,
+            cookieOptions.domain
+          );
+          this.cookieService.delete(
+            LOCALSTORAGE_KEYS.REFRESH_TOKEN,
+            cookieOptions.path,
+            cookieOptions.domain
+          );
+          this.cookieService.delete(
+            LOCALSTORAGE_KEYS.CONTENEDOR,
+            cookieOptions.path,
+            cookieOptions.domain
+          );
+
           this.router.navigate(['/auth/login']);
         })
       ),

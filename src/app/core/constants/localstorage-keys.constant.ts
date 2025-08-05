@@ -3,4 +3,5 @@ export const LOCALSTORAGE_KEYS = {
   REFRESH_TOKEN: 'RefreshToken',
   USER: 'usuario',
   SUBDOMAIN: 'subdomain',
+  CONTENEDOR: 'contenedor',
 };

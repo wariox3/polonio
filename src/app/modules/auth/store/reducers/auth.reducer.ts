@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { getCookie } from 'typescript-cookie';
 import { Usuario } from '../../interfaces/usuario.interface';
 import { loginRequest, loginSuccess, loginFailure, logout } from '../actions/login.action';
+import { LOCALSTORAGE_KEYS } from '@app/core/constants/localstorage-keys.constant';
 
 // Definir la interfaz del estado de autenticación
 export interface AuthState {
@@ -12,7 +13,7 @@ export interface AuthState {
 }
 
 // Estado inicial con rehidratación desde cookie
-const userCookie: string | undefined = getCookie('usuario');
+const userCookie: string | undefined = getCookie(LOCALSTORAGE_KEYS.USER);
 
 // Estado inicial por defecto
 const defaultState: AuthState = {

@@ -26,19 +26,18 @@
             </span>
           </div>
         </div>
-        <span class="badge badge-xs badge-primary badge-outline"> Pro </span>
       </div>
       <div class="menu-separator"></div>
       <div class="flex flex-col">
         @for (item of menuItems; track $index) {
-          <div class="menu-item">
+          <a class="menu-item" [href]="item.link" [target]="item.newWindow ? '_blank' : '_self'">
             <button class="menu-link">
               <span class="menu-icon">
                 <i class="ki-filled" [ngClass]="item.icono"></i>
               </span>
               <span class="menu-title"> {{ item.titulo }} </span>
             </button>
-          </div>
+          </a>
         }
       </div>
       @if (menuItems.length) {

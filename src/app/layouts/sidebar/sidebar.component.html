@@ -78,7 +78,12 @@
               </div>
             </div>
           } @else {
-            <div class="menu-item" data-menu-item-toggle="accordion" data-menu-item-trigger="click">
+            <div
+              class="menu-item menu-item-accordion"
+              data-menu-item-toggle="accordion"
+              data-menu-item-trigger="click"
+              [ngClass]="{ show: menu.abierto }"
+            >
               <div
                 class="menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] pl-[10px] pr-[10px] py-[6px]"
                 tabindex="0"

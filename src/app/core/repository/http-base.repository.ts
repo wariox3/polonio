@@ -57,7 +57,7 @@ export class HttpBaseRepository {
   }
 
   // Método DELETE
-  public delete(endpoint: string, data: any): Observable<any> {
+  public delete(endpoint: string, data?: any): Observable<any> {
     const url = this.buildUrl(endpoint);
     return this.httpClient.delete(url, data);
   }

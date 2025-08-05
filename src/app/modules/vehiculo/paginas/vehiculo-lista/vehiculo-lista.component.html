@@ -1,0 +1,14 @@
+<div class="flex justify-end mb-4 gap-2">
+  <a class="btn btn-primary" routerLink="/administracion/vehiculo/nuevo"> Nuevo </a>
+  <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+</div>
+
+<app-tabla
+  [columnas]="columnas"
+  [datos]="arrVehiculos()"
+  [rutas]="{
+    editar: '/administracion/vehiculo/editar',
+    detalle: '/administracion/vehiculo/detalle',
+  }"
+  (seleccionCambiada)="onSeleccionVehiculos($event)"
+></app-tabla>

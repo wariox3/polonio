@@ -1,0 +1,21 @@
+<ng-select
+  [items]="options()"
+  [multiple]="multiSelect"
+  [bindLabel]="label"
+  [bindValue]="value"
+  [notFoundText]="notFoundText"
+  [loading]="loading()"
+  [loadingText]="'Buscando...'"
+  [placeholder]="placeholder"
+  (keyup)="buscarPorValor($event)"
+  (clear)="busquedaInicial()"
+  (focus)="busquedaInicial()"
+  [formControl]="control"
+  class="border border-gray-300 rounded-lg focus:border-primary hover:border-gray-400 transition-colors"
+>
+</ng-select>
+@if (error) {
+  <p class="text-sm text-red-600 mt-1">
+    {{ error }}
+  </p>
+}

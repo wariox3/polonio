@@ -1,0 +1,78 @@
+<div class="card min-w-full">
+  <div class="card-header">
+    <h3 class="card-title">Contenedores</h3>
+
+    <!-- <app-advanced-button routerLink="/contenedor/nuevo" text="Nuevo"></app-advanced-button> -->
+  </div>
+  <div class="card-table scrollable-x-auto">
+    <table class="table align-middle text-gray-700 font-medium text-sm">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th></th>
+          <th>Plan</th>
+          <th>Usuarios</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (contenedor of contenedores(); let idx = $index; track idx) {
+          <tr>
+            <td class="flex items-center">
+              <ng-container *ngIf="contenedor.imagen">
+                <img
+                  [src]="contenedor.imagen"
+                  [alt]="'Error al cargar logo'"
+                  width="120"
+                  height="120"
+                  style="min-width: 120px"
+                  class="img-thumbnail border border-1 rounded-lg"
+                />
+              </ng-container>
+
+              <div class="flex flex-col items-start ml-4">
+                <span class="text-dark font-bold">
+                  {{ contenedor.nombre }}
+                </span>
+                <!-- <span class="text-slate-400 mb-3 text-xs"
+                  >{{ contenedor.subdominio }}{{ dominioApp }}</span
+                > -->
+                <div>
+                  <span class="badge badge-outline badge-xs">{{ contenedor.rol }}</span>
+                  @if (contenedor.acceso_restringido) {
+                    <span
+                      class="inline-block bg-red-50 text-red-700 px-2 py-1 rounded text-xs font-bold whitespace-normal text-left w-full mt-1"
+                    >
+                      El acceso a este contenedor está temporalmente suspendido. Por favor, revise
+                      su cuenta o la del propietario para solucionar el inconveniente
+                    </span>
+                  }
+                </div>
+              </div>
+            </td>
+            <td></td>
+            <td>
+              <div>
+                <span class="badge badge-outline badge-success">{{ contenedor.plan_nombre }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="text-xs">{{ contenedor.usuarios }} / {{ contenedor.usuarios_base }}</div>
+            </td>
+            <td>
+              <div class="flex gap-4">
+                <app-advanced-button
+                  [isDisabled]="contenedor.acceso_restringido && contenedor.rol !== 'control'"
+                  (buttonClick)="conectarContenedor(contenedor.contenedor_id, idx)"
+                  text="Conectar"
+                  loadingText="Conectando..."
+                  [isLoading]="loaders()[idx]"
+                ></app-advanced-button>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

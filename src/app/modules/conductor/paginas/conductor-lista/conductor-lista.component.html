@@ -1,0 +1,13 @@
+<div class="flex justify-end mb-4 gap-2">
+  <a class="btn btn-primary" routerLink="/administracion/conductor/nuevo"> Nuevo </a>
+  <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+</div>
+<app-tabla
+  [columnas]="columnas"
+  [datos]="arrConductores()"
+  [rutas]="{
+    editar: '/administracion/conductor/editar',
+    detalle: '/administracion/conductor/detalle',
+  }"
+  (seleccionCambiada)="onSeleccionConductores($event)"
+></app-tabla>

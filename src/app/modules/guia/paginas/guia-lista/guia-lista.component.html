@@ -1,0 +1,14 @@
+<div class="flex justify-end mb-4 gap-2">
+  <a class="btn btn-primary" routerLink="/movimiento/guia/nuevo"> Nuevo </a>
+  <button class="btn btn-danger" (click)="eliminar()">Eliminar</button>
+</div>
+
+<app-tabla
+  [columnas]="columnas"
+  [datos]="arrGuiasSignal()"
+  [rutas]="{
+    editar: '/movimiento/guia/editar',
+    detalle: '/movimiento/guia/detalle',
+  }"
+  (seleccionCambiada)="onSeleccionGuias($event)"
+></app-tabla>

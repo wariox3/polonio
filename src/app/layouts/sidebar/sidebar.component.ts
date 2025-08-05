@@ -21,21 +21,39 @@ export class SidebarComponent {
 
   public sidebarMenu: any[] = [
     {
-      nombre: 'Home',
+      nombre: 'Inicio',
       link: '/dashboard',
       iconoClase: 'ki-filled ki-home',
       activo: false,
     },
     {
-      nombre: 'Titulo',
-      link: '',
+      nombre: 'Movimiento',
+      link: '/movimiento',
+      iconoClase: 'ki-filled ki-abstract-26',
+      activo: false,
+      tipoAcordion: true,
+      abierto: true,
+      children: [
+        {
+          nombre: 'Guía',
+          link: '/movimiento/guia/lista',
+        },
+      ],
+    },
+    {
+      nombre: 'Administrador',
+      link: '/administracion',
       iconoClase: 'ki-filled ki-setting-2',
       activo: false,
       tipoAcordion: true,
       children: [
         {
-          nombre: 'Sub',
+          nombre: 'Vehiculo',
           link: '/administracion/vehiculo/lista',
+        },
+        {
+          nombre: 'Conductor',
+          link: '/administracion/conductor/lista',
         },
       ],
     },
