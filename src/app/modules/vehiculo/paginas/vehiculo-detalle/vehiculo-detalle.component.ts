@@ -1,14 +1,19 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { CommonModule } from '@angular/common';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
+import {
+  CampoDetalle,
+  TablaDetallesComponent,
+} from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
+import { obtenerCamposVehiculoDetalle } from '../../mapeo/vehiculo-detalle.mapeo';
 
 @Component({
   selector: 'app-vehiculo-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TablaDetallesComponent],
   templateUrl: './vehiculo-detalle.component.html',
 })
 export default class VehiculoDetalleComponent implements OnInit {
@@ -62,6 +67,9 @@ export default class VehiculoDetalleComponent implements OnInit {
     configuracion: 0,
     configuracion__nombre: '',
     configuracion__codigo: '',
+  });
+  camposDetalle = computed<CampoDetalle[]>(() => {
+    return obtenerCamposVehiculoDetalle();
   });
 
   ngOnInit(): void {
