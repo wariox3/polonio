@@ -4,11 +4,15 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Conductor } from '../../interfaces/conductor.interface';
 import { ConductorRepository } from '../../repository/conductor.repository';
+import {
+  CampoDetalle,
+  TablaDetallesComponent,
+} from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
 
 @Component({
   selector: 'app-conductor-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TablaDetallesComponent],
   templateUrl: './conductor-detalle.component.html',
 })
 export default class conductorDetalleComponent implements OnInit, OnDestroy {
@@ -49,6 +53,26 @@ export default class conductorDetalleComponent implements OnInit, OnDestroy {
     estado_revisado: false,
     comentario: '',
   });
+
+  // Configuración de los campos a mostrar en la tabla de detalles
+  camposDetalle: CampoDetalle[] = [
+    { clave: 'nombre_corto', etiqueta: 'Nombre' },
+    { clave: 'identificacion__nombre', etiqueta: 'Tipo identificación' },
+    {
+      clave: 'numero_identificacion',
+      etiqueta: 'Identificación',
+      formato: valor => `${valor} - ${this.vehiculosSignal().digito_verificacion}`,
+    },
+    { clave: 'direccion', etiqueta: 'Dirección' },
+    { clave: 'telefono', etiqueta: 'Teléfono' },
+    { clave: 'celular', etiqueta: 'Celular' },
+    { clave: 'fecha_ingreso', etiqueta: 'Fecha ingreso' },
+    { clave: 'fecha_retiro', etiqueta: 'Fecha retiro' },
+    { clave: 'numero_licencia', etiqueta: 'Licencia' },
+    { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha expedición licencia' },
+    { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha vencimiento licencia' },
+    { clave: 'comentario', etiqueta: 'Comentario', filaCompleta: true },
+  ];
 
   ngOnInit(): void {
     this.consultarInformacion();
