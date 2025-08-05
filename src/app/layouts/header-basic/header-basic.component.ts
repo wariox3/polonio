@@ -33,6 +33,7 @@ export class HeaderBasicComponent implements OnInit {
 
   public URL_REDDOC_CUENTA = environment.URL_REDDOC_CUENTA;
   public nombreUsuario = signal('');
+  public imagenUsuario = signal('');
 
   public menuItems: MenuItem[] = [
     {
@@ -51,6 +52,7 @@ export class HeaderBasicComponent implements OnInit {
         // Usar nombre_corto si está disponible, de lo contrario usar nombre + apellido
         const nombreCompleto = usuario.nombre_corto || `${usuario.nombre} ${usuario.apellido}`;
         this.nombreUsuario.set(nombreCompleto);
+        this.imagenUsuario.set(usuario.imagen_thumbnail);
       }
     });
   }

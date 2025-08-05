@@ -7,16 +7,12 @@
     data-menu-item-trigger="click|lg:click"
   >
     <div class="menu-toggle btn btn-icon rounded-full">
-      <img
-        alt=""
-        class="size-9 rounded-full border-2 shrink-0"
-        [src]="profileImageUrl() || imagen"
-      />
+      <img alt="" class="size-9 rounded-full border-2 shrink-0" [src]="imagen" />
     </div>
     <div class="menu-dropdown menu-default light:border-gray-300 w-full max-w-[250px]">
       <div class="flex items-center justify-between px-5 py-1.5 gap-1.5">
         <div class="flex items-center gap-2">
-          <img alt="" class="size-9 rounded-full border-2" [src]="profileImageUrl() || imagen" />
+          <img alt="" class="size-9 rounded-full border-2" [src]="imagen" />
           <div class="flex flex-col gap-1.5">
             <span class="text-sm text-gray-800 font-semibold leading-none">
               {{ titulo }}

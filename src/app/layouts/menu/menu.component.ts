@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { logout } from '@app/modules/auth/store/actions/login.action';
 import { Store } from '@ngrx/store';
-import { ProfileImageService } from '@app/core/services/profile-image.service';
 
 @Component({
   selector: 'app-menu',
@@ -18,10 +17,6 @@ export class MenuComponent {
   @Input() imagen: string;
 
   private store = inject(Store);
-  private profileImageService = inject(ProfileImageService);
-
-  // Use the service's profileImageUrl signal
-  protected profileImageUrl = this.profileImageService.profileImageUrl;
 
   cerrarSesion() {
     this.store.dispatch(logout());

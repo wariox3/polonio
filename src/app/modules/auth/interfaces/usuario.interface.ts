@@ -26,6 +26,7 @@ export interface Usuario {
   username: string;
   cargo: string;
   imagen: string;
+  imagen_thumbnail: string;
   nombre_corto: string;
   nombre: string;
   apellido: string;
