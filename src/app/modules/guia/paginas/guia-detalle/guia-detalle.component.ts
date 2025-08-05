@@ -1,19 +1,24 @@
 import { Guia } from './../../interfaces/guia.interface';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { GuiaRepository } from '../../repository/guia.repository';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import {
+  CampoDetalle,
+  TablaDetallesComponent,
+} from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
+import { obtenerCamposGuiaDetalle } from '../../mapeo/guia-detalle.mapeo';
 
 @Component({
   selector: 'app-guia-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TablaDetallesComponent],
   templateUrl: './guia-detalle.component.html',
   styleUrl: './guia-detalle.component.scss',
 })
 export default class GuiaDetalleComponent implements OnInit {
-  private _vehiculoRepository = inject(GuiaRepository);
+  private _guiaRepository = inject(GuiaRepository);
   private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
   public guiaSignal = signal<Guia>({
@@ -83,6 +88,11 @@ export default class GuiaDetalleComponent implements OnInit {
     destinatario__direccion: '',
     destinatario__telefono: '',
   });
+
+  camposDetalle = computed<CampoDetalle[]>(() => {
+    return obtenerCamposGuiaDetalle();
+  });
+
   ngOnInit(): void {
     this.consultarInformacion();
   }
@@ -91,7 +101,7 @@ export default class GuiaDetalleComponent implements OnInit {
       .pipe(
         takeUntil(this.destroy$),
         switchMap((param: { id: number }) => {
-          return this._vehiculoRepository.detalle(param.id);
+          return this._guiaRepository.detalle(param.id);
         }),
         tap(detalle => this.guiaSignal.set(detalle))
       )
