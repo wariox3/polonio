@@ -1,58 +1,93 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Guia } from '../../interfaces/guia.interface';
-import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
-import { GuiaRepository } from '../../repository/guia.repository';
-import { columnasGuiaLista } from '../../mapeo/guia-lista.mapeo';
-import { forkJoin } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
+import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
+import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
+import { QueryParams } from '@app/core/interfaces/api.interface';
+import { forkJoin } from 'rxjs';
+import { Guia } from '../../interfaces/guia.interface';
+import { columnasGuiaLista } from '../../mapeo/guia-lista.mapeo';
+import { GuiaRepository } from '../../repository/guia.repository';
 
 @Component({
   selector: 'app-guia-lista',
   standalone: true,
-  imports: [RouterModule, TablaComponent],
+  imports: [RouterModule, TablaComponent, PaginadorComponent],
   templateUrl: './guia-lista.component.html',
   styleUrl: './guia-lista.component.scss',
 })
 export default class GuiaListaComponent implements OnInit {
-  private arrGuiasSeleccionadas = signal<Guia[]>([]);
   private _guiaRepository = inject(GuiaRepository);
 
+  public guiasSeleccionadas = signal<Guia[]>([]);
+  public guias = signal<Guia[]>([]);
   public columnas = columnasGuiaLista;
-  public arrGuiasSignal = signal<Guia[]>([]);
+  public estadoPaginacion = signal<EstadoPaginacion>({
+    paginaActual: 1,
+    itemsPorPagina: 30,
+    totalItems: 0,
+  });
 
   ngOnInit(): void {
     this.consultarInformacion();
   }
 
   consultarInformacion() {
-    this._guiaRepository.lista().subscribe(respuesta => {
+    const parametros: QueryParams = {
+      page: this.estadoPaginacion().paginaActual,
+    };
+
+    this._guiaRepository.lista(parametros).subscribe(respuesta => {
       const guias = respuesta.results.map((guia: Guia) => {
         return {
           ...guia,
           total: guia.flete + guia.manejo,
         };
       });
-      this.arrGuiasSignal.set(guias);
+      this.guias.set(guias);
+      this.actualizarPaginacion(respuesta.count);
     });
   }
 
-  onSeleccionGuias(vehiculos: Guia[]) {
-    this.arrGuiasSeleccionadas.set(vehiculos);
+  onPageChange(nuevaPagina: number): void {
+    this.estadoPaginacion.update(estado => ({
+      ...estado,
+      paginaActual: nuevaPagina,
+    }));
+
+    this.consultarInformacion();
+  }
+
+  onSeleccionGuias(guias: Guia[]) {
+    this.guiasSeleccionadas.set(guias);
   }
 
   eliminar() {
-    const eliminaciones$ = this.arrGuiasSeleccionadas().map(guia =>
+    const eliminaciones$ = this.guiasSeleccionadas().map(guia =>
       this._guiaRepository.eliminar(guia.id)
     );
 
     forkJoin(eliminaciones$).subscribe({
       next: () => {
+        // Después de eliminar, volver a la primera página y recargar
+        this.estadoPaginacion.update(estado => ({
+          ...estado,
+          paginaActual: 1,
+        }));
         this.consultarInformacion();
-        this.arrGuiasSeleccionadas.set([]);
+        this.guiasSeleccionadas.set([]);
       },
       error: err => {
         console.error('Error al eliminar guia:', err);
       },
     });
+  }
+
+  private actualizarPaginacion(count: number) {
+    this.estadoPaginacion.update(estado => ({
+      ...estado,
+      totalItems: count,
+      totalPaginas: Math.ceil(count / estado.itemsPorPagina),
+    }));
   }
 }
