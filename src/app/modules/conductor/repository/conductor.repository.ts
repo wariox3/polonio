@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
-import { RespuestaApi } from '@app/core/interfaces/api.interface';
+import { RespuestaApi, QueryParams } from '@app/core/interfaces/api.interface';
 import { Conductor } from '../interfaces/conductor.interface';
 
 @Injectable({
@@ -11,8 +11,11 @@ export class ConductorRepository {
 
   constructor() {}
 
-  lista() {
-    return this._generalRepository.get<RespuestaApi<Conductor>>('transporte/conductor/');
+  lista(queryParams: QueryParams = {}) {
+    return this._generalRepository.get<RespuestaApi<Conductor>>(
+      'transporte/conductor/',
+      queryParams
+    );
   }
 
   nuevo(data: Conductor) {
