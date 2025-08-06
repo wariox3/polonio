@@ -39,6 +39,10 @@ export default [
         path: 'guia',
         loadChildren: () => import('../modules/guia/guia.routes'),
       },
+      {
+        path: 'negocio',
+        loadChildren: () => import('../modules/negocio/negocio.routes'),
+      },
     ],
   },
   {

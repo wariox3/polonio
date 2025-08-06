@@ -43,6 +43,10 @@ export class SidebarComponent implements OnInit {
           nombre: 'Guía',
           link: '/movimiento/guia/lista',
         },
+        {
+          nombre: 'Negocio',
+          link: '/movimiento/negocio/lista',
+        },
       ],
     },
     {
