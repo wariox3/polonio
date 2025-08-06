@@ -16,7 +16,7 @@
     <h3 class="card-title">Negocios</h3>
 
     <div class="flex gap-2">
-      <a class="btn btn-primary" routerLink="/administracion/negocio/nuevo"> Nuevo </a>
+      <a class="btn btn-primary" routerLink="/movimiento/negocio/nuevo"> Nuevo </a>
       <button
         class="btn btn-danger"
         (click)="eliminar()"
@@ -39,8 +39,8 @@
       [columnas]="columnas"
       [datos]="negocios()"
       [rutas]="{
-        editar: '/administracion/negocio/editar',
-        detalle: '/administracion/negocio/detalle',
+        editar: '/movimiento/negocio/editar',
+        detalle: '/movimiento/negocio/detalle',
       }"
       (seleccionCambiada)="onSeleccionNegocios($event)"
     ></app-tabla>

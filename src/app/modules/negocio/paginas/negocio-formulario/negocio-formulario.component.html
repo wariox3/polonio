@@ -1,0 +1,206 @@
+<form [formGroup]="formularioNegocio" (ngSubmit)="onSubmit()">
+  <div class="flex gap-2 mb-4">
+    <a class="btn btn-secondary" routerLink="/movimiento/negocio/lista"> Atrás </a>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        {{ detalleID() > 0 ? 'Editar negocio' : 'Registro de negocio' }}
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Fecha -->
+        <div>
+          <app-label [required]="true">Fecha</app-label>
+          <app-input
+            placeholder="Selecciona la fecha"
+            formControlName="fecha"
+            [type]="'date'"
+            [control]="formularioNegocio.get('fecha')"
+            [errors]="{
+              required: 'La fecha es requerida.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Contacto -->
+        <div>
+          <app-label [required]="true">Contacto</app-label>
+          <app-select-search
+            [control]="getControl('contacto')"
+            [label]="'nombre_corto'"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre_corto__icontains'"
+            [parametrosEndpoint]="{
+              nombre_corto__icontains: this.formularioNegocio.get('contacto__nombre_corto').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Ciudad Origen -->
+        <div>
+          <app-label [required]="true">Ciudad Origen</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_origen')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('ciudad_origen__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Ciudad Destino -->
+        <div>
+          <app-label [required]="true">Ciudad Destino</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_destino')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('ciudad_destino__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Unidades -->
+        <div>
+          <app-label [required]="true">Unidades</app-label>
+          <app-input
+            placeholder="Ingresa el número de unidades"
+            formControlName="unidades"
+            [type]="'number'"
+            [control]="formularioNegocio.get('unidades')"
+            [errors]="{
+              required: 'Las unidades son requeridas.',
+              min: 'Debe ser mayor a 0.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Peso -->
+        <div>
+          <app-label [required]="true">Peso (kg)</app-label>
+          <app-input
+            placeholder="Ingresa el peso en kilogramos"
+            formControlName="peso"
+            [type]="'number'"
+            step="0.1"
+            [control]="formularioNegocio.get('peso')"
+            [errors]="{
+              required: 'El peso es requerido.',
+              min: 'Debe ser mayor a 0.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Volumen -->
+        <div>
+          <app-label [required]="true">Volumen (m³)</app-label>
+          <app-input
+            placeholder="Ingresa el volumen en metros cúbicos"
+            formControlName="volumen"
+            [type]="'number'"
+            step="0.1"
+            [control]="formularioNegocio.get('volumen')"
+            [errors]="{
+              required: 'El volumen es requerido.',
+              min: 'Debe ser mayor a 0.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Declara -->
+        <div>
+          <app-label [required]="true">Valor Declarado</app-label>
+          <app-input
+            placeholder="Ingresa el valor declarado"
+            formControlName="declara"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('declara')"
+            [errors]="{
+              required: 'El valor declarado es requerido.',
+              min: 'Debe ser mayor o igual a 0.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Pago -->
+        <div>
+          <app-label [required]="true">Pago</app-label>
+          <app-input
+            placeholder="Ingresa el valor del pago"
+            formControlName="pago"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('pago')"
+            [errors]="{
+              required: 'El pago es requerido.',
+              min: 'Debe ser mayor o igual a 0.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Flete -->
+        <div>
+          <app-label [required]="true">Flete</app-label>
+          <app-input
+            placeholder="Ingresa el valor del flete"
+            formControlName="flete"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('flete')"
+            [errors]="{
+              required: 'El flete es requerido.',
+              min: 'Debe ser mayor o igual a 0.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Manejo -->
+        <div>
+          <app-label [required]="true">Manejo</app-label>
+          <app-input
+            placeholder="Ingresa el valor del manejo"
+            formControlName="manejo"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('manejo')"
+            [errors]="{
+              required: 'El manejo es requerido.',
+              min: 'Debe ser mayor o igual a 0.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Comentario - Ocupa toda la fila -->
+        <div class="md:col-span-2">
+          <app-label>Comentario</app-label>
+          <div>
+            <textarea
+              rows="4"
+              class="w-full px-3 py-2 text-gray-700 border rounded-lg"
+              formControlName="comentario"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
