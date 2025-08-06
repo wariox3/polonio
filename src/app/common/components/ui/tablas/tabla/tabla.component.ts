@@ -2,22 +2,19 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TooltipDirective } from '@app/common/directives/tooltip';
+import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
 
 @Component({
   selector: 'app-tabla',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, TooltipDirective],
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.scss'],
 })
 export class TablaComponent {
   // Propiedades de entrada
-  @Input() columnas: {
-    clave: string;
-    nombre: string;
-    ancho?: string;
-    formato?: (valor: any) => string;
-  }[] = [];
+  @Input() columnas: ColumnaTabla[] = [];
   @Input() datos: any[] = [];
   @Input() claveCheckbox: string = 'id';
   @Input() mostrarAcciones: boolean = true;

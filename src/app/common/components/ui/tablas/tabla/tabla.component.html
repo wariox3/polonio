@@ -15,7 +15,9 @@
           [style.width]="columna.ancho || 'auto'"
         >
           <div class="flex items-center space-x-1">
-            <span>{{ columna.nombre }}</span>
+            <span [appTooltip]="columna.tooltip || ''" tooltipPosition="top" [tooltipDelay]="300">
+              {{ columna.nombre }}
+            </span>
           </div>
         </th>
 
