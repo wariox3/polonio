@@ -8,18 +8,22 @@ import { forkJoin } from 'rxjs';
 import { Guia } from '../../interfaces/guia.interface';
 import { columnasGuiaLista } from '../../mapeo/guia-lista.mapeo';
 import { GuiaRepository } from '../../repository/guia.repository';
+import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
+import { GUIA_LISTA_FILTERS } from '../../mapeo/guia-filtros.mapeo';
 
 @Component({
   selector: 'app-guia-lista',
   standalone: true,
-  imports: [RouterModule, TablaComponent, PaginadorComponent],
+  imports: [RouterModule, TablaComponent, PaginadorComponent, FiltroComponent],
   templateUrl: './guia-lista.component.html',
   styleUrl: './guia-lista.component.scss',
 })
 export default class GuiaListaComponent implements OnInit {
   private _guiaRepository = inject(GuiaRepository);
+  private filtrosActivos = signal<QueryParams>({});
 
   public guiasSeleccionadas = signal<Guia[]>([]);
+  public camposFiltros = GUIA_LISTA_FILTERS;
   public guias = signal<Guia[]>([]);
   public columnas = columnasGuiaLista;
   public estadoPaginacion = signal<EstadoPaginacion>({
@@ -35,6 +39,7 @@ export default class GuiaListaComponent implements OnInit {
   consultarInformacion() {
     const parametros: QueryParams = {
       page: this.estadoPaginacion().paginaActual,
+      ...this.filtrosActivos(),
     };
 
     this._guiaRepository.lista(parametros).subscribe(respuesta => {
@@ -44,6 +49,7 @@ export default class GuiaListaComponent implements OnInit {
           total: guia.flete + guia.manejo,
         };
       });
+
       this.guias.set(guias);
       this.actualizarPaginacion(respuesta.count);
     });
@@ -53,6 +59,16 @@ export default class GuiaListaComponent implements OnInit {
     this.estadoPaginacion.update(estado => ({
       ...estado,
       paginaActual: nuevaPagina,
+    }));
+
+    this.consultarInformacion();
+  }
+
+  onFiltersChange(filtros: QueryParams): void {
+    this.filtrosActivos.set(filtros);
+    this.estadoPaginacion.update(estado => ({
+      ...estado,
+      paginaActual: 1,
     }));
 
     this.consultarInformacion();
