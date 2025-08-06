@@ -2,22 +2,27 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
+import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
 import { forkJoin } from 'rxjs';
 import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { columnasVehiculoLista } from '../../mapeo/vehiculo-lista.mapeo';
+import { VEHICULO_LISTA_FILTERS } from '../../mapeo/vehiculo-filtros.mapeo';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
 
 @Component({
   selector: 'app-vehiculo-lista',
   standalone: true,
-  imports: [RouterModule, TablaComponent, PaginadorComponent],
+  imports: [RouterModule, TablaComponent, PaginadorComponent, FiltroComponent],
   templateUrl: './vehiculo-lista.component.html',
 })
 export default class VehiculoListaComponent implements OnInit {
   private _vehiculoService = inject(VehiculoRepository);
+  private _filtrosActivos = signal<QueryParams>({});
+
   public vehiculosSeleccionados = signal<Vehiculo[]>([]);
+  public camposFiltros = VEHICULO_LISTA_FILTERS;
   public vehiculos = signal<Vehiculo[]>([]);
   public columnas = columnasVehiculoLista;
   public estadoPaginacion = signal<EstadoPaginacion>({
@@ -33,6 +38,8 @@ export default class VehiculoListaComponent implements OnInit {
   consultarInformacion() {
     const parametros: QueryParams = {
       page: this.estadoPaginacion().paginaActual,
+      page_size: this.estadoPaginacion().itemsPorPagina,
+      ...this._filtrosActivos(),
     };
 
     this._vehiculoService.lista(parametros).subscribe(respuesta => {
@@ -45,6 +52,16 @@ export default class VehiculoListaComponent implements OnInit {
     this.estadoPaginacion.update(estado => ({
       ...estado,
       paginaActual: nuevaPagina,
+    }));
+
+    this.consultarInformacion();
+  }
+
+  onFiltersChange(filtros: QueryParams): void {
+    this._filtrosActivos.set(filtros);
+    this.estadoPaginacion.update(estado => ({
+      ...estado,
+      paginaActual: 1,
     }));
 
     this.consultarInformacion();

@@ -1,3 +1,15 @@
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Filtros</h3>
+  </div>
+  <div class="card-body">
+    <app-filtro
+      (filtersApply)="onFiltersChange($event)"
+      [availableFields]="camposFiltros"
+    ></app-filtro>
+  </div>
+</div>
+
 <div class="flex justify-between mb-4 gap-2">
   <app-paginador
     [totalItems]="estadoPaginacion().totalItems"
