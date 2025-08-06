@@ -10,31 +10,38 @@
   </div>
 </div>
 
-<div class="flex justify-between mb-4 gap-2">
-  <app-paginador
-    [totalItems]="estadoPaginacion().totalItems"
-    [itemsPerPage]="estadoPaginacion().itemsPorPagina"
-    (pageChange)="onPageChange($event)"
-  ></app-paginador>
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Vehículos</h3>
 
-  <div class="flex gap-2">
-    <a class="btn btn-primary" routerLink="/administracion/vehiculo/nuevo"> Nuevo </a>
-    <button
-      class="btn btn-danger"
-      (click)="eliminar()"
-      [disabled]="vehiculosSeleccionados().length === 0"
-    >
-      Eliminar
-    </button>
+    <div class="flex gap-2">
+      <a class="btn btn-primary" routerLink="/administracion/vehiculo/nuevo"> Nuevo </a>
+      <button
+        class="btn btn-danger"
+        (click)="eliminar()"
+        [disabled]="vehiculosSeleccionados().length === 0"
+      >
+        Eliminar
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="flex justify-between mb-4 gap-2">
+      <app-paginador
+        [totalItems]="estadoPaginacion().totalItems"
+        [itemsPerPage]="estadoPaginacion().itemsPorPagina"
+        (pageChange)="onPageChange($event)"
+      ></app-paginador>
+    </div>
+
+    <app-tabla
+      [columnas]="columnas"
+      [datos]="vehiculos()"
+      [rutas]="{
+        editar: '/administracion/vehiculo/editar',
+        detalle: '/administracion/vehiculo/detalle',
+      }"
+      (seleccionCambiada)="onSeleccionVehiculos($event)"
+    ></app-tabla>
   </div>
 </div>
-
-<app-tabla
-  [columnas]="columnas"
-  [datos]="vehiculos()"
-  [rutas]="{
-    editar: '/administracion/vehiculo/editar',
-    detalle: '/administracion/vehiculo/detalle',
-  }"
-  (seleccionCambiada)="onSeleccionVehiculos($event)"
-></app-tabla>
