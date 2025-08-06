@@ -1,5 +1,5 @@
 <div class="paginator-container flex items-center gap-2">
-  <span class="mr-2">Página</span>
+  <span class="mr-2 text-sm">Página</span>
 
   <input
     type="number"
@@ -11,7 +11,7 @@
     [max]="totalPages"
   />
 
-  <span class="mx-2">de {{ totalPages }}</span>
+  <span class="mx-2 text-sm">de {{ totalPages }}</span>
 
   <div class="flex gap-1">
     <button
@@ -30,5 +30,5 @@
     </button>
   </div>
 
-  <span>Registros: {{ totalItems }}</span>
+  <span class="text-sm">Registros: {{ totalItems }}</span>
 </div>

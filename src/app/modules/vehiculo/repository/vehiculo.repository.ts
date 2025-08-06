@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
-import { RespuestaApi } from '@app/core/interfaces/api.interface';
+import { RespuestaApi, QueryParams } from '@app/core/interfaces/api.interface';
 import { Vehiculo } from '../interfaces/vehiculo.interface';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class VehiculoRepository {
 
   constructor() {}
 
-  lista() {
-    return this._generalRepository.get<RespuestaApi<Vehiculo>>('transporte/vehiculo/');
+  lista(queryParams: QueryParams = {}) {
+    return this._generalRepository.get<RespuestaApi<Vehiculo>>('transporte/vehiculo/', queryParams);
   }
 
   nuevo(data: Vehiculo) {
