@@ -40,12 +40,12 @@ export class SidebarComponent implements OnInit {
       abierto: false,
       children: [
         {
-          nombre: 'Guía',
-          link: '/movimiento/guia/lista',
-        },
-        {
           nombre: 'Negocio',
           link: '/movimiento/negocio/lista',
+        },
+        {
+          nombre: 'Guía',
+          link: '/movimiento/guia/lista',
         },
       ],
     },

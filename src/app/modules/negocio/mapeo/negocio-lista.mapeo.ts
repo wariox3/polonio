@@ -15,11 +15,11 @@ export const columnasNegocioLista: ColumnaTabla[] = [
   },
   {
     clave: 'ciudad_origen__nombre',
-    nombre: 'Ciudad Origen',
+    nombre: 'Origen',
   },
   {
     clave: 'ciudad_destino__nombre',
-    nombre: 'Ciudad Destino',
+    nombre: 'Destino',
   },
   {
     clave: 'unidades',
@@ -35,7 +35,7 @@ export const columnasNegocioLista: ColumnaTabla[] = [
   },
   {
     clave: 'declara',
-    nombre: 'Declara',
+    nombre: 'Declarado',
   },
   {
     clave: 'pago',

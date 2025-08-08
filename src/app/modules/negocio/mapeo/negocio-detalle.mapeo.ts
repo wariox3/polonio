@@ -14,8 +14,8 @@ export function obtenerCamposNegocioDetalle(): CampoDetalle[] {
       formato: valor => formatearFechaISO(valor),
     },
     { clave: 'contacto__nombre_corto', etiqueta: 'Contacto' },
-    { clave: 'ciudad_origen__nombre', etiqueta: 'Ciudad Origen' },
-    { clave: 'ciudad_destino__nombre', etiqueta: 'Ciudad Destino' },
+    { clave: 'ciudad_origen__nombre', etiqueta: 'Origen' },
+    { clave: 'ciudad_destino__nombre', etiqueta: 'Destino' },
     { clave: 'unidades', etiqueta: 'Unidades' },
     {
       clave: 'peso',
