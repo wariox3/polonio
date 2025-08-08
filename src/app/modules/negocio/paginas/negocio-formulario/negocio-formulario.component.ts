@@ -13,6 +13,7 @@ import { InputComponent } from '@app/common/components/ui/form/input/input.compo
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
+import { FechaService } from '@app/common/services/fecha.service';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Negocio } from '../../interfaces/negocio.interface';
 import { NegocioRepository } from '../../repository/negocio.repository';
@@ -37,6 +38,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
   private _negocioRepository = inject(NegocioRepository);
   private _activatedRoute = inject(ActivatedRoute);
   private _router = inject(Router);
+  private _fechaService = inject(FechaService);
   private destroy$ = new Subject<void>();
 
   public detalleID = signal(0);
@@ -55,7 +57,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
   inicializarFormulario() {
     this.formularioNegocio = this._formBuilder.group({
       id: [],
-      fecha: ['', [Validators.required]],
+      fecha: [this._fechaService.obtenerFechaHoy(), [Validators.required]],
       unidades: [0, [Validators.required, Validators.min(1)]],
       peso: [0, [Validators.required, Validators.min(0.1)]],
       volumen: [0, [Validators.required, Validators.min(0.1)]],
