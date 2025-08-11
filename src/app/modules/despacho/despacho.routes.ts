@@ -13,7 +13,11 @@ const routes: Route[] = [
         path: 'lista',
         loadComponent: () => import('./paginas/despacho-lista/despacho-lista.component'),
       },
-      // Las rutas de formulario y detalle se agregarán más adelante
+      {
+        path: 'detalle/:id',
+        loadComponent: () => import('./paginas/despacho-detalle/despacho-detalle.component'),
+      },
+      // Las rutas de formulario se agregarán más adelante
       // {
       //   path: 'nuevo',
       //   loadComponent: () => import('./paginas/despacho-formulario/despacho-formulario.component'),
@@ -21,10 +25,6 @@ const routes: Route[] = [
       // {
       //   path: 'editar/:id',
       //   loadComponent: () => import('./paginas/despacho-formulario/despacho-formulario.component'),
-      // },
-      // {
-      //   path: 'detalle/:id',
-      //   loadComponent: () => import('./paginas/despacho-detalle/despacho-detalle.component'),
       // },
     ],
   },
