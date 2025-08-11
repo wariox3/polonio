@@ -48,8 +48,8 @@ export class SelectSearchComponent implements OnChanges {
     }
   }
 
-  emitirSeleccion() {
-    this.selectionChange.emit(this.selectedOptions);
+  emitirSeleccion(data: any) {
+    this.selectionChange.emit(data);
   }
 
   get error(): string | null {

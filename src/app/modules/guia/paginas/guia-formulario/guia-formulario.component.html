@@ -3,179 +3,25 @@
     <a class="btn btn-secondary" routerLink="/movimiento/guia/lista"> Atrás </a>
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
-
   <div class="card">
     <div class="card-header">
       <h3 class="card-title">{{ detalleID() > 0 ? 'Editar guía' : 'Registro de guía' }}</h3>
     </div>
-
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <app-label>Documento</app-label>
-          <app-input
-            formControlName="documento"
-            [type]="'text'"
-            [control]="formularioGuia.get('documento')"
-            [errors]="{ maxLength: 'Máximo 30 caracteres.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label [required]="true">Remitente nombre</app-label>
-          <app-input
-            formControlName="remitente_nombre"
-            [type]="'text'"
-            [control]="formularioGuia.get('remitente_nombre')"
-            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label [required]="true">Destinatario nombre</app-label>
-          <app-input
-            formControlName="destinatario_nombre"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_nombre')"
-            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label [required]="true">Destinatario dirección</app-label>
-          <app-input
-            formControlName="destinatario_direccion"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_direccion')"
-            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Destinatario teléfono</app-label>
-          <app-input
-            formControlName="destinatario_telefono"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_telefono')"
-            [errors]="{ maxLength: 'Máximo 50 caracteres.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Destinatario correo</app-label>
-          <app-input
-            formControlName="destinatario_correo"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_correo')"
-            [errors]="{ email: 'Correo inválido.', maxLength: 'Máximo 255 caracteres.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Unidades</app-label>
-          <app-input
-            formControlName="unidades"
-            [type]="'number'"
-            [control]="formularioGuia.get('unidades')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Peso</app-label>
-          <app-input
-            formControlName="peso"
-            [type]="'number'"
-            [control]="formularioGuia.get('peso')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Volumen</app-label>
-          <app-input
-            formControlName="volumen"
-            [type]="'number'"
-            [control]="formularioGuia.get('volumen')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Peso facturado</app-label>
-          <app-input
-            formControlName="peso_facturado"
-            [type]="'number'"
-            [control]="formularioGuia.get('peso_facturado')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Valor declarado</app-label>
-          <app-input
-            formControlName="declara"
-            [type]="'number'"
-            [control]="formularioGuia.get('declara')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Flete</app-label>
-          <app-input
-            formControlName="flete"
-            [type]="'number'"
-            [control]="formularioGuia.get('flete')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Manejo</app-label>
-          <app-input
-            formControlName="manejo"
-            [type]="'number'"
-            [control]="formularioGuia.get('manejo')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Recaudo</app-label>
-          <app-input
-            formControlName="recaudo"
-            [type]="'number'"
-            [control]="formularioGuia.get('recaudo')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Cobro contra entrega</app-label>
-          <app-input
-            formControlName="cobro_entrega"
-            [type]="'number'"
-            [control]="formularioGuia.get('cobro_entrega')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label [required]="true">Contacto</app-label>
+        <div class="md:col-span-2">
+          <app-label [required]="true">Servicio</app-label>
           <app-select-search
-            [control]="getControl('contacto')"
-            [label]="'nombre_corto'"
+            [control]="getControl('servicio')"
             [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'general/contacto/seleccionar/'"
+            [endpoint]="'transporte/servicio/seleccionar/'"
             [campoBusqueda]="'nombre__icontains'"
             [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('contacto__nombre').value,
+              nombre__icontains: this.formularioGuia.get('servicio__nombre').value,
               limit: 10,
             }"
           ></app-select-search>
         </div>
-
         <div>
           <app-label [required]="true">Cliente</app-label>
           <app-select-search
@@ -190,48 +36,14 @@
             }"
           ></app-select-search>
         </div>
-
         <div>
-          <app-label [required]="true">Destinatario</app-label>
-          <app-select-search
-            [control]="getControl('destinatario')"
-            [label]="'nombre_corto'"
-            [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'general/contacto/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('destinatario__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-
-        <div>
-          <app-label [required]="true">Destino</app-label>
-          <app-select-search
-            [control]="getControl('ciudad_destino')"
-            [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'general/ciudad/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('ciudad_destino__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-
-        <div>
-          <app-label [required]="true">Servicio</app-label>
-          <app-select-search
-            [control]="getControl('servicio')"
-            [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'transporte/servicio/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('servicio__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
+          <app-label [required]="true">Remitente</app-label>
+          <app-input
+            formControlName="remitente_nombre"
+            [type]="'text'"
+            [control]="formularioGuia.get('remitente_nombre')"
+            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
+          ></app-input>
         </div>
         <div>
           <app-label [required]="true">Producto</app-label>
@@ -248,7 +60,6 @@
             }"
           ></app-select-search>
         </div>
-
         <div>
           <app-label [required]="true">Empaque</app-label>
           <app-select-search
@@ -258,6 +69,93 @@
             [campoBusqueda]="'nombre__icontains'"
             [parametrosEndpoint]="{
               nombre__icontains: this.formularioGuia.get('empaque__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Contacto</app-label>
+          <app-select-search
+            [control]="getControl('contacto')"
+            [label]="'nombre_corto'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('contacto__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label>Documento</app-label>
+          <app-input
+            formControlName="documento"
+            [type]="'text'"
+            [control]="formularioGuia.get('documento')"
+            [errors]="{ maxLength: 'Máximo 30 caracteres.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Destinatario</app-label>
+          <app-select-search
+            [control]="getControl('destinatario')"
+            [label]="'nombre_corto'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            (selectionChange)="modificarFormulario('destinatario_nombre', $event)"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('destinatario__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Destinatario nombre</app-label>
+          <app-input
+            formControlName="destinatario_nombre"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_nombre')"
+            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Destinatario dirección</app-label>
+          <app-input
+            formControlName="destinatario_direccion"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_direccion')"
+            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Destinatario teléfono</app-label>
+          <app-input
+            formControlName="destinatario_telefono"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_telefono')"
+            [errors]="{ maxLength: 'Máximo 50 caracteres.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Destinatario correo</app-label>
+          <app-input
+            formControlName="destinatario_correo"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_correo')"
+            [errors]="{ email: 'Correo inválido.', maxLength: 'Máximo 255 caracteres.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Destino</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_destino')"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('ciudad_destino__nombre').value,
               limit: 10,
             }"
           ></app-select-search>
@@ -275,8 +173,100 @@
             }"
           ></app-select-search>
         </div>
-        <div></div>
+        <div>
+          <app-label>Unidades</app-label>
+          <app-input
+            [placeholder]="'0'"
+            formControlName="unidades"
+            [type]="'number'"
+            [control]="formularioGuia.get('unidades')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Peso</app-label>
+          <app-input
+            [placeholder]="'0'"
+            formControlName="peso"
+            [type]="'number'"
+            [control]="formularioGuia.get('peso')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Volumen</app-label>
+          <app-input
+            [placeholder]="'0'"
+            formControlName="volumen"
+            [type]="'number'"
+            [control]="formularioGuia.get('volumen')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Peso facturado</app-label>
+          <app-input
+            [placeholder]="'0'"
+            formControlName="peso_facturado"
+            [type]="'number'"
+            [control]="formularioGuia.get('peso_facturado')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Valor declarado</app-label>
+          <app-input
+            formControlName="declara"
+            [type]="'number'"
+            [control]="formularioGuia.get('declara')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Flete</app-label>
+          <app-input
+            formControlName="flete"
+            [type]="'number'"
+            [control]="formularioGuia.get('flete')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Manejo</app-label>
+          <app-input
+            formControlName="manejo"
+            [type]="'number'"
+            [control]="formularioGuia.get('manejo')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Cobro contra entrega</app-label>
+          <app-input
+            formControlName="cobro_entrega"
+            [type]="'number'"
+            [control]="formularioGuia.get('cobro_entrega')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Recaudo</app-label>
+          <app-input
+            formControlName="recaudo"
+            [type]="'number'"
+            [control]="formularioGuia.get('recaudo')"
+            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+          ></app-input>
+        </div>
 
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700">Comentario</label>
+          <textarea
+            rows="4"
+            class="w-full px-3 py-2 text-gray-700 border rounded-lg"
+            formControlName="comentario"
+          ></textarea>
+        </div>
         <div class="flex flex-col gap-2">
           <app-switch
             [control]="getControl('contenido_verificado')"
@@ -287,17 +277,6 @@
             titulo="Mercancía peligrosa"
           ></app-switch>
           <app-switch [control]="getControl('requiere_cita')" titulo="Requiere cita"></app-switch>
-        </div>
-
-        <div></div>
-
-        <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700">Comentario</label>
-          <textarea
-            rows="4"
-            class="w-full px-3 py-2 text-gray-700 border rounded-lg"
-            formControlName="comentario"
-          ></textarea>
         </div>
       </div>
     </div>

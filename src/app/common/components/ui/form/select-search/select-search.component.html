@@ -11,6 +11,7 @@
   (clear)="busquedaInicial()"
   (focus)="busquedaInicial()"
   [formControl]="control"
+  (change)="emitirSeleccion($event)"
   class="border border-gray-300 rounded-lg focus:border-primary hover:border-gray-400 transition-colors"
 >
 </ng-select>

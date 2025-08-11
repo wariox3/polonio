@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -20,6 +20,7 @@ import { TransporteRepository } from '@app/common/repositories/transporte/transp
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repository/guia.repository';
+import { OperacionRepository } from '../../repository/operacion.repository';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -41,9 +42,11 @@ export default class GuiaFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private _activatedRoute = inject(ActivatedRoute);
   private _guiaRepository = inject(GuiaRepository);
+  private _operacionRepository = inject(OperacionRepository);
   private _transporteRepository = inject(TransporteRepository);
   private _ciudadRepository = inject(CiudadRepository);
   private _contactoRepository = inject(ContactoRepository);
+  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
   public formularioGuia: FormGroup;
@@ -62,6 +65,7 @@ export default class GuiaFormularioComponent implements OnInit {
 
   ngOnInit() {
     this.inicializarFormulario();
+    this._consultarInformacion();
     this.consultardetalle();
   }
 
@@ -96,6 +100,10 @@ export default class GuiaFormularioComponent implements OnInit {
       cliente__nombre_corto: [null],
       destinatario: [null, Validators.required],
       destinatario__nombre: [null],
+      operacion_ingreso: [1, Validators.required],
+      operacion_cargo: [1, Validators.required],
+      operacion_cargo__nombre: [null],
+      ciudad_origen: [null, Validators.required],
       ciudad_destino: [null, Validators.required],
       ciudad_destino__nombre: [null],
       despacho: [null],
@@ -107,7 +115,15 @@ export default class GuiaFormularioComponent implements OnInit {
       empaque__nombre: [null],
       ruta: [null],
       ruta__nombre: [null],
+      liquidacion: ['k'],
     });
+  }
+
+  private _consultarInformacion() {
+    //TODO: codigo temporal para la tarea 1685
+    this._operacionRepository
+      .consultaOperacionIngreso()
+      .subscribe((respuesta: any) => this.modificarFormulario('ciudad_origen', respuesta[0]));
   }
 
   consultardetalle() {
@@ -126,21 +142,19 @@ export default class GuiaFormularioComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.formularioGuia.valid) {
-      if (this.detalleID() === 0) {
-        this._nuevoVehiculo();
-      } else {
-        this._editarVehiculo();
-      }
-    } else {
+    if (!this.formularioGuia.valid) {
       this.formularioGuia.markAllAsTouched();
-      // Mostrar errores simples en consola
-      Object.keys(this.formularioGuia.controls).forEach(campo => {
-        const control = this.formularioGuia.get(campo);
-        if (control && control.invalid) {
-          console.warn(`Error en el campo "${campo}":`, control.errors);
-        }
-      });
+      return;
+    }
+    const acciones: Record<string, () => void> = {
+      nuevo: () => this._nuevoVehiculo(),
+      editar: () => this._editarVehiculo(),
+    };
+
+    if (this.detalleID() === 0) {
+      acciones['nuevo']?.();
+    } else {
+      acciones['editar']?.();
     }
   }
 
@@ -230,6 +244,20 @@ export default class GuiaFormularioComponent implements OnInit {
 
   getControl(nombre: string): FormControl {
     return this.formularioGuia.get(nombre) as FormControl;
+  }
+
+  modificarFormulario(campo: string, data: any) {
+    if (campo === 'ciudad_origen') {
+      this.formularioGuia.patchValue({
+        ciudad_origen: data.ciudad,
+      });
+    }
+    if (campo === 'destinatario_nombre') {
+      this.formularioGuia.patchValue({
+        destinatario_nombre: data?.nombre_corto ?? null,
+      });
+    }
+    this._changeDetectorRef.detectChanges();
   }
 
   private formatearFechaISO(fecha: string | null | undefined): string | null {
