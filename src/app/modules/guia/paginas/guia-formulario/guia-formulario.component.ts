@@ -20,7 +20,7 @@ import { TransporteRepository } from '@app/common/repositories/transporte/transp
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repository/guia.repository';
-import { OperacionRepository } from '../../repository/operacion.repository';
+import { OperacionRepository } from '@app/modules/operacion/repository/operacion.repository';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -147,8 +147,8 @@ export default class GuiaFormularioComponent implements OnInit {
       return;
     }
     const acciones: Record<string, () => void> = {
-      nuevo: () => this._nuevoVehiculo(),
-      editar: () => this._editarVehiculo(),
+      nuevo: () => this._nuevoGuia(),
+      editar: () => this._editarGuia(),
     };
 
     if (this.detalleID() === 0) {
@@ -158,7 +158,7 @@ export default class GuiaFormularioComponent implements OnInit {
     }
   }
 
-  private _nuevoVehiculo() {
+  private _nuevoGuia() {
     this._guiaRepository
       .nuevo(this.formularioGuia.value)
       .pipe(takeUntil(this.destroy$))
@@ -167,7 +167,7 @@ export default class GuiaFormularioComponent implements OnInit {
       });
   }
 
-  private _editarVehiculo() {
+  private _editarGuia() {
     this._guiaRepository
       .editar(this.detalleID(), this.formularioGuia.value)
       .pipe(takeUntil(this.destroy$))

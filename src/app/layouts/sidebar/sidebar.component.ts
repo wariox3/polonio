@@ -69,6 +69,10 @@ export class SidebarComponent implements OnInit {
           nombre: 'Conductor',
           link: '/administracion/conductor/lista',
         },
+        {
+          nombre: 'Operación',
+          link: '/administracion/operacion/lista',
+        },
       ],
     },
   ];

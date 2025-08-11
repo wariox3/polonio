@@ -62,6 +62,10 @@ export default [
         path: 'conductor',
         loadChildren: () => import('../modules/conductor/conductor.routes'),
       },
+      {
+        path: 'operacion',
+        loadChildren: () => import('../modules/operacion/operacion.routes'),
+      },
     ],
   },
 ] as Routes;
