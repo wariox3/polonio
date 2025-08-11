@@ -43,6 +43,10 @@ export default [
         path: 'negocio',
         loadChildren: () => import('../modules/negocio/negocio.routes'),
       },
+      {
+        path: 'despacho',
+        loadChildren: () => import('../modules/despacho/despacho.routes'),
+      },
     ],
   },
   {
