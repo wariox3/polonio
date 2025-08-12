@@ -40,7 +40,7 @@ export const columnasNegocioLista: ColumnaTabla[] = [
   {
     clave: 'declara',
     nombre: 'Declarado',
-    formato: valor => formatearMonedaCOP(valor, 0),
+    formato: valor => formatearMonedaCOP(valor),
     alineacion: 'derecha',
   },
   {

@@ -91,9 +91,6 @@ export default class NegocioListaComponent implements OnInit {
 
       return copia;
     });
-
-    console.log(this.negociosSeleccionados());
-
   }
 
   eliminar() {
@@ -118,6 +115,10 @@ export default class NegocioListaComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  exportarExcel() {
+    this._negocioRepository.descargarExcel(this.filtrosActivos());
   }
 
   private actualizarPaginacion(count: number) {

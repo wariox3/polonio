@@ -10,15 +10,15 @@ export interface IAlertOptions {
   icon?: 'success' | 'error' | 'warning' | 'info' | 'question';
   timer?: number;
   position?:
-    | 'top'
-    | 'top-start'
-    | 'top-end'
-    | 'center'
-    | 'center-start'
-    | 'center-end'
-    | 'bottom'
-    | 'bottom-start'
-    | 'bottom-end';
+  | 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'center'
+  | 'center-start'
+  | 'center-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end';
   showConfirmButton?: boolean;
   showCancelButton?: boolean;
   confirmButtonText?: string;
@@ -324,5 +324,25 @@ export class AlertaService {
       .then(() => {
         window.location.href = ruta;
       });
+  }
+
+  async mensajaEspera(
+    text: string,
+    icon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'info',
+  ) {
+    return await (Swal.fire({
+      html: text,
+      icon,
+      timerProgressBar: true,
+      showConfirmButton: true,
+      allowOutsideClick: false,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown',
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp',
+      },
+    }),
+    Swal.showLoading());
   }
 }

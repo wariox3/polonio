@@ -9,7 +9,7 @@ import { Negocio } from '../interfaces/negocio.interface';
 export class NegocioRepository {
   private _generalRepository = inject(GeneralRepository);
 
-  constructor() {}
+  constructor() { }
 
   lista(queryParams: QueryParams = {}) {
     return this._generalRepository.get<RespuestaApi<Negocio>>('transporte/negocio/', queryParams);
@@ -29,5 +29,12 @@ export class NegocioRepository {
 
   eliminar(id: number) {
     return this._generalRepository.delete<Negocio>('transporte/negocio/', id);
+  }
+
+  descargarExcel(data: QueryParams) {
+    this._generalRepository.descargarArchivos('transporte/negocio/', {
+      excel: 1,
+      ...data,
+    });
   }
 }
