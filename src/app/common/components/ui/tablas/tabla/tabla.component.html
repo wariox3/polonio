@@ -73,9 +73,14 @@
         class="hover:bg-gray-50 transition-colors duration-150 ease-in-out"
       >
         <!-- Celdas de datos -->
-        <td *ngFor="let columna of columnas" class="px-6 whitespace-nowrap text-sm text-gray-800">
-          {{ formatearValor(columna, item[columna.clave]) }}
-        </td>
+        @for (columna of columnas; track $index) {
+          <td
+            class="px-6 whitespace-nowrap text-sm text-gray-800"
+            [ngClass]="getClaseAlineacion(columna)"
+          >
+            {{ formatearValor(columna, item[columna.clave]) }}
+          </td>
+        }
 
         <!-- Acciones -->
         <td *ngIf="mostrarAcciones" class="px-4 whitespace-nowrap text-center w-[60px]">

@@ -85,6 +85,18 @@ export class TablaComponent {
     );
   }
 
+  getClaseAlineacion(columna: ColumnaTabla): string {
+    switch (columna.alineacion) {
+      case 'derecha':
+        return 'text-end';
+      case 'centro':
+        return 'text-center';
+      case 'izquierda':
+      default:
+        return 'text-start'; // valor por defecto
+    }
+  }
+
   private notificarSeleccion(): void {
     this.seleccionCambiada.emit([...this.registrosSeleccionados]);
   }
