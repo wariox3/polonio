@@ -53,12 +53,12 @@ export class InputComponent implements ControlValueAccessor {
   @Output() blurEvent = new EventEmitter<void>(); // Nuevo output para emitir evento de blur
 
   value: string = ''; // Valor interno del input
-  onChange: any = () => {}; // Función para notificar cambios
-  onTouched: any = () => {}; // Función para notificar que el input fue tocado
+  onChange: any = () => { }; // Función para notificar cambios
+  onTouched: any = () => { }; // Función para notificar que el input fue tocado
 
   // Escribe el valor en el input
   writeValue(value: any): void {
-    this.value = value || '';
+    this.value = value ?? '';
   }
 
   // Registra la función para notificar cambios

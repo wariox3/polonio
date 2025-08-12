@@ -1,4 +1,5 @@
 import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
+import { formatearMonedaCOP } from '@app/common/utils/formatters';
 
 export const columnasNegocioLista: ColumnaTabla[] = [
   {
@@ -36,17 +37,21 @@ export const columnasNegocioLista: ColumnaTabla[] = [
   {
     clave: 'declara',
     nombre: 'Declarado',
+    formato: valor => formatearMonedaCOP(valor),
   },
   {
     clave: 'pago',
     nombre: 'Pago',
+    formato: valor => formatearMonedaCOP(valor),
   },
   {
     clave: 'flete',
     nombre: 'Flete',
+    formato: valor => formatearMonedaCOP(valor),
   },
   {
     clave: 'manejo',
     nombre: 'Manejo',
+    formato: valor => formatearMonedaCOP(valor),
   },
 ];
