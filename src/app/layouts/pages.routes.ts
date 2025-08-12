@@ -66,6 +66,10 @@ export default [
         path: 'operacion',
         loadChildren: () => import('../modules/operacion/operacion.routes'),
       },
+      {
+        path: 'ruta',
+        loadChildren: () => import('../modules/ruta/ruta.routes'),
+      },
     ],
   },
 ] as Routes;

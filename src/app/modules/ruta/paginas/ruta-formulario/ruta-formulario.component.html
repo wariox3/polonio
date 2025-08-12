@@ -1,0 +1,26 @@
+<form [formGroup]="formularioRuta" (ngSubmit)="onSubmit()">
+  <div class="flex gap-2 mb-4">
+    <a class="btn btn-secondary" routerLink="/administracion/ruta/lista"> Atrás </a>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">
+        {{ detalleID() > 0 ? 'Editar ruta' : 'Registro de ruta' }}
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true">Nombre</app-label>
+          <app-input
+            formControlName="nombre"
+            [type]="'text'"
+            [control]="formularioRuta.get('nombre')"
+            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 100 caracteres.' }"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
