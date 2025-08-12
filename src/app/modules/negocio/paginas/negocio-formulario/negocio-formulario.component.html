@@ -40,6 +40,7 @@
             [parametrosEndpoint]="{
               nombre_corto__icontains: this.formularioNegocio.get('contacto__nombre_corto').value,
               limit: 10,
+              cliente: 'True',
             }"
           ></app-select-search>
         </div>
@@ -127,7 +128,7 @@
 
         <!-- Declara -->
         <div>
-          <app-label [required]="true">Valor Declarado</app-label>
+          <app-label [required]="true">Valor declarado</app-label>
           <app-input
             placeholder="Ingresa el valor declarado"
             formControlName="declara"
