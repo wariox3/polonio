@@ -3,15 +3,16 @@
  * @param valor Valor numérico a formatear
  * @returns Cadena formateada con el símbolo de moneda y separadores
  */
-export function formatearMonedaCOP(valor: number): string {
+export function formatearMonedaCOP(valor: number, decimales: number = 2): string {
   if (valor === null || valor === undefined) {
     return '';
   }
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'COP',
-    currencyDisplay: 'symbol',
-  }).format(valor);
+  return valor.toFixed(decimales).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  // return new Intl.NumberFormat('es-CO', {
+  //   style: 'currency',
+  //   currency: 'COP',
+  //   currencyDisplay: 'symbol',
+  // }).format(valor);
 }
 
 /**

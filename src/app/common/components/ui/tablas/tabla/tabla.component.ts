@@ -34,16 +34,16 @@ export class TablaComponent {
     const nuevoEstado = !this.seleccionTodos;
     this.seleccionTodos = nuevoEstado;
 
-    // Limpiar selección actual
     this.registrosSeleccionados = [];
 
-    // Si estamos marcando (no desmarcando)
     if (nuevoEstado) {
-      // Agregar todos los IDs de los datos actuales
       this.registrosSeleccionados = [...this.datos];
+      // Emitimos pero NO limpiamos para que se mantengan seleccionados visualmente
+      this.notificarSeleccion(false);
+    } else {
+      // Desmarcar todos → emitimos y limpiamos
+      this.notificarSeleccion(true);
     }
-
-    this.notificarSeleccion();
   }
 
   // Alternar selección individual - CORRECCIÓN ADICIONAL
@@ -60,11 +60,11 @@ export class TablaComponent {
       this.registrosSeleccionados.splice(index, 1);
     }
 
-    // Actualizar estado del checkbox principal
     this.seleccionTodos = this.registrosSeleccionados.length === this.datos.length;
-    this.notificarSeleccion();
-  }
 
+    // En selección individual sí limpiamos después de emitir
+    this.notificarSeleccion(true);
+  }
   // Verificar selección
   estaSeleccionado(registro: any): boolean {
     return this.registrosSeleccionados.some(
@@ -97,7 +97,12 @@ export class TablaComponent {
     }
   }
 
-  private notificarSeleccion(): void {
+  private notificarSeleccion(limpiar = true): void {
     this.seleccionCambiada.emit([...this.registrosSeleccionados]);
+
+    if (limpiar) {
+      this.registrosSeleccionados = [];
+      this.seleccionTodos = false;
+    }
   }
 }

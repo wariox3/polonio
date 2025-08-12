@@ -25,19 +25,22 @@ export const columnasNegocioLista: ColumnaTabla[] = [
   {
     clave: 'unidades',
     nombre: 'Unidades',
+    alineacion: 'derecha',
   },
   {
     clave: 'peso',
     nombre: 'Peso',
+    alineacion: 'derecha',
   },
   {
     clave: 'volumen',
     nombre: 'Volumen',
+    alineacion: 'derecha',
   },
   {
     clave: 'declara',
     nombre: 'Declarado',
-    formato: valor => formatearMonedaCOP(valor),
+    formato: valor => formatearMonedaCOP(valor, 0),
     alineacion: 'derecha',
   },
   {
