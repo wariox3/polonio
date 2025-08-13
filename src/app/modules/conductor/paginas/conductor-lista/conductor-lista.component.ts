@@ -20,7 +20,10 @@ import { ConductorRepository } from '../../repository/conductor.repository';
 })
 export default class ConductorListaComponent implements OnInit {
   private _conductorRepository = inject(ConductorRepository);
-  private _filtrosActivos = signal<QueryParams>({});
+  private _filtrosActivos = signal<QueryParams>({
+    conductor: 'True',
+    serializador: 'lista',
+  });
 
   public conductoresSeleccionados = signal<Conductor[]>([]);
   public conductores = signal<Conductor[]>([]);

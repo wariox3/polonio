@@ -14,20 +14,23 @@
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
+          <app-label [required]="true"> Tipo persona </app-label>
+          <app-select
+            [control]="getControl('tipo_persona')"
+            [opciones]="arrTipoPersona()"
+          ></app-select>
+        </div>
+        <div>
+          <app-label [required]="true"> Régimen fiscal </app-label>
+          <app-select [control]="getControl('regimen')" [opciones]="arrRegimen()"></app-select>
+        </div>
+
+        <div>
           <app-label [required]="true"> identificación </app-label>
-          <app-select-search
+          <app-select
             [control]="getControl('identificacion')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-            }"
-            [endpoint]="'general/identificacion/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioConductor.get('identificacion__nombre').value,
-              tipo_persona: 2,
-              limit: 10,
-            }"
-          ></app-select-search>
+            [opciones]="filteredIdentificacionSignal()"
+          ></app-select>
         </div>
 
         <div>
@@ -43,6 +46,8 @@
               required: 'El modelo es requerido.',
               min: 'Debe ser mayor o igual a 1900.',
               max: 'No puede ser mayor al año actual.',
+              numeroIdentificacionExistente:
+                'El conductor con el número y tipo de identificación seleccionados ya existe.',
             }"
           ></app-input>
         </div>
@@ -79,62 +84,80 @@
             }"
           ></app-select-search>
         </div>
+        @if (formularioConductor.value.tipo_persona === 1) {
+          <div>
+            <app-label [required]="true">Nombre corto</app-label>
+            <app-input
+              placeholder="Nombre corto"
+              formControlName="nombre_corto"
+              [type]="'text'"
+              maxlength=""
+              [control]="formularioConductor.get('nombre_corto')"
+              [errors]="{
+                required: 'Este campo es requerido.',
+                maxlength: 'Máximo 200 caracteres.',
+              }"
+            ></app-input>
+          </div>
+        }
 
-        <div>
-          <app-label [required]="true">Primer nombre</app-label>
-          <app-input
-            placeholder="Ingresa primer nombre"
-            formControlName="nombre1"
-            [type]="'text'"
-            maxlength=""
-            [control]="formularioConductor.get('nombre1')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-              maxlength: 'Máximo 50 caracteres.',
-            }"
-          ></app-input>
-        </div>
+        @if (formularioConductor.value.tipo_persona === 2) {
+          <div>
+            <app-label [required]="true">Primer nombre</app-label>
+            <app-input
+              placeholder="Ingresa primer nombre"
+              formControlName="nombre1"
+              [type]="'text'"
+              maxlength=""
+              [control]="formularioConductor.get('nombre1')"
+              [errors]="{
+                required: 'Este campo es requerido.',
+                maxlength: 'Máximo 50 caracteres.',
+              }"
+            ></app-input>
+          </div>
 
-        <div>
-          <app-label>Segundo nombre</app-label>
-          <app-input
-            placeholder="Ingresa segundo nombre"
-            formControlName="nombre2"
-            [type]="'text'"
-            maxlength=""
-            [control]="formularioConductor.get('nombre2')"
-          ></app-input>
-        </div>
+          <div>
+            <app-label>Segundo nombre</app-label>
+            <app-input
+              placeholder="Ingresa segundo nombre"
+              formControlName="nombre2"
+              [type]="'text'"
+              maxlength=""
+              [control]="formularioConductor.get('nombre2')"
+            ></app-input>
+          </div>
 
-        <div>
-          <app-label [required]="true">Primer apellido</app-label>
-          <app-input
-            placeholder="Ingresa primer apellido"
-            formControlName="apellido1"
-            [type]="'text'"
-            maxlength=""
-            [control]="formularioConductor.get('apellido1')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-              min: 'Debe ser un valor positivo.',
-            }"
-          ></app-input>
-        </div>
+          <div>
+            <app-label [required]="true">Primer apellido</app-label>
+            <app-input
+              placeholder="Ingresa primer apellido"
+              formControlName="apellido1"
+              [type]="'text'"
+              maxlength=""
+              [control]="formularioConductor.get('apellido1')"
+              [errors]="{
+                required: 'Este campo es requerido.',
+                min: 'Debe ser un valor positivo.',
+              }"
+            ></app-input>
+          </div>
 
-        <div>
-          <app-label>Segundo apellido</app-label>
-          <app-input
-            placeholder="Ingresa segundo apellido"
-            formControlName="apellido2"
-            [type]="'text'"
-            maxlength=""
-            [control]="formularioConductor.get('apellido2')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-              min: 'Debe ser un valor positivo.',
-            }"
-          ></app-input>
-        </div>
+          <div>
+            <app-label>Segundo apellido</app-label>
+            <app-input
+              placeholder="Ingresa segundo apellido"
+              formControlName="apellido2"
+              [type]="'text'"
+              maxlength=""
+              [control]="formularioConductor.get('apellido2')"
+              [errors]="{
+                required: 'Este campo es requerido.',
+                min: 'Debe ser un valor positivo.',
+              }"
+            ></app-input>
+          </div>
+        }
 
         <div>
           <app-label [required]="true">Correo</app-label>
