@@ -28,9 +28,6 @@ export default class conductorDetalleComponent implements OnInit, OnDestroy {
     ciudad: 0,
     ciudad__nombre: '',
     ciudad__estado__nombre: '',
-    rh: 0,
-    rh__nombre: '',
-    rh__codigo: '',
     numero_identificacion: '',
     nombre_corto: '',
     nombre1: '',
@@ -44,15 +41,7 @@ export default class conductorDetalleComponent implements OnInit, OnDestroy {
     correo: '',
     numero_licencia: '',
     categoria_licencia: '',
-    fecha_nacimiento: '',
     fecha_vence_licencia: '',
-    fecha_expedicion_licencia: '',
-    fecha_ingreso: undefined,
-    fecha_retiro: undefined,
-    propio: false,
-    estado_inactivo: false,
-    estado_revisado: false,
-    comentario: '',
   });
   camposDetalle = computed<CampoDetalle[]>(() => {
     return obtenerCamposConductorDetalle(this.vehiculosSignal());

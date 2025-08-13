@@ -204,22 +204,6 @@
         </div>
 
         <div>
-          <app-label [required]="true">Rh</app-label>
-          <app-select-search
-            [control]="getControl('rh')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-            }"
-            [endpoint]="'general/rh/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioConductor.get('rh__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-
-        <div>
           <app-label>Barrio</app-label>
           <app-input
             placeholder="Barrio"
@@ -288,62 +272,6 @@
             }"
           ></app-input>
         </div>
-
-        <div>
-          <app-label [required]="true">Fecha vence nacimiento</app-label>
-          <app-input
-            placeholder="fecha nacimiento"
-            formControlName="fecha_nacimiento"
-            [type]="'date'"
-            maxlength=""
-            [control]="formularioConductor.get('fecha_nacimiento')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-            }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label [required]="true">Fecha expedicion licencia</app-label>
-          <app-input
-            formControlName="fecha_expedicion_licencia"
-            [type]="'date'"
-            maxlength=""
-            [control]="formularioConductor.get('fecha_expedicion_licencia')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-            }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label [required]="true">Fecha ingreso</app-label>
-          <app-input
-            formControlName="fecha_ingreso"
-            [type]="'date'"
-            maxlength=""
-            [control]="formularioConductor.get('fecha_ingreso')"
-          ></app-input>
-        </div>
-        <div>
-          <app-label [required]="true">Fecha retiro</app-label>
-          <app-input
-            placeholder="fecha retiro"
-            formControlName="fecha_retiro"
-            [type]="'date'"
-            maxlength=""
-            [control]="formularioConductor.get('fecha_retiro')"
-          ></app-input>
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Comentario</label>
-        <textarea
-          rows="2"
-          class="w-full px-3 py-2 text-gray-700 border rounded-lg"
-          formControlName="comentario"
-        ></textarea>
       </div>
     </div>
   </div>

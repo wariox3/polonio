@@ -48,14 +48,10 @@ export default class ConductorFormularioComponent implements OnInit {
   public informacionContacto: any = {
     id: 0,
     identificacion: 0,
-    identificacion__nombre: '',
     digito_verificacion: 0,
     ciudad: 0,
     ciudad__nombre: '',
     ciudad__estado__nombre: '',
-    rh: 0,
-    rh__nombre: '',
-    rh__codigo: '',
     numero_identificacion: '',
     nombre_corto: '',
     nombre1: '',
@@ -69,15 +65,7 @@ export default class ConductorFormularioComponent implements OnInit {
     correo: '',
     numero_licencia: '',
     categoria_licencia: '',
-    fecha_nacimiento: '',
     fecha_vence_licencia: '',
-    fecha_expedicion_licencia: '',
-    fecha_ingreso: undefined,
-    fecha_retiro: undefined,
-    propio: false,
-    estado_inactivo: false,
-    estado_revisado: false,
-    comentario: '',
     identificacion_id: 0,
   };
   public detalleID = signal(0);
@@ -111,7 +99,6 @@ export default class ConductorFormularioComponent implements OnInit {
       apellido1: ['', [Validators.required, Validators.maxLength(50)]],
       apellido2: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       nombre_corto: ['', [Validators.required, Validators.maxLength(200)]],
-      fecha_nacimiento: ['', [Validators.required]],
       direccion: ['', [Validators.required, Validators.maxLength(100)]],
       barrio: ['', [Validators.maxLength(200), cambiarVacioPorNulo.validar]],
       telefono: ['', [Validators.required, Validators.maxLength(50)]],
@@ -120,26 +107,16 @@ export default class ConductorFormularioComponent implements OnInit {
       numero_licencia: ['', [Validators.required, Validators.maxLength(50)]],
       categoria_licencia: ['', [Validators.required, Validators.maxLength(2)]],
       fecha_vence_licencia: ['', [Validators.required]],
-      fecha_expedicion_licencia: ['', [Validators.required]],
-      fecha_ingreso: [''],
-      fecha_retiro: [''],
-      propio: [false],
-      estado_inactivo: [false],
-      estado_revisado: [false],
-      comentario: ['', [Validators.maxLength(500), cambiarVacioPorNulo.validar]],
       identificacion: [1, [Validators.required]],
-      identificacion__nombre: [null],
       ciudad: [null, [Validators.required]],
       ciudad__nombre: [null],
-      rh: [null, [Validators.required]],
-      rh__nombre: [null],
     });
   }
 
   onSubmit() {
-    this.actualizarNombreCorto();
-
     if (this.formularioConductor.valid) {
+      console.log(this.detalleID());
+
       if (this.detalleID() === 0) {
         this._nuevoConductor();
       } else {
@@ -192,7 +169,14 @@ export default class ConductorFormularioComponent implements OnInit {
   }
 
   private _editarConductor() {
-    this.actualizarNombreCorto();
+    if (this.formularioConductor.get('tipo_persona')?.value == 1) {
+      this.formularioConductor.patchValue({
+        nombre1: null,
+        nombre2: null,
+        apellido1: null,
+        apellido2: null,
+      });
+    }
     this._conductorRepository
       .editar(this.detalleID(), this.formularioConductor.value)
       .pipe(takeUntil(this.destroy$))
@@ -227,28 +211,17 @@ export default class ConductorFormularioComponent implements OnInit {
       apellido1: data.apellido1,
       apellido2: data.apellido2,
       nombre_corto: data.nombre_corto,
-      fecha_nacimiento: data.fecha_nacimiento ?? '',
       direccion: data.direccion,
       barrio: data.barrio,
       telefono: data.telefono,
       celular: data.celular,
       correo: data.correo,
-      numero_licencia: data.numero_licencia ?? '',
-      categoria_licencia: data.categoria_licencia ?? '',
-      fecha_vence_licencia: data.fecha_vence_licencia ?? '',
-      fecha_expedicion_licencia: data.fecha_expedicion_licencia ?? '',
-      fecha_ingreso: data.fecha_ingreso ?? '',
-      fecha_retiro: data.fecha_retiro ?? '',
-      propio: data.propio ?? '',
-      estado_inactivo: data.estado_inactivo ?? '',
-      estado_revisado: data.estado_revisado ?? '',
-      comentario: data.comentario ?? '',
+      numero_licencia: data.numero_licencia,
+      categoria_licencia: data.categoria_licencia,
+      fecha_vence_licencia: data.fecha_vence_licencia,
       identificacion: data.identificacion_id,
-      identificacion__nombre: data.identificacion__nombre ?? '',
       ciudad: data.ciudad_id,
       ciudad__nombre: data.ciudad_nombre,
-      rh: data.rh ?? '',
-      rh__nombre: data.rh__nombre ?? '',
       tipo_persona: data.tipo_persona_id,
       regimen: data.regimen_id,
     });
