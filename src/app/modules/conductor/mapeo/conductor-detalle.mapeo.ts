@@ -8,21 +8,33 @@ import { Conductor } from '../interfaces/conductor.interface';
  */
 export function obtenerCamposConductorDetalle(datos: Conductor): CampoDetalle[] {
   return [
-    { clave: 'nombre_corto', etiqueta: 'Nombre' },
-    { clave: 'identificacion__nombre', etiqueta: 'Tipo identificación' },
+    { clave: 'tipo_persona', etiqueta: 'Nombre', filaCompleta: true },
+    { clave: 'nombre_corto', etiqueta: 'Nombre', filaCompleta: true },
+    { clave: 'nombre1', etiqueta: 'Primer nombre' },
+    { clave: 'nombre2', etiqueta: 'Segundo  nombre' },
+    { clave: 'apellido1', etiqueta: 'Primer apellido	' },
+    { clave: 'apellido2', etiqueta: 'Segundo apellido' },
+    { clave: 'identificacion_abreviatura', etiqueta: 'Tipo identificación' },
     {
       clave: 'numero_identificacion',
       etiqueta: 'Identificación',
-      formato: valor => `${valor} - ${datos.digito_verificacion}`,
     },
-    { clave: 'direccion', etiqueta: 'Dirección' },
+    {
+      clave: 'digito_verificacion',
+      etiqueta: 'Digito verificación',
+    },
     { clave: 'telefono', etiqueta: 'Teléfono' },
     { clave: 'celular', etiqueta: 'Celular' },
-    { clave: 'fecha_ingreso', etiqueta: 'Fecha ingreso' },
-    { clave: 'fecha_retiro', etiqueta: 'Fecha retiro' },
+    { clave: 'correo', etiqueta: 'Correo' },
     { clave: 'numero_licencia', etiqueta: 'Licencia' },
-    { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha expedición licencia' },
-    { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha vencimiento licencia' },
-    { clave: 'comentario', etiqueta: 'Comentario', filaCompleta: true },
+    { clave: 'categoria_licencia', etiqueta: 'Categoria' },
+    { clave: 'fecha_vence_licencia', etiqueta: 'Vence' },
+
+    { clave: 'direccion', etiqueta: 'Dirección', filaCompleta: true },
+    { clave: 'regimen_nombre', etiqueta: 'Regimen', filaCompleta: true },
+    // { clave: 'fecha_ingreso', etiqueta: 'Fecha ingreso' },
+    // { clave: 'fecha_retiro', etiqueta: 'Fecha retiro' },
+    // { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha expedición licencia' },
+    // { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha vencimiento licencia' },
   ];
 }
