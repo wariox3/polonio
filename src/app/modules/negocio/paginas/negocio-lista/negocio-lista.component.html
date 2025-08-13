@@ -24,7 +24,7 @@
       ></app-paginador>
       <div class="flex">
         <div
-          class="dropdown"
+          class="dropdown rounded-r-none"
           data-dropdown="true"
           data-dropdown-trigger="click"
           data-dropdown-dismiss="true"
@@ -44,9 +44,9 @@
           </div>
         </div>
 
-        <a class="btn btn-primary" routerLink="/movimiento/negocio/nuevo"> Nuevo </a>
+        <a class="btn btn-primary rounded-none" routerLink="/movimiento/negocio/nuevo"> Nuevo </a>
         <button
-          class="btn btn-danger"
+          class="btn btn-danger rounded-l-none"
           (click)="eliminar()"
           [disabled]="negociosSeleccionados().length === 0"
         >

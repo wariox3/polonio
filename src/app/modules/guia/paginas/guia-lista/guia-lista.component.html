@@ -22,9 +22,9 @@
         (pageChange)="onPageChange($event)"
       ></app-paginador>
       <div class="flex">
-        <a class="btn btn-primary" routerLink="/movimiento/guia/nuevo"> Nuevo </a>
+        <a class="btn btn-primary rounded-r-none" routerLink="/movimiento/guia/nuevo"> Nuevo </a>
         <button
-          class="btn btn-danger"
+          class="btn btn-danger rounded-l-none"
           (click)="eliminar()"
           [disabled]="guiasSeleccionadas().length === 0"
         >
