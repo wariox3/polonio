@@ -1,0 +1,156 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">{{ detalleID() > 0 ? 'Editar' : 'Nuevo' }} Despacho</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="formularioDespacho" (ngSubmit)="guardar()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Vehículo -->
+        <div>
+          <app-label [required]="true">Vehículo</app-label>
+          <app-select-search
+            [control]="getControl('vehiculo')"
+            [label]="'placa'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'administracion/vehiculo/seleccionar/'"
+            [campoBusqueda]="'placa__icontains'"
+            [parametrosEndpoint]="{ limit: 10 }"
+          ></app-select-search>
+        </div>
+
+        <!-- Remolque -->
+        <div>
+          <app-label [required]="true">Remolque</app-label>
+          <app-select-search
+            [control]="getControl('remolque')"
+            [label]="'placa'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'administracion/vehiculo/seleccionar/'"
+            [campoBusqueda]="'placa__icontains'"
+            [parametrosEndpoint]="{ limit: 10 }"
+          ></app-select-search>
+        </div>
+
+        <!-- Conductor -->
+        <div>
+          <app-label [required]="true">Conductor</app-label>
+          <app-select-search
+            [control]="getControl('conductor')"
+            [label]="'nombre_corto'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'administracion/conductor/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{ limit: 10 }"
+          ></app-select-search>
+        </div>
+
+        <!-- Ciudad Origen -->
+        <div>
+          <app-label [required]="true">Ciudad Origen</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_origen')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{ limit: 10 }"
+          ></app-select-search>
+        </div>
+
+        <!-- Ciudad Destino -->
+        <div>
+          <app-label [required]="true">Ciudad Destino</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_destino')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{ limit: 10 }"
+          ></app-select-search>
+        </div>
+
+        <!-- Ruta -->
+        <div>
+          <app-label [required]="true">Ruta</app-label>
+          <app-select-search
+            [control]="getControl('ruta')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/ruta/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{ limit: 10 }"
+          ></app-select-search>
+        </div>
+
+        <!-- Operación -->
+        <div>
+          <app-label [required]="true">Operación</app-label>
+          <app-select-search
+            [control]="getControl('operacion')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/operacion/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{ limit: 10 }"
+          ></app-select-search>
+        </div>
+
+        <!-- Pago -->
+        <div>
+          <app-label [required]="true">Pago</app-label>
+          <app-input
+            formControlName="pago"
+            [type]="'number'"
+            [control]="formularioDespacho.get('pago')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              min: 'El valor debe ser mayor o igual a 0.',
+            }"
+            placeholder="0.00"
+          ></app-input>
+        </div>
+
+        <!-- Flete -->
+        <div>
+          <app-label [required]="true">Flete</app-label>
+          <app-input
+            formControlName="flete"
+            [type]="'number'"
+            [control]="formularioDespacho.get('flete')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              min: 'El valor debe ser mayor o igual a 0.',
+            }"
+            placeholder="0.00"
+          ></app-input>
+        </div>
+
+        <!-- Comentario -->
+        <div class="md:col-span-2">
+          <app-label>Comentario</app-label>
+          <app-input
+            formControlName="comentario"
+            [type]="'textarea'"
+            [control]="formularioDespacho.get('comentario')"
+            [errors]="{ maxlength: 'Máximo 500 caracteres.' }"
+            placeholder="Comentarios adicionales..."
+          ></app-input>
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 mt-6">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="_router.navigate(['/movimiento/despacho/lista'])"
+        >
+          Atrás
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="formularioDespacho.invalid">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

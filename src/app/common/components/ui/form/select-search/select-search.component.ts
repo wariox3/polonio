@@ -43,7 +43,7 @@ export class SelectSearchComponent implements OnChanges {
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['parametrosEndpoint'].firstChange) {
+    if (changes['parametrosEndpoint'] && !changes['parametrosEndpoint'].firstChange) {
       this._consultarData(this.parametrosEndpoint);
     }
   }

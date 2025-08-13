@@ -72,7 +72,7 @@ export class HttpBaseRepository {
     return this.httpClient.get(url, {
       params,
       observe: 'response',
-      responseType: 'blob'
+      responseType: 'blob',
     });
   }
 }
