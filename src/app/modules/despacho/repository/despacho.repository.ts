@@ -12,22 +12,22 @@ export class DespachoRepository {
   constructor() {}
 
   lista(queryParams: QueryParams = {}) {
-    return this._generalRepository.get<RespuestaApi<Despacho>>('ruteo/despacho/', queryParams);
+    return this._generalRepository.get<RespuestaApi<Despacho>>('transporte/despacho/', queryParams);
   }
 
   nuevo(data: Despacho) {
-    return this._generalRepository.create<Despacho>('ruteo/despacho/', data);
+    return this._generalRepository.create<Despacho>('transporte/despacho/', data);
   }
 
   editar(id: number, data: Despacho) {
-    return this._generalRepository.update<Despacho>('ruteo/despacho/', id, data);
+    return this._generalRepository.update<Despacho>('transporte/despacho/', id, data);
   }
 
   detalle(id: number) {
-    return this._generalRepository.getById<Despacho>('ruteo/despacho/', id);
+    return this._generalRepository.getById<Despacho>('transporte/despacho/', id);
   }
 
   eliminar(id: number) {
-    return this._generalRepository.delete<Despacho>('ruteo/despacho/', id);
+    return this._generalRepository.delete<Despacho>('transporte/despacho/', id);
   }
 }
