@@ -104,6 +104,16 @@ export class GeneralRepository {
   }
 
   /**
+   * Consultar un recurso mediante POST con el subdominio actual
+   * @param endpoint Ruta del endpoint
+   * @param data Datos a enviar
+   * @returns Observable con la respuesta tipada
+   */
+  public post<T>(endpoint: string, data: any): Observable<T> {
+    return this.postWithSubdominio<T>(endpoint, data);
+  }
+
+  /**
    * Construye los parámetros HTTP a partir de los parámetros de consulta
    * @param queryParams Parámetros de consulta
    * @returns HttpParams
