@@ -190,7 +190,7 @@
             [errors]="{
               required: 'Este campo es requerido.',
               email: 'Correo no valido',
-              maxlength: 'Máximo 255 caracteres.',
+              maxLength: 'Máximo 255 caracteres.',
             }"
           ></app-input>
         </div>
@@ -204,7 +204,7 @@
             maxlength=""
             [control]="formularioConductor.get('celular')"
             [errors]="{
-              maxlength: 'Máximo 50 caracteres.',
+              maxLength: 'Máximo 50 caracteres.',
             }"
           ></app-input>
         </div>
@@ -232,7 +232,7 @@
             maxlength=""
             [control]="formularioConductor.get('barrio')"
             [errors]="{
-              maxlength: 'Máximo 200 caracteres.',
+              maxLength: 'Máximo 200 caracteres.',
             }"
           ></app-input>
         </div>
@@ -275,6 +275,7 @@
             [control]="formularioConductor.get('categoria_licencia')"
             [errors]="{
               required: 'Este campo es requerido.',
+              maxLength: 'Máximo 2 caracteres.',
             }"
           ></app-input>
         </div>

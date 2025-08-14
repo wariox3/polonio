@@ -103,13 +103,13 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       regimen: [1, Validators.compose([Validators.required])],
       numero_identificacion: ['', [Validators.required, Validators.maxLength(20)]],
       digito_verificacion: ['', [Validators.maxLength(1)]],
-      nombre1: ['', [Validators.required, Validators.maxLength(50)]],
-      nombre2: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
-      apellido1: ['', [Validators.required, Validators.maxLength(50)]],
-      apellido2: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
-      nombre_corto: ['', [Validators.required, Validators.maxLength(200)]],
-      direccion: ['', [Validators.required, Validators.maxLength(100)]],
-      barrio: ['', [Validators.maxLength(200), cambiarVacioPorNulo.validar]],
+      nombre1: [null, [Validators.maxLength(50)]],
+      nombre2: [null, [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
+      apellido1: [null, [Validators.maxLength(50)]],
+      apellido2: [null, [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
+      nombre_corto: [null, [Validators.required, Validators.maxLength(200)]],
+      direccion: [null, [Validators.required, Validators.maxLength(100)]],
+      barrio: [null, [Validators.maxLength(200), cambiarVacioPorNulo.validar]],
       telefono: ['', [Validators.required, Validators.maxLength(50)]],
       celular: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       correo: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
@@ -119,6 +119,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       identificacion: [1, [Validators.required]],
       ciudad: [null, [Validators.required]],
       ciudad__nombre: [null],
+      conductor: [true],
     });
   }
 
@@ -126,6 +127,17 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
     if (!this.formularioConductor.valid) {
       this.formularioConductor.markAllAsTouched();
       return;
+    }
+    if (this.formularioConductor.get('tipo_persona')?.value == 2) {
+      this.actualizarNombreCorto();
+    }
+    if (this.detalleID() > 0 && this.formularioConductor.get('tipo_persona')?.value == 1) {
+      this.formularioConductor.patchValue({
+        nombre1: null,
+        nombre2: null,
+        apellido1: null,
+        apellido2: null,
+      });
     }
     if (this.detalleID() === 0) {
       this._nuevoConductor();
@@ -171,7 +183,6 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   }
 
   private _nuevoConductor() {
-    this.actualizarNombreCorto();
     this._conductorRepository
       .nuevo(this.formularioConductor.value)
       .pipe(takeUntil(this._destroy$))
@@ -237,6 +248,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       ciudad__nombre: data.ciudad_nombre,
       tipo_persona: data.tipo_persona_id,
       regimen: data.regimen_id,
+      conducto: true,
     });
   }
 
@@ -334,11 +346,9 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
           );
         }
         if (this.detalleID() > 0) {
-          console.log(this.filteredIdentificacionSignal());
-
           this.formularioConductor.patchValue(
             {
-              identificacion: this.identificacionIdApiDetalleSignal(),
+              identificacion: this.filteredIdentificacionSignal()[0].valor,
               tipo_persona: valorPersonaTipo,
             },
             { emitEvent: false }
