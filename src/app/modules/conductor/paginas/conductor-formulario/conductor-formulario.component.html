@@ -19,10 +19,23 @@
             [control]="getControl('tipo_persona')"
             [opciones]="arrTipoPersona()"
           ></app-select>
+          @if (
+            formularioConductor.get('tipo_persona').hasError('required') &&
+            (formularioConductor.get('tipo_persona').dirty ||
+              formularioConductor.get('tipo_persona').touched)
+          ) {
+            <p class="text-sm text-red-600 mt-1">Este campo es requerido.</p>
+          }
         </div>
         <div>
           <app-label [required]="true"> Régimen fiscal </app-label>
           <app-select [control]="getControl('regimen')" [opciones]="arrRegimen()"></app-select>
+          @if (
+            formularioConductor.get('regimen').hasError('required') &&
+            (formularioConductor.get('regimen').dirty || formularioConductor.get('regimen').touched)
+          ) {
+            <p class="text-sm text-red-600 mt-1">Este campo es requerido.</p>
+          }
         </div>
 
         <div>
@@ -31,6 +44,13 @@
             [control]="getControl('identificacion')"
             [opciones]="filteredIdentificacionSignal()"
           ></app-select>
+          @if (
+            formularioConductor.get('identificacion').hasError('required') &&
+            (formularioConductor.get('identificacion').dirty ||
+              formularioConductor.get('identificacion').touched)
+          ) {
+            <p class="text-sm text-red-600 mt-1">Este campo es requerido.</p>
+          }
         </div>
 
         <div>
@@ -43,7 +63,7 @@
             [control]="formularioConductor.get('numero_identificacion')"
             (blurEvent)="calcularDigitoVerificacion()"
             [errors]="{
-              required: 'El modelo es requerido.',
+              required: 'Este campo es requerido.',
               min: 'Debe ser mayor o igual a 1900.',
               max: 'No puede ser mayor al año actual.',
               numeroIdentificacionExistente:

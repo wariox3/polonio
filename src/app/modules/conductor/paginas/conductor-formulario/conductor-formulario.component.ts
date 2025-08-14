@@ -123,14 +123,14 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.formularioConductor.valid) {
-      if (this.detalleID() === 0) {
-        this._nuevoConductor();
-      } else {
-        this._editarConductor();
-      }
-    } else {
+    if (!this.formularioConductor.valid) {
       this.formularioConductor.markAllAsTouched();
+      return;
+    }
+    if (this.detalleID() === 0) {
+      this._nuevoConductor();
+    } else {
+      this._editarConductor();
     }
   }
 
