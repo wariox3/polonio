@@ -315,7 +315,6 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
         } else {
           this.formularioConductor.patchValue(
             {
-              identificacion: this.filteredIdentificacionSignal()[0].valor,
               tipo_persona: valorPersonaTipo,
             },
             { emitEvent: false }
