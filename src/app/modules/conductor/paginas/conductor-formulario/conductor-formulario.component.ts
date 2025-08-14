@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -12,13 +20,13 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
+import { SelectComponent } from '@app/common/components/ui/form/select/select.component';
 import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
+import { GeneralRepository } from '@app/core';
 import { debounceTime, filter, Subject, switchMap, takeUntil, zip } from 'rxjs';
 import { Conductor } from '../../interfaces/conductor.interface';
 import { ConductorRepository } from '../../repository/conductor.repository';
-import { GeneralRepository } from '@app/core';
-import { SelectComponent } from '@app/common/components/ui/form/select/select.component';
 
 @Component({
   selector: 'app-conductor-formulario',
@@ -36,7 +44,7 @@ import { SelectComponent } from '@app/common/components/ui/form/select/select.co
   templateUrl: './conductor-formulario.component.html',
   styleUrl: './conductor-formulario.component.scss',
 })
-export default class ConductorFormularioComponent implements OnInit {
+export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   private _formBuilder = inject(FormBuilder);
   private _conductorRepository = inject(ConductorRepository);
   private _generalRepository = inject(GeneralRepository);
@@ -44,7 +52,7 @@ export default class ConductorFormularioComponent implements OnInit {
   private _devuelveDigitoVerificacionService = inject(DevuelveDigitoVerificacionService);
   private _router = inject(Router);
   private _changeDetectorRef = inject(ChangeDetectorRef);
-  private destroy$ = new Subject<void>();
+  private _destroy$ = new Subject<void>();
   public informacionContacto: any = {
     id: 0,
     identificacion: 0,
@@ -79,6 +87,7 @@ export default class ConductorFormularioComponent implements OnInit {
     this.arrIdentificacion().filter(item => item.tipo_persona === this.filtroIdentificacionSignal())
   );
   public formularioConductor: FormGroup;
+  public identificacionIdApiDetalleSignal = signal(0);
 
   ngOnInit() {
     this.inicializarFormulario();
@@ -115,8 +124,6 @@ export default class ConductorFormularioComponent implements OnInit {
 
   onSubmit() {
     if (this.formularioConductor.valid) {
-      console.log(this.detalleID());
-
       if (this.detalleID() === 0) {
         this._nuevoConductor();
       } else {
@@ -125,6 +132,11 @@ export default class ConductorFormularioComponent implements OnInit {
     } else {
       this.formularioConductor.markAllAsTouched();
     }
+  }
+
+  ngOnDestroy(): void {
+    this._destroy$.next();
+    this._destroy$.unsubscribe();
   }
 
   consultarInformacion() {
@@ -162,7 +174,7 @@ export default class ConductorFormularioComponent implements OnInit {
     this.actualizarNombreCorto();
     this._conductorRepository
       .nuevo(this.formularioConductor.value)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this._destroy$))
       .subscribe(respuesta => {
         this._router.navigate(['administracion/conductor/detalle/', respuesta.id]);
       });
@@ -179,7 +191,7 @@ export default class ConductorFormularioComponent implements OnInit {
     }
     this._conductorRepository
       .editar(this.detalleID(), this.formularioConductor.value)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntil(this._destroy$))
       .subscribe(respuesta => {
         this._router.navigate(['administracion/conductor/detalle/', respuesta.id]);
       });
@@ -188,7 +200,7 @@ export default class ConductorFormularioComponent implements OnInit {
   consultardetalle() {
     this._activatedRoute.params
       .pipe(
-        takeUntil(this.destroy$),
+        takeUntil(this._destroy$),
         filter((param: any) => !!param.id),
         switchMap((param: { id: number }) => {
           this.detalleID.set(param.id);
@@ -202,6 +214,7 @@ export default class ConductorFormularioComponent implements OnInit {
 
   private poblarFormulario(data: any) {
     this.informacionContacto = data;
+    this.identificacionIdApiDetalleSignal.update(() => data.identificacion_id);
     this.formularioConductor.setValue({
       id: data.id,
       numero_identificacion: data.numero_identificacion,
@@ -321,9 +334,11 @@ export default class ConductorFormularioComponent implements OnInit {
           );
         }
         if (this.detalleID() > 0) {
+          console.log(this.filteredIdentificacionSignal());
+
           this.formularioConductor.patchValue(
             {
-              identificacion: this.filteredIdentificacionSignal()[0].valor,
+              identificacion: this.identificacionIdApiDetalleSignal(),
               tipo_persona: valorPersonaTipo,
             },
             { emitEvent: false }
