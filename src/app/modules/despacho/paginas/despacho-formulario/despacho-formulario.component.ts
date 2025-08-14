@@ -17,6 +17,8 @@ import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccion
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Despacho } from '../../interfaces/despacho.interface';
 import { DespachoRepository } from '../../repository/despacho.repository';
+import { FechaService } from '@app/common/services/fecha.service';
+import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 
 @Component({
   selector: 'app-despacho-formulario',
@@ -37,6 +39,7 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
   private _formBuilder = inject(FormBuilder);
   private _activatedRoute = inject(ActivatedRoute);
   private _despachoRepository = inject(DespachoRepository);
+  private _fechaService = inject(FechaService);
   public _router = inject(Router);
   private destroy$ = new Subject<void>();
 
@@ -53,6 +56,7 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.inicializarFormulario();
     this.consultardetalle();
+    this._iniciarSuscripcionesFormularioVehiculo();
   }
 
   ngOnDestroy(): void {
@@ -62,6 +66,10 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
 
   inicializarFormulario() {
     this.formularioDespacho = this._formBuilder.group({
+      fecha: [this._fechaService.obtenerFechaHoy(), [Validators.required]],
+      contacto: [null],
+      despacho_tipo: [null, [Validators.required]],
+      despacho_tipo__nombre: [null],
       vehiculo: [null, [Validators.required]],
       vehiculo__placa: [null],
       remolque: [null, [Validators.required]],
@@ -73,7 +81,7 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
       ciudad_destino: [null, [Validators.required]],
       ciudad_destino__nombre: [null],
       pago: [0, [Validators.required, Validators.min(0)]],
-      comentario: ['', [Validators.maxLength(500)]],
+      comentario: [null, [Validators.maxLength(500), cambiarVacioPorNulo.validar]],
       ruta: [null, [Validators.required]],
       ruta__nombre: [null],
       operacion: [null, [Validators.required]],
@@ -98,21 +106,14 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
   }
 
   guardar() {
-    if (this.formularioDespacho.valid) {
-      if (this.detalleID() === 0) {
-        this._nuevoDespacho();
-      } else {
-        this._editarDespacho();
-      }
-    } else {
+    if (!this.formularioDespacho.valid) {
       this.formularioDespacho.markAllAsTouched();
-      // Mostrar errores simples en consola
-      Object.keys(this.formularioDespacho.controls).forEach(campo => {
-        const control = this.formularioDespacho.get(campo);
-        if (control && control.invalid) {
-          console.warn(`Error en el campo "${campo}":`, control.errors);
-        }
-      });
+      return;
+    }
+    if (this.detalleID() === 0) {
+      this._nuevoDespacho();
+    } else {
+      this._editarDespacho();
     }
   }
 
@@ -136,6 +137,8 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
 
   private poblarFormulario(data: Despacho) {
     this.formularioDespacho.patchValue({
+      despacho_tipo: data.despacho_tipo,
+      despacho_tipo__nombre: data.despacho_tipo__nombre,
       vehiculo: data.vehiculo,
       vehiculo__placa: data.vehiculo__placa,
       remolque: data.remolque,
@@ -153,6 +156,17 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
       operacion: data.operacion,
       operacion__nombre: data.operacion__nombre,
       flete: data.flete,
+    });
+  }
+
+  private _iniciarSuscripcionesFormularioVehiculo() {
+    this.formularioDespacho.get('conductor')?.valueChanges.subscribe((valor: any) => {
+      this.formularioDespacho.patchValue(
+        {
+          contacto: valor,
+        },
+        { emitEvent: false }
+      );
     });
   }
 

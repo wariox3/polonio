@@ -1,5 +1,7 @@
 export interface Despacho {
   id: number;
+  despacho_tipo: number;
+  despacho_tipo__nombre?: string;
   vehiculo: number;
   vehiculo__placa?: string;
   remolque: number;

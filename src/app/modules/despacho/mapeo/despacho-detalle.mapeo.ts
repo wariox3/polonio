@@ -7,7 +7,7 @@ import { formatearMonedaCOP } from '@app/common/utils/formatters';
  */
 export function obtenerCamposDespachoDetalle(): CampoDetalle[] {
   return [
-    { clave: 'id', etiqueta: 'ID' },
+    { clave: 'despacho_tipo__nombre', etiqueta: 'Tipo', filaCompleta: true },
     { clave: 'vehiculo__placa', etiqueta: 'Vehículo' },
     { clave: 'remolque__placa', etiqueta: 'Remolque' },
     { clave: 'conductor__nombre_corto', etiqueta: 'Conductor' },
