@@ -29,12 +29,7 @@ export function obtenerCamposConductorDetalle(datos: Conductor): CampoDetalle[] 
     { clave: 'numero_licencia', etiqueta: 'Licencia' },
     { clave: 'categoria_licencia', etiqueta: 'Categoria' },
     { clave: 'fecha_vence_licencia', etiqueta: 'Vence' },
-
     { clave: 'direccion', etiqueta: 'Dirección', filaCompleta: true },
     { clave: 'regimen_nombre', etiqueta: 'Regimen', filaCompleta: true },
-    // { clave: 'fecha_ingreso', etiqueta: 'Fecha ingreso' },
-    // { clave: 'fecha_retiro', etiqueta: 'Fecha retiro' },
-    // { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha expedición licencia' },
-    // { clave: 'fecha_expedicion_licencia', etiqueta: 'Fecha vencimiento licencia' },
   ];
 }

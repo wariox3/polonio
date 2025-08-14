@@ -71,14 +71,10 @@ export default class OperacionFormularioComponent implements OnInit {
       this.formularioOperacion.markAllAsTouched();
       return;
     }
-    const acciones: Record<string, () => void> = {
-      nuevo: () => this._nuevoOperacion(),
-      editar: () => this._editarEditar(),
-    };
     if (this.detalleID() === 0) {
-      acciones['nuevo']?.();
+      this._nuevoOperacion();
     } else {
-      acciones['editar']?.();
+      this._editarEditar();
     }
   }
 
