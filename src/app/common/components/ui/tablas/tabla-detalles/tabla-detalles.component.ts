@@ -38,12 +38,13 @@ export class TablaDetallesComponent {
   @Input() campos: CampoDetalle[] = [];
 
   /**
-   * Número de columnas para mostrar (2, 4 o 6)
+   * Número de columnas para mostrar (2, 4, 6 u 8)
    * - 2: Una etiqueta y un valor por fila
    * - 4: Dos pares de etiqueta-valor por fila
    * - 6: Tres pares de etiqueta-valor por fila
+   * - 8: Cuatro pares de etiqueta-valor por fila
    */
-  @Input() columnas: 2 | 4 | 6 = 4;
+  @Input() columnas: 2 | 4 | 6 | 8 = 4;
 
   /**
    * Texto a mostrar cuando no hay datos
@@ -113,6 +114,35 @@ export class TablaDetallesComponent {
    * Obtener el número de campos por fila según la configuración de columnas
    */
   get camposPorFila(): number {
-    return this.columnas === 2 ? 1 : this.columnas === 4 ? 2 : 3;
+    switch (this.columnas) {
+      case 2:
+        return 1; // 1 par por fila
+      case 4:
+        return 2; // 2 pares por fila
+      case 6:
+        return 3; // 3 pares por fila
+      case 8:
+        return 4; // 4 pares por fila
+      default:
+        return 2; // Valor por defecto
+    }
+  }
+
+  /**
+   * Obtener el ancho base para las celdas según el número de columnas
+   */
+  get anchoCelda(): string {
+    switch (this.columnas) {
+      case 2:
+        return 'w-1/3'; // Etiqueta: 1/3, Valor: 2/3
+      case 4:
+        return 'w-1/4'; // Cada celda ocupa 1/4
+      case 6:
+        return 'w-1/6'; // Cada celda ocupa 1/6
+      case 8:
+        return 'w-1/8'; // Cada celda ocupa 1/8
+      default:
+        return 'w-1/4';
+    }
   }
 }
