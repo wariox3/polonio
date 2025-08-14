@@ -10,19 +10,4 @@ export const columnasConductorLista: ColumnaTabla[] = [
   { clave: 'numero_licencia', nombre: 'Licencia' },
   { clave: 'categoria_licencia', nombre: 'Categoría' },
   { clave: 'fecha_vence_licencia', nombre: 'Vence licencia' },
-  {
-    clave: 'propio',
-    nombre: 'Propio',
-    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
-  },
-  {
-    clave: 'estado_inactivo',
-    nombre: 'Inactivo',
-    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
-  },
-  {
-    clave: 'estado_revisado',
-    nombre: 'Revisado',
-    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
-  },
 ];
