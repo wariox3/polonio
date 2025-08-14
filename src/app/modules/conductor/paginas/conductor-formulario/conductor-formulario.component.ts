@@ -248,7 +248,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       ciudad__nombre: data.ciudad_nombre,
       tipo_persona: data.tipo_persona_id,
       regimen: data.regimen_id,
-      conducto: true,
+      conductor: true,
     });
   }
 
