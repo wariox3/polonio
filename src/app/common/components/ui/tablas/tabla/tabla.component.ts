@@ -58,66 +58,45 @@ export class TablaComponent implements OnChanges {
 
   // Alternar selección de todos los registros
   alternarSeleccionTodos(): void {
-    this.seleccionTodos = !this.seleccionTodos;
+    const nuevoEstado = !this.seleccionTodos;
+    this.seleccionTodos = nuevoEstado;
 
-    if (this.seleccionTodos) {
-      this.agregarTodosLosRegistros();
-    } else {
-      this.removerTodosLosRegistros();
+    // Limpiar selección actual
+    this.registrosSeleccionados = [];
+
+    // Si estamos marcando (no desmarcando)
+    if (nuevoEstado) {
+      // Agregar todos los IDs de los datos actuales
+      this.registrosSeleccionados = [...this.datos];
     }
 
-    this.seleccionCambiada.emit([...this.registrosSeleccionados]);
+    this.notificarSeleccion();
   }
 
   // Alternar selección individual
   alternarSeleccion(registro: any, event: Event): void {
     event.stopPropagation();
 
-    if (this.estaSeleccionado(registro)) {
-      this.removerRegistroDeSeleccion(registro[this.claveCheckbox]);
+    const index = this.registrosSeleccionados.findIndex(
+      r => r[this.claveCheckbox] === registro[this.claveCheckbox]
+    );
+
+    if (index === -1) {
+      this.registrosSeleccionados.push(registro);
     } else {
-      this.agregarRegistroASeleccion(registro);
+      this.registrosSeleccionados.splice(index, 1);
     }
 
-    // Actualizar estado del checkbox global
+    // Actualizar estado del checkbox principal
     this.seleccionTodos = this.registrosSeleccionados.length === this.datos.length;
-
-    this.seleccionCambiada.emit([...this.registrosSeleccionados]);
+    this.notificarSeleccion();
   }
+
   // Verificar selección
   estaSeleccionado(registro: any): boolean {
     return this.registrosSeleccionados.some(
       r => r[this.claveCheckbox] === registro[this.claveCheckbox]
     );
-  }
-
-  // Agregar un registro a la selección
-  agregarRegistroASeleccion(registro: any): void {
-    if (!this.estaSeleccionado(registro)) {
-      this.registrosSeleccionados.push(registro);
-    }
-  }
-
-  // Remover un registro de la selección
-  removerRegistroDeSeleccion(id: any): void {
-    this.registrosSeleccionados = this.registrosSeleccionados.filter(
-      r => r[this.claveCheckbox] !== id
-    );
-  }
-
-  // Agregar todos los registros a la selección
-  agregarTodosLosRegistros(): void {
-    this.registrosSeleccionados = [];
-    this.datos.forEach(item => {
-      if (!this.estaSeleccionado(item)) {
-        this.registrosSeleccionados.push(item);
-      }
-    });
-  }
-
-  // Remover todos los registros de la selección
-  removerTodosLosRegistros(): void {
-    this.registrosSeleccionados = [];
   }
 
   // Formatear valor si hay función de formato
@@ -143,5 +122,9 @@ export class TablaComponent implements OnChanges {
       default:
         return 'text-start'; // valor por defecto
     }
+  }
+
+  private notificarSeleccion(): void {
+    this.seleccionCambiada.emit([...this.registrosSeleccionados]);
   }
 }
