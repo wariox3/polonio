@@ -14,6 +14,7 @@ import { Operacion } from '../../interfaces/operacion.interface';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
+import { OperacionDetalleParametros } from '../../interfaces/operacion-detalle-parametros.interface';
 
 @Component({
   selector: 'app-operacion-formulario',
@@ -55,10 +56,11 @@ export default class OperacionFormularioComponent implements OnInit {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: any) => !!param.id),
-        switchMap((param: { id: number }) => {
-          this.detalleID.set(param.id);
-          return this._operacionRepository.detalle(param.id);
+        filter((param: OperacionDetalleParametros) => !!param.id),
+        switchMap((param: OperacionDetalleParametros) => {
+          const id = Number(param.id);
+          this.detalleID.set(id);
+          return this._operacionRepository.detalle(id);
         })
       )
       .subscribe((respuesta: Operacion) => {
