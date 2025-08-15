@@ -19,6 +19,7 @@ import { Despacho } from '../../interfaces/despacho.interface';
 import { DespachoRepository } from '../../repository/despacho.repository';
 import { FechaService } from '@app/common/services/fecha.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
+import { DespachoDetalleParametros } from '../../interfaces/despacho-detalle-parametros.interface';
 
 @Component({
   selector: 'app-despacho-formulario',
@@ -94,10 +95,11 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: any) => !!param.id),
-        switchMap((param: { id: number }) => {
-          this.detalleID.set(param.id);
-          return this._despachoRepository.detalle(param.id);
+        filter((param: DespachoDetalleParametros) => !!param.id),
+        switchMap((param: DespachoDetalleParametros) => {
+          const id = Number(param.id);
+          this.detalleID.set(id);
+          return this._despachoRepository.detalle(id);
         })
       )
       .subscribe((respuesta: Despacho) => {

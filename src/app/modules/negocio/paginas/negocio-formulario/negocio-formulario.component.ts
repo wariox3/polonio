@@ -17,6 +17,7 @@ import { FechaService } from '@app/common/services/fecha.service';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Negocio } from '../../interfaces/negocio.interface';
 import { NegocioRepository } from '../../repository/negocio.repository';
+import { NegocioDetalleParametros } from '../../interfaces/negocio-detalle-parametros.interface';
 
 @Component({
   selector: 'app-negocio-formulario',
@@ -109,10 +110,11 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: any) => !!param.id),
-        switchMap((param: { id: number }) => {
-          this.detalleID.set(param.id);
-          return this._negocioRepository.detalle(param.id);
+        filter((param: NegocioDetalleParametros) => !!param.id),
+        switchMap((param: NegocioDetalleParametros) => {
+          const id = Number(param.id);
+          this.detalleID.set(id);
+          return this._negocioRepository.detalle(id);
         })
       )
       .subscribe((respuesta: Negocio) => {
