@@ -110,7 +110,7 @@ export default class VehiculoFormularioComponent implements OnInit {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: any) => !!param.id),
+        filter((param: { id: number }) => !!param.id),
         switchMap((param: { id: number }) => {
           this.detalleID.set(param.id);
           return this._vehiculoRepository.detalle(param.id);

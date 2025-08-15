@@ -3,7 +3,7 @@ export interface Vehiculo {
   fecha_registro: string;
   placa: string;
   modelo: number;
-  modelo_repotenciado: any;
+  modelo_repotenciado: number;
   motor: string;
   chasis: string;
   ejes: number;
@@ -12,7 +12,7 @@ export interface Vehiculo {
   celular: string;
   poliza: string;
   vence_poliza: string;
-  tecnicomecanica: any;
+  tecnicomecanica: string;
   vence_tecnicomecanica: string;
   propio: boolean;
   remolque: boolean;
