@@ -26,7 +26,7 @@ import { ModalService } from '@app/common/services/modal.service';
 })
 export class ContenedorEliminarComponent {
   @Input({ required: true }) contenedor: Contenedor;
-  @Output() emitirContenedorEliminado: EventEmitter<any> = new EventEmitter();
+  @Output() emitirContenedorEliminado: EventEmitter<boolean> = new EventEmitter();
 
   private contenedorRepository = inject(ContenedorRepository);
   private alertaService = inject(AlertaService);

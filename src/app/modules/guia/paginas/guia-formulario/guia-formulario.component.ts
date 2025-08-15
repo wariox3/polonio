@@ -14,13 +14,12 @@ import { LabelComponent } from '@app/common/components/ui/form/label/label.compo
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
-import { CiudadRepository } from '@app/common/repositories/ciudad/ciudad.repository';
-import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
-import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repository/guia.repository';
 import { OperacionRepository } from '@app/modules/operacion/repository/operacion.repository';
+import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
+import { FechaService } from '@app/common/services/fecha.service';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -43,9 +42,7 @@ export default class GuiaFormularioComponent implements OnInit {
   private _activatedRoute = inject(ActivatedRoute);
   private _guiaRepository = inject(GuiaRepository);
   private _operacionRepository = inject(OperacionRepository);
-  private _transporteRepository = inject(TransporteRepository);
-  private _ciudadRepository = inject(CiudadRepository);
-  private _contactoRepository = inject(ContactoRepository);
+  private _fechaService = inject(FechaService);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
@@ -123,17 +120,18 @@ export default class GuiaFormularioComponent implements OnInit {
     //TODO: codigo temporal para la tarea 1685
     this._operacionRepository
       .consultaOperacionIngreso()
-      .subscribe((respuesta: any) => this.modificarFormulario('ciudad_origen', respuesta[0]));
+      .subscribe(respuesta => this.modificarFormulario('ciudad_origen', respuesta[0]));
   }
 
   consultardetalle() {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: any) => !!param.id),
-        switchMap((param: { id: number }) => {
-          this.detalleID.set(param.id);
-          return this._guiaRepository.detalle(param.id);
+        filter((param: GuiaDetalleParametros) => !!param.id),
+        switchMap((param: GuiaDetalleParametros) => {
+          const id = Number(param.id);
+          this.detalleID.set(id);
+          return this._guiaRepository.detalle(id);
         })
       )
       .subscribe((respuesta: Guia) => {
@@ -146,15 +144,11 @@ export default class GuiaFormularioComponent implements OnInit {
       this.formularioGuia.markAllAsTouched();
       return;
     }
-    const acciones: Record<string, () => void> = {
-      nuevo: () => this._nuevoGuia(),
-      editar: () => this._editarGuia(),
-    };
 
     if (this.detalleID() === 0) {
-      acciones['nuevo']?.();
+      this._nuevoGuia();
     } else {
-      acciones['editar']?.();
+      this._editarGuia();
     }
   }
 
@@ -179,11 +173,11 @@ export default class GuiaFormularioComponent implements OnInit {
   private poblarFormulario(data: Guia) {
     this.formularioGuia.patchValue({
       fecha: data.fecha,
-      fecha_recogida: this.formatearFechaISO(data.fecha_recogida),
-      fecha_ingreso: this.formatearFechaISO(data.fecha_ingreso),
-      fecha_despacho: this.formatearFechaISO(data.fecha_despacho),
-      fecha_entrega: this.formatearFechaISO(data.fecha_entrega),
-      fecha_soporte: this.formatearFechaISO(data.fecha_soporte),
+      fecha_recogida: this._fechaService.convertirAFormatoISO(data.fecha_recogida),
+      fecha_ingreso: this._fechaService.convertirAFormatoISO(data.fecha_ingreso),
+      fecha_despacho: this._fechaService.convertirAFormatoISO(data.fecha_despacho),
+      fecha_entrega: this._fechaService.convertirAFormatoISO(data.fecha_entrega),
+      fecha_soporte: this._fechaService.convertirAFormatoISO(data.fecha_soporte),
       documento: data.documento,
       numero_rndc: data.numero_rndc,
       remitente_nombre: data.remitente_nombre,
@@ -260,10 +254,4 @@ export default class GuiaFormularioComponent implements OnInit {
     this._changeDetectorRef.detectChanges();
   }
 
-  private formatearFechaISO(fecha: string | null | undefined): string | null {
-    if (!fecha) return null;
-
-    const fechaValida = new Date(fecha);
-    return isNaN(fechaValida.getTime()) ? null : fechaValida.toISOString().split('T')[0];
-  }
 }

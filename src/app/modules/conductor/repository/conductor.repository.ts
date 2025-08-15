@@ -9,7 +9,7 @@ import { Conductor } from '../interfaces/conductor.interface';
 export class ConductorRepository {
   private _generalRepository = inject(GeneralRepository);
 
-  constructor() { }
+  constructor() {}
 
   lista(queryParams: QueryParams = {}) {
     return this._generalRepository.get<RespuestaApi<Conductor>>('general/contacto/', queryParams);

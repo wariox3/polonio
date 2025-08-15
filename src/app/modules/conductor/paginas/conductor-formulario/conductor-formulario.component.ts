@@ -14,6 +14,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -27,6 +28,9 @@ import { GeneralRepository } from '@app/core';
 import { debounceTime, filter, Subject, switchMap, takeUntil, zip } from 'rxjs';
 import { Conductor } from '../../interfaces/conductor.interface';
 import { ConductorRepository } from '../../repository/conductor.repository';
+import { RespuestaSeleccionarIdentificacion } from '@app/common/interfaces/identificacion.interface';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
+import { ConductorDetalleParametros } from '../../interfaces/conductor-detalle-parametros.interface';
 
 @Component({
   selector: 'app-conductor-formulario',
@@ -53,29 +57,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   private _router = inject(Router);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _destroy$ = new Subject<void>();
-  public informacionContacto: any = {
-    id: 0,
-    identificacion: 0,
-    digito_verificacion: 0,
-    ciudad: 0,
-    ciudad__nombre: '',
-    ciudad__estado__nombre: '',
-    numero_identificacion: '',
-    nombre_corto: '',
-    nombre1: '',
-    nombre2: '',
-    apellido1: '',
-    apellido2: '',
-    direccion: '',
-    barrio: '',
-    telefono: '',
-    celular: '',
-    correo: '',
-    numero_licencia: '',
-    categoria_licencia: '',
-    fecha_vence_licencia: '',
-    identificacion_id: 0,
-  };
+  public informacionContacto: Conductor | null = null;
   public detalleID = signal(0);
   public arrRh = signal([]);
   public arrCiudad = signal([]);
@@ -156,30 +138,38 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       this._generalRepository.get('general/regimen/seleccionar/'),
       this._generalRepository.get('general/tipo_persona/seleccionar/'),
       this._generalRepository.get('general/identificacion/seleccionar/')
-    ).subscribe((respuesta: any) => {
-      this.arrRegimen.set(
-        respuesta[0].map((item: any) => ({
-          valor: item.id,
-          nombre: item.nombre,
-        }))
-      );
-      this.arrTipoPersona.set(
-        respuesta[1].map((item: any) => ({
-          valor: item.id,
-          nombre: item.nombre,
-        }))
-      );
-      this.arrIdentificacion.set(
-        respuesta[2].map((item: any) => ({
-          valor: item.id,
-          nombre: item.nombre,
-          tipo_persona: item.tipo_persona,
-        }))
-      );
-      this.formularioConductor.patchValue({
-        identificacion: this.filteredIdentificacionSignal()[0].valor,
-      });
-    });
+    ).subscribe(
+      (
+        respuesta: [
+          RespuestaSeleccionar[],
+          RespuestaSeleccionar[],
+          RespuestaSeleccionarIdentificacion[],
+        ]
+      ): void => {
+        this.arrRegimen.set(
+          respuesta[0].map((item: RespuestaSeleccionar) => ({
+            valor: item.id,
+            nombre: item.nombre,
+          }))
+        );
+        this.arrTipoPersona.set(
+          respuesta[1].map((item: RespuestaSeleccionar) => ({
+            valor: item.id,
+            nombre: item.nombre,
+          }))
+        );
+        this.arrIdentificacion.set(
+          respuesta[2].map((item: RespuestaSeleccionarIdentificacion) => ({
+            valor: item.id,
+            nombre: item.nombre,
+            tipo_persona: item.tipo_persona,
+          }))
+        );
+        this.formularioConductor.patchValue({
+          identificacion: this.filteredIdentificacionSignal()[0].valor,
+        });
+      }
+    );
   }
 
   private _nuevoConductor() {
@@ -212,10 +202,11 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
     this._activatedRoute.params
       .pipe(
         takeUntil(this._destroy$),
-        filter((param: any) => !!param.id),
-        switchMap((param: { id: number }) => {
-          this.detalleID.set(param.id);
-          return this._conductorRepository.detalle(param.id);
+        filter((param: ConductorDetalleParametros) => !!param.id),
+        switchMap((param: ConductorDetalleParametros) => {
+          const id = Number(param.id);
+          this.detalleID.set(id);
+          return this._conductorRepository.detalle(id);
         })
       )
       .subscribe((respuesta: Conductor) => {
@@ -223,7 +214,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       });
   }
 
-  private poblarFormulario(data: any) {
+  private poblarFormulario(data: Conductor) {
     this.informacionContacto = data;
     this.identificacionIdApiDetalleSignal.update(() => data.identificacion_id);
     this.formularioConductor.setValue({
@@ -285,7 +276,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   }
 
   private _iniciarSuscripcionesFormularioConductor() {
-    this.formularioConductor.get('tipo_persona')?.valueChanges.subscribe((valor: any) => {
+    this.formularioConductor.get('tipo_persona')?.valueChanges.subscribe((valor: string) => {
       const valorPersonaTipo = parseInt(valor);
       this.filtroIdentificacionSignal.set(valorPersonaTipo);
 
@@ -413,7 +404,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       parseInt(this.formularioConductor.get('numero_identificacion')?.value);
 
     const identificacionIdCambio =
-      parseInt(this.informacionContacto.identificacion_id) !==
+      this.informacionContacto?.identificacion_id !==
       parseInt(this.formularioConductor.get('identificacion')?.value);
 
     return numeroIdentificacionCambio || identificacionIdCambio;
@@ -429,7 +420,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
     this._changeDetectorRef.detectChanges();
   }
 
-  private _setValidators(fieldName: string, validators: any[]) {
+  private _setValidators(fieldName: string, validators: ValidatorFn[]) {
     const control = this.formularioConductor.get(fieldName);
     control?.clearValidators();
     control?.setValidators(validators);

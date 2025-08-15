@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
 import { RespuestaApi, QueryParams } from '@app/core/interfaces/api.interface';
 import { Operacion } from '../interfaces/operacion.interface';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +10,13 @@ import { Operacion } from '../interfaces/operacion.interface';
 export class OperacionRepository {
   private _generalRepository = inject(GeneralRepository);
 
-  constructor() {}
+  constructor() { }
 
   lista(queryParams: QueryParams = {}) {
-    return this._generalRepository.get<RespuestaApi<Operacion>>('transporte/operacion/', queryParams);
+    return this._generalRepository.get<RespuestaApi<Operacion>>(
+      'transporte/operacion/',
+      queryParams
+    );
   }
 
   nuevo(data: Operacion) {
@@ -32,8 +36,11 @@ export class OperacionRepository {
   }
 
   consultaOperacionIngreso() {
-    return this._generalRepository.get<any>('transporte/operacion/seleccionar', {
-      id: 1,
-    });
+    return this._generalRepository.get<RespuestaSeleccionar[]>(
+      'transporte/operacion/seleccionar/',
+      {
+        id: 1,
+      }
+    );
   }
 }

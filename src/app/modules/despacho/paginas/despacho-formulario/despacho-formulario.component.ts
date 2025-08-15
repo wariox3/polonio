@@ -162,7 +162,7 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
   }
 
   private _iniciarSuscripcionesFormularioVehiculo() {
-    this.formularioDespacho.get('conductor')?.valueChanges.subscribe((valor: any) => {
+    this.formularioDespacho.get('conductor')?.valueChanges.subscribe((valor: number) => {
       this.formularioDespacho.patchValue(
         {
           contacto: valor,

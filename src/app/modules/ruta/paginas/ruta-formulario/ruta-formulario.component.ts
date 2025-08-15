@@ -71,14 +71,10 @@ export default class RutaFormularioComponent implements OnInit {
       this.formularioRuta.markAllAsTouched();
       return;
     }
-    const acciones: Record<string, () => void> = {
-      nuevo: () => this._nuevoRuta(),
-      editar: () => this._editarEditar(),
-    };
     if (this.detalleID() === 0) {
-      acciones['nuevo']?.();
+      this._nuevoRuta();
     } else {
-      acciones['editar']?.();
+      this._editarEditar();
     }
   }
 

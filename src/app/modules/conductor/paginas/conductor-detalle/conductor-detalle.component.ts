@@ -42,6 +42,13 @@ export default class conductorDetalleComponent implements OnInit, OnDestroy {
     numero_licencia: '',
     categoria_licencia: '',
     fecha_vence_licencia: '',
+    identificacion_id: 0,
+    ciudad_id: 0,
+    ciudad_nombre: '',
+    tipo_persona: 0,
+    regimen: 0,
+    tipo_persona_id: 0,
+    regimen_id: 0,
   });
   camposDetalle = computed<CampoDetalle[]>(() => {
     return obtenerCamposConductorDetalle(this.vehiculosSignal());
