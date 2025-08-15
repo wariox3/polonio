@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -12,7 +21,7 @@ import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.scss'],
 })
-export class TablaComponent {
+export class TablaComponent implements OnChanges {
   // Propiedades de entrada
   @Input() columnas: ColumnaTabla[] = [];
   @Input() datos: any[] = [];
@@ -29,47 +38,86 @@ export class TablaComponent {
   seleccionTodos: boolean = false;
   registrosSeleccionados: any[] = [];
 
-  // Alternar selección de todos los registros - CORRECCIÓN PRINCIPAL
-  alternarSeleccionTodos(): void {
-    const nuevoEstado = !this.seleccionTodos;
-    this.seleccionTodos = nuevoEstado;
+  @ViewChild('checkboxGlobal', { static: false })
+  checkboxGlobal: ElementRef<HTMLInputElement>;
 
-    this.registrosSeleccionados = [];
+  // Implementación del ciclo de vida OnChanges
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['datos'] && !changes['datos'].firstChange) {
+      // Reiniciar registrosSeleccionados si los datos cambian
+      this.registrosSeleccionados = [];
+      this.seleccionCambiada.emit(this.registrosSeleccionados);
 
-    if (nuevoEstado) {
-      this.registrosSeleccionados = [...this.datos];
-      // Emitimos pero NO limpiamos para que se mantengan seleccionados visualmente
-      this.notificarSeleccion(false);
-    } else {
-      // Desmarcar todos → emitimos y limpiamos
-      this.notificarSeleccion(true);
+      if (this.checkboxGlobal) {
+        this.checkboxGlobal.nativeElement.checked = false;
+      }
+
+      this.seleccionTodos = false;
     }
   }
 
-  // Alternar selección individual - CORRECCIÓN ADICIONAL
+  // Alternar selección de todos los registros
+  alternarSeleccionTodos(): void {
+    this.seleccionTodos = !this.seleccionTodos;
+
+    if (this.seleccionTodos) {
+      this.agregarTodosLosRegistros();
+    } else {
+      this.removerTodosLosRegistros();
+    }
+
+    this.seleccionCambiada.emit([...this.registrosSeleccionados]);
+  }
+
+  // Alternar selección individual
   alternarSeleccion(registro: any, event: Event): void {
     event.stopPropagation();
 
-    const index = this.registrosSeleccionados.findIndex(
-      r => r[this.claveCheckbox] === registro[this.claveCheckbox]
-    );
-
-    if (index === -1) {
-      this.registrosSeleccionados.push(registro);
+    if (this.estaSeleccionado(registro)) {
+      this.removerRegistroDeSeleccion(registro[this.claveCheckbox]);
     } else {
-      this.registrosSeleccionados.splice(index, 1);
+      this.agregarRegistroASeleccion(registro);
     }
 
+    // Actualizar estado del checkbox global
     this.seleccionTodos = this.registrosSeleccionados.length === this.datos.length;
 
-    // En selección individual sí limpiamos después de emitir
-    this.notificarSeleccion(true);
+    this.seleccionCambiada.emit([...this.registrosSeleccionados]);
   }
   // Verificar selección
   estaSeleccionado(registro: any): boolean {
     return this.registrosSeleccionados.some(
       r => r[this.claveCheckbox] === registro[this.claveCheckbox]
     );
+  }
+
+  // Agregar un registro a la selección
+  agregarRegistroASeleccion(registro: any): void {
+    if (!this.estaSeleccionado(registro)) {
+      this.registrosSeleccionados.push(registro);
+    }
+  }
+
+  // Remover un registro de la selección
+  removerRegistroDeSeleccion(id: any): void {
+    this.registrosSeleccionados = this.registrosSeleccionados.filter(
+      r => r[this.claveCheckbox] !== id
+    );
+  }
+
+  // Agregar todos los registros a la selección
+  agregarTodosLosRegistros(): void {
+    this.registrosSeleccionados = [];
+    this.datos.forEach(item => {
+      if (!this.estaSeleccionado(item)) {
+        this.registrosSeleccionados.push(item);
+      }
+    });
+  }
+
+  // Remover todos los registros de la selección
+  removerTodosLosRegistros(): void {
+    this.registrosSeleccionados = [];
   }
 
   // Formatear valor si hay función de formato
@@ -94,15 +142,6 @@ export class TablaComponent {
       case 'izquierda':
       default:
         return 'text-start'; // valor por defecto
-    }
-  }
-
-  private notificarSeleccion(limpiar = true): void {
-    this.seleccionCambiada.emit([...this.registrosSeleccionados]);
-
-    if (limpiar) {
-      this.registrosSeleccionados = [];
-      this.seleccionTodos = false;
     }
   }
 }

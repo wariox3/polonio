@@ -29,6 +29,7 @@
         <!-- Checkbox principal con estado indeterminado -->
         <th *ngIf="mostrarCheckbox" class="px-6 py-3 text-center">
           <input
+            #checkboxGlobal
             type="checkbox"
             [checked]="seleccionTodos"
             [indeterminate]="estadoIndeterminado"
