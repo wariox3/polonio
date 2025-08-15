@@ -20,6 +20,7 @@ import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { VehiculoRepository } from '../../repository/vehiculo.repository';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
+import { VehiculoDetalleParametros } from '../../interfaces/vehiculo-detalle-parametros';
 
 @Component({
   selector: 'app-vehiculo-formulario',
@@ -110,10 +111,10 @@ export default class VehiculoFormularioComponent implements OnInit {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: { id: number }) => !!param.id),
-        switchMap((param: { id: number }) => {
-          this.detalleID.set(param.id);
-          return this._vehiculoRepository.detalle(param.id);
+        filter((param: VehiculoDetalleParametros) => !!param.id),
+        switchMap((param: VehiculoDetalleParametros) => {
+          this.detalleID.set(Number(param.id));
+          return this._vehiculoRepository.detalle(Number(param.id));
         })
       )
       .subscribe((respuesta: Vehiculo) => {
