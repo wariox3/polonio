@@ -14,6 +14,7 @@ import { LabelComponent } from '@app/common/components/ui/form/label/label.compo
 import { filter, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Ruta } from '../../interfaces/ruta.interface';
 import { RutaRepository } from '../../repository/ruta.repository';
+import { rutaDetalleParametros } from '../../mapeo/ruta-detalle-parametros';
 
 @Component({
   selector: 'app-ruta-formulario',
@@ -53,10 +54,11 @@ export default class RutaFormularioComponent implements OnInit {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: any) => !!param.id),
-        switchMap((param: { id: number }) => {
-          this.detalleID.set(param.id);
-          return this._rutaRepository.detalle(param.id);
+        filter((param: rutaDetalleParametros) => !!param.id),
+        switchMap((param: rutaDetalleParametros) => {
+          const id = Number(param.id);
+          this.detalleID.set(id);
+          return this._rutaRepository.detalle(id);
         })
       )
       .subscribe((respuesta: Ruta) => {

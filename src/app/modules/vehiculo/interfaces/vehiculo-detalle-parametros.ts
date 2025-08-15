@@ -1,3 +1,3 @@
-export interface VehiculoDetalleParametros {
+export interface vehiculoDetalleParametros {
   id: string;
 }

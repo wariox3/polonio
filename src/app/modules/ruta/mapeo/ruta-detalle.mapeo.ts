@@ -6,7 +6,5 @@ import { CampoDetalle } from '@app/common/components/ui/tablas/tabla-detalles/ta
  * @returns Array de campos configurados
  */
 export function obtenerCamposRutaDetalle(): CampoDetalle[] {
-  return [
-    { clave: 'nombre', etiqueta: 'Nombre' }
-  ];
+  return [{ clave: 'nombre', etiqueta: 'Nombre' }];
 }
