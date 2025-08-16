@@ -11,19 +11,19 @@ const routes: Route[] = [
     children: [
       {
         path: 'lista',
-        loadComponent: () => import('./paginas/guia-lista/guia-lista.component'),
+        loadComponent: () => import('./pages/guia-lista/guia-lista.component'),
       },
       {
         path: 'nuevo',
-        loadComponent: () => import('./paginas/guia-formulario/guia-formulario.component'),
+        loadComponent: () => import('./pages/guia-formulario/guia-formulario.component'),
       },
       {
         path: 'editar/:id',
-        loadComponent: () => import('./paginas/guia-formulario/guia-formulario.component'),
+        loadComponent: () => import('./pages/guia-formulario/guia-formulario.component'),
       },
       {
         path: 'detalle/:id',
-        loadComponent: () => import('./paginas/guia-detalle/guia-detalle.component'),
+        loadComponent: () => import('./pages/guia-detalle/guia-detalle.component'),
       },
     ],
   },

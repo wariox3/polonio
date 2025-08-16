@@ -11,19 +11,19 @@ const routes: Route[] = [
     children: [
       {
         path: 'lista',
-        loadComponent: () => import('./paginas/vehiculo-lista/vehiculo-lista.component'),
+        loadComponent: () => import('./pages/vehiculo-lista/vehiculo-lista.component'),
       },
       {
         path: 'nuevo',
-        loadComponent: () => import('./paginas/vehiculo-formulario/vehiculo-formulario.component'),
+        loadComponent: () => import('./pages/vehiculo-formulario/vehiculo-formulario.component'),
       },
       {
         path: 'editar/:id',
-        loadComponent: () => import('./paginas/vehiculo-formulario/vehiculo-formulario.component'),
+        loadComponent: () => import('./pages/vehiculo-formulario/vehiculo-formulario.component'),
       },
       {
         path: 'detalle/:id',
-        loadComponent: () => import('./paginas/vehiculo-detalle/vehiculo-detalle.component'),
+        loadComponent: () => import('./pages/vehiculo-detalle/vehiculo-detalle.component'),
       },
     ],
   },
