@@ -5,7 +5,7 @@ import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.com
 import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { columnasVehiculoLista } from '../../mapping/vehiculo-lista.mapeo';
 import { VEHICULO_LISTA_FILTERS } from '../../mapping/vehiculo-filtros.mapeo';
@@ -73,7 +73,12 @@ export default class VehiculoListaComponent implements OnInit {
 
   eliminar() {
     const eliminaciones$ = this.vehiculosSeleccionados().map(vehiculo =>
-      this._vehiculoService.eliminar(vehiculo.id)
+      this._vehiculoService.eliminar(vehiculo.id).pipe(
+        catchError(err => {
+          console.error(`Error al eliminar vehículos ${vehiculo.id}:`, err);
+          return of(null); // devolvemos algo para que forkJoin no falle
+        })
+      )
     );
 
     forkJoin(eliminaciones$).subscribe({

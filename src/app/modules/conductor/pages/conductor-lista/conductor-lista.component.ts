@@ -5,7 +5,7 @@ import { PaginadorComponent } from '@app/common/components/ui/paginador/paginado
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Conductor } from './../../interfaces/conductor.interface';
 import { columnasConductorLista } from '../../mapping/conductor-lista.mapeo';
 import { CONDUCTOR_LISTA_FILTERS } from '../../mapping/conductor-filtros.mapeo';
@@ -76,7 +76,12 @@ export default class ConductorListaComponent implements OnInit {
 
   eliminar() {
     const eliminaciones$ = this.conductoresSeleccionados().map(conductor =>
-      this._conductorRepository.eliminar(conductor.id)
+      this._conductorRepository.eliminar(conductor.id).pipe(
+        catchError(err => {
+          console.error(`Error al eliminar conductor ${conductor.id}:`, err);
+          return of(null); // devolvemos algo para que forkJoin no falle
+        })
+      )
     );
 
     forkJoin(eliminaciones$).subscribe({

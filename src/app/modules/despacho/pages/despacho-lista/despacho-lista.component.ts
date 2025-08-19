@@ -4,7 +4,7 @@ import { PaginadorComponent } from '@app/common/components/ui/paginador/paginado
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Despacho } from '../../interfaces/despacho.interface';
 import { columnasDespachoLista } from '../../mapping/despacho-lista.mapeo';
 import { DespachoRepository } from '../../repositories/despacho.repository';
@@ -73,7 +73,12 @@ export default class DespachoListaComponent implements OnInit {
 
   eliminar() {
     const eliminaciones$ = this.despachosSeleccionados().map(despacho =>
-      this._despachoRepository.eliminar(despacho.id)
+      this._despachoRepository.eliminar(despacho.id).pipe(
+        catchError(err => {
+          console.error(`Error al eliminar despacho ${despacho.id}:`, err);
+          return of(null); // devolvemos algo para que forkJoin no falle
+        })
+      )
     );
 
     forkJoin(eliminaciones$).subscribe({

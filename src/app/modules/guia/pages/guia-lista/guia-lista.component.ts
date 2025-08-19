@@ -4,7 +4,7 @@ import { PaginadorComponent } from '@app/common/components/ui/paginador/paginado
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Guia } from '../../interfaces/guia.interface';
 import { columnasGuiaLista } from '../../mapping/guia-lista.mapeo';
 import { GuiaRepository } from '../../repositories/guia.repository';
@@ -80,7 +80,12 @@ export default class GuiaListaComponent implements OnInit {
 
   eliminar() {
     const eliminaciones$ = this.guiasSeleccionadas().map(guia =>
-      this._guiaRepository.eliminar(guia.id)
+      this._guiaRepository.eliminar(guia.id).pipe(
+        catchError(err => {
+          console.error(`Error al eliminar guia ${guia.id}:`, err);
+          return of(null); // devolvemos algo para que forkJoin no falle
+        })
+      )
     );
 
     forkJoin(eliminaciones$).subscribe({

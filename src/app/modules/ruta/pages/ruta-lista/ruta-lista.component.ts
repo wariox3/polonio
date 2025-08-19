@@ -5,7 +5,7 @@ import { PaginadorComponent } from '@app/common/components/ui/paginador/paginado
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Ruta } from '../../interfaces/ruta.interface';
 import { RUTA_LISTA_FILTERS } from '../../mapping/ruta-filtros.mapeo';
 import { columnasRutaLista } from '../../mapping/ruta-lista.mapeo';
@@ -70,8 +70,13 @@ export default class RutaListaComponent implements OnInit {
   }
 
   eliminar() {
-    const eliminaciones$ = this.rutaSeleccionadas().map(guia =>
-      this._rutaRepository.eliminar(guia.id)
+    const eliminaciones$ = this.rutaSeleccionadas().map(ruta =>
+      this._rutaRepository.eliminar(ruta.id).pipe(
+        catchError(err => {
+          console.error(`Error al eliminar ruta ${ruta.id}:`, err);
+          return of(null); // devolvemos algo para que forkJoin no falle
+        })
+      )
     );
 
     forkJoin(eliminaciones$).subscribe({
@@ -85,7 +90,7 @@ export default class RutaListaComponent implements OnInit {
         this.rutaSeleccionadas.set([]);
       },
       error: err => {
-        console.error('Error al eliminar guia:', err);
+        console.error('Error al eliminar ruta:', err);
       },
     });
   }

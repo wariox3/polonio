@@ -4,7 +4,7 @@ import { PaginadorComponent } from '@app/common/components/ui/paginador/paginado
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { Operacion } from '../../interfaces/operacion.interface';
 import { OPERACION_LISTA_FILTERS } from '../../mapping/operacion-filtros.mapeo';
 import { columnasOperacionLista } from '../../mapping/operacion-lista.mapeo';
@@ -70,8 +70,13 @@ export default class OperacionListaComponent implements OnInit {
   }
 
   eliminar() {
-    const eliminaciones$ = this.operacionSeleccionadas().map(guia =>
-      this._operacionRepository.eliminar(guia.id)
+    const eliminaciones$ = this.operacionSeleccionadas().map(operacion =>
+      this._operacionRepository.eliminar(operacion.id).pipe(
+        catchError(err => {
+          console.error(`Error al eliminar operacion ${operacion.id}:`, err);
+          return of(null); // devolvemos algo para que forkJoin no falle
+        })
+      )
     );
 
     forkJoin(eliminaciones$).subscribe({
