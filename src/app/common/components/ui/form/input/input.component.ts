@@ -1,6 +1,6 @@
 // src/app/shared/ui/input/input.component.ts
 import { NgIf } from '@angular/common';
-import { Component, forwardRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, forwardRef, Input, Output, EventEmitter, signal } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -15,7 +15,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
       <input
         [type]="type"
         [placeholder]="placeholder"
-        [value]="value"
+        [value]="value()"
         (input)="onInput($event)"
         (blur)="onBlur()"
         [disabled]="disabled"
@@ -52,13 +52,14 @@ export class InputComponent implements ControlValueAccessor {
 
   @Output() blurEvent = new EventEmitter<void>(); // Nuevo output para emitir evento de blur
 
-  value: string = ''; // Valor interno del input
-  onChange: any = () => { }; // Función para notificar cambios
-  onTouched: any = () => { }; // Función para notificar que el input fue tocado
+  value = signal(''); // Valor interno del input
+  onChange: any = () => {}; // Función para notificar cambios
+  onTouched: any = () => {}; // Función para notificar que el input fue tocado
 
   // Escribe el valor en el input
   writeValue(value: any): void {
-    this.value = value ?? '';
+    console.log(value);
+    this.value.set(value ?? '');
   }
 
   // Registra la función para notificar cambios
@@ -74,7 +75,7 @@ export class InputComponent implements ControlValueAccessor {
   // Maneja el evento de entrada
   onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    this.value = value;
+    this.value.set(value);
     this.onChange(value); // Notifica el cambio
     this.dirty = true; // Marca el control como "sucio"
   }
