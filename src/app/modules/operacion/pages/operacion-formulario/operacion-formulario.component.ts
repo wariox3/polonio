@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { filter, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { OperacionRepository } from '../../repositories/operacion.repository';
 import { Operacion } from '../../interfaces/operacion.interface';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';

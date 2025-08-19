@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -14,12 +14,12 @@ import { LabelComponent } from '@app/common/components/ui/form/label/label.compo
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
+import { FechaService } from '@app/common/services/fecha.service';
+import { OperacionRepository } from '@app/modules/operacion/repositories/operacion.repository';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
-import { OperacionRepository } from '@app/modules/operacion/repositories/operacion.repository';
-import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
-import { FechaService } from '@app/common/services/fecha.service';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -43,7 +43,6 @@ export default class GuiaFormularioComponent implements OnInit {
   private _guiaRepository = inject(GuiaRepository);
   private _operacionRepository = inject(OperacionRepository);
   private _fechaService = inject(FechaService);
-  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
   public formularioGuia: FormGroup;
@@ -251,6 +250,5 @@ export default class GuiaFormularioComponent implements OnInit {
         destinatario_nombre: data?.nombre_corto ?? null,
       });
     }
-    this._changeDetectorRef.detectChanges();
   }
 }

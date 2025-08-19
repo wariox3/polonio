@@ -36,6 +36,7 @@ export class OperacionRepository {
   }
 
   consultaOperacionIngreso() {
+    //TODO: codigo temporal para la tarea 1685
     return this._generalRepository.get<RespuestaSeleccionar[]>(
       'transporte/operacion/seleccionar/',
       {

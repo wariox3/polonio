@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  computed,
-  inject,
-  OnDestroy,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -22,15 +14,15 @@ import { InputComponent } from '@app/common/components/ui/form/input/input.compo
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { SelectComponent } from '@app/common/components/ui/form/select/select.component';
+import { RespuestaSeleccionarIdentificacion } from '@app/common/interfaces/identificacion.interface';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { GeneralRepository } from '@app/core';
 import { debounceTime, filter, Subject, switchMap, takeUntil, zip } from 'rxjs';
+import { ConductorDetalleParametros } from '../../interfaces/conductor-detalle-parametros.interface';
 import { Conductor } from '../../interfaces/conductor.interface';
 import { ConductorRepository } from '../../repositories/conductor.repository';
-import { RespuestaSeleccionarIdentificacion } from '@app/common/interfaces/identificacion.interface';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
-import { ConductorDetalleParametros } from '../../interfaces/conductor-detalle-parametros.interface';
 
 @Component({
   selector: 'app-conductor-formulario',
@@ -55,7 +47,6 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   private _activatedRoute = inject(ActivatedRoute);
   private _devuelveDigitoVerificacionService = inject(DevuelveDigitoVerificacionService);
   private _router = inject(Router);
-  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _destroy$ = new Subject<void>();
   public informacionContacto: Conductor | null = null;
   public detalleID = signal(0);
@@ -417,7 +408,6 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
 
     this.formularioConductor.get('numero_identificacion')!.setErrors(errores);
     this.formularioConductor.get('numero_identificacion')!.markAsTouched();
-    this._changeDetectorRef.detectChanges();
   }
 
   private _setValidators(fieldName: string, validators: ValidatorFn[]) {

@@ -11,7 +11,7 @@ import {
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
-import { filter, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Ruta } from '../../interfaces/ruta.interface';
 import { RutaRepository } from '../../repositories/ruta.repository';
 import { RutaDetalleParametros } from '../../interfaces/ruta-detalle-parametros.interface';
@@ -97,9 +97,13 @@ export default class RutaFormularioComponent implements OnInit {
   }
 
   private poblarFormulario(data: Ruta) {
-    this.formularioRuta.patchValue({
+    this.formularioRuta.setValue({
       nombre: data.nombre,
     });
+    /**
+     * TODO: // Se usa detectChanges() porque la actualización del formulario ocurre
+     * fuera del ciclo de detección de Angular y la vista no se refresca automáticamente.
+     */
     this._changeDetectorRef.detectChanges();
   }
 
