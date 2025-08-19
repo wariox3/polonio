@@ -97,7 +97,7 @@ export default class RutaFormularioComponent implements OnInit {
   }
 
   private poblarFormulario(data: Ruta) {
-    this.formularioRuta.setValue({
+    this.formularioRuta.patchValue({
       nombre: data.nombre,
     });
     /**
