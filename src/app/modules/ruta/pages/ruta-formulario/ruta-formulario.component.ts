@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -12,9 +12,9 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { RutaDetalleParametros } from '../../interfaces/ruta-detalle-parametros.interface';
 import { Ruta } from '../../interfaces/ruta.interface';
 import { RutaRepository } from '../../repositories/ruta.repository';
-import { RutaDetalleParametros } from '../../interfaces/ruta-detalle-parametros.interface';
 
 @Component({
   selector: 'app-ruta-formulario',
@@ -33,7 +33,6 @@ export default class RutaFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private _activatedRoute = inject(ActivatedRoute);
   private _rutaRepository = inject(RutaRepository);
-  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
   public formularioRuta: FormGroup;
@@ -100,11 +99,6 @@ export default class RutaFormularioComponent implements OnInit {
     this.formularioRuta.patchValue({
       nombre: data.nombre,
     });
-    /**
-     * TODO: // Se usa detectChanges() porque la actualización del formulario ocurre
-     * fuera del ciclo de detección de Angular y la vista no se refresca automáticamente.
-     */
-    this._changeDetectorRef.detectChanges();
   }
 
   getControl(nombre: string): FormControl {

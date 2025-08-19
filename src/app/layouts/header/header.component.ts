@@ -53,7 +53,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.select(obtenerContenedorNombre).subscribe(nombre => {
-      console.log(nombre);
       if (nombre) {
         this.nombreContenedor.set(nombre);
       }

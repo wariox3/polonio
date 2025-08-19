@@ -58,7 +58,6 @@ export class InputComponent implements ControlValueAccessor {
 
   // Escribe el valor en el input
   writeValue(value: any): void {
-    console.log(value);
     this.value.set(value ?? '');
   }
 
