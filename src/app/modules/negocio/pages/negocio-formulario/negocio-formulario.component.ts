@@ -77,14 +77,15 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.formularioNegocio.valid) {
-      if (this.detalleID() === 0) {
-        this._nuevoNegocio();
-      } else {
-        this._editarNegocio();
-      }
-    } else {
+    if (!this.formularioNegocio.valid) {
       this.formularioNegocio.markAllAsTouched();
+      return;
+    }
+
+    if (this.detalleID() === 0) {
+      this._nuevoNegocio();
+    } else {
+      this._editarNegocio();
     }
   }
 
