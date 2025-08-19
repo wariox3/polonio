@@ -68,4 +68,8 @@ export class FechaService {
     if (f1 > f2) return 1;
     return 0;
   }
+
+  obtenerAnioActual(): number {
+    return new Date().getFullYear();
+  }
 }

@@ -1,15 +1,15 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
 import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
-import { catchError, finalize, forkJoin, from, mergeMap, of } from 'rxjs';
+import { catchError, finalize, forkJoin, of } from 'rxjs';
 import { Negocio } from '../../interfaces/negocio.interface';
+import { NEGOCIO_LISTA_FILTERS } from '../../mapping/negocio-filtros.mapeo';
 import { columnasNegocioLista } from '../../mapping/negocio-lista.mapeo';
 import { NegocioRepository } from '../../repositories/negocio.repository';
-import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
-import { NEGOCIO_LISTA_FILTERS } from '../../mapping/negocio-filtros.mapeo';
 
 @Component({
   selector: 'app-negocio-lista',
@@ -21,8 +21,6 @@ import { NEGOCIO_LISTA_FILTERS } from '../../mapping/negocio-filtros.mapeo';
 export default class NegocioListaComponent implements OnInit {
   private _negocioRepository = inject(NegocioRepository);
   private filtrosActivos = signal<QueryParams>({});
-  private _changeDetectorRef = inject(ChangeDetectorRef);
-
   public negociosSeleccionados = signal<Negocio[]>([]);
   public camposFiltros = NEGOCIO_LISTA_FILTERS;
   public negocios = signal<Negocio[]>([]);

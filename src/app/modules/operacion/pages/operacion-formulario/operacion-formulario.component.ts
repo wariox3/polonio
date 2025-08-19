@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -33,7 +33,6 @@ export default class OperacionFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private _activatedRoute = inject(ActivatedRoute);
   private _operacionRepository = inject(OperacionRepository);
-  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
   public formularioOperacion: FormGroup;

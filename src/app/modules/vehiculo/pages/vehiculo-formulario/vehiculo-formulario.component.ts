@@ -13,14 +13,13 @@ import { InputComponent } from '@app/common/components/ui/form/input/input.compo
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
-import { ContactoRepository } from '@app/common/repositories/contacto/contacto.repository';
-import { TransporteRepository } from '@app/common/repositories/transporte/transporte.repository';
+import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { VehiculoDetalleParametros } from '../../interfaces/vehiculo-detalle-parametros.interface';
 import { Vehiculo } from '../../interfaces/vehiculo.interface';
 import { VehiculoRepository } from '../../repositories/vehiculo.repository';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
-import { VehiculoDetalleParametros } from '../../interfaces/vehiculo-detalle-parametros.interface';
+import { FechaService } from '@app/common/services/fecha.service';
 
 @Component({
   selector: 'app-vehiculo-formulario',
@@ -40,10 +39,8 @@ import { VehiculoDetalleParametros } from '../../interfaces/vehiculo-detalle-par
 export default class VehiculoFormularioComponent implements OnInit {
   private _formBuilder = inject(FormBuilder);
   private _vehiculoRepository = inject(VehiculoRepository);
-  private _transporteRepository = inject(TransporteRepository);
-  private _contactoRepository = inject(ContactoRepository);
   private _activatedRoute = inject(ActivatedRoute);
-
+  private _fechaService = inject(FechaService);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
   public arrColores = signal<RespuestaSeleccionar[]>([]);
@@ -64,13 +61,26 @@ export default class VehiculoFormularioComponent implements OnInit {
   }
 
   inicializarFormulario() {
-    const anioActual = new Date().getFullYear();
     this.formularioVehiculo = this._formBuilder.group({
       id: [],
       fecha_registro: [{ value: null, disabled: true }],
       placa: ['', [Validators.required, Validators.maxLength(6)]],
-      modelo: [null, [Validators.required, Validators.min(1900), Validators.max(anioActual)]],
-      modelo_repotenciado: [null, [Validators.min(1900), Validators.max(anioActual)]],
+      modelo: [
+        null,
+        [
+          Validators.required,
+          Validators.min(1900),
+          Validators.max(this._fechaService.obtenerAnioActual()),
+        ],
+      ],
+      modelo_repotenciado: [
+        null,
+        [
+          Validators.min(1900),
+          Validators.max(this._fechaService.obtenerAnioActual()),
+          cambiarVacioPorNulo.validar,
+        ],
+      ],
       motor: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       chasis: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       ejes: [null, [Validators.required, Validators.min(1)]],
@@ -79,7 +89,7 @@ export default class VehiculoFormularioComponent implements OnInit {
       celular: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       poliza: ['', [Validators.maxLength(30), cambiarVacioPorNulo.validar]],
       vence_poliza: [null, Validators.required],
-      tecnicomecanica: [null, Validators.maxLength(30)],
+      tecnicomecanica: [null, [Validators.maxLength(30), cambiarVacioPorNulo.validar]],
       vence_tecnicomecanica: [null, Validators.required],
       propio: [false],
       remolque: [false],
@@ -124,14 +134,15 @@ export default class VehiculoFormularioComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.formularioVehiculo.valid) {
-      if (this.detalleID() === 0) {
-        this._nuevoVehiculo();
-      } else {
-        this._editarVehiculo();
-      }
-    } else {
+    if (!this.formularioVehiculo.valid) {
       this.formularioVehiculo.markAllAsTouched();
+      return;
+    }
+
+    if (this.detalleID() === 0) {
+      this._nuevoVehiculo();
+    } else {
+      this._editarVehiculo();
     }
   }
 
