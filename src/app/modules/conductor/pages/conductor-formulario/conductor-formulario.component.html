@@ -84,7 +84,7 @@
             [errors]="{
               required: 'El modelo es requerido.',
               min: 'Debe ser mayor o igual a 1900.',
-              max: 'No puede ser mayor al año actual.',
+              maxLength: 'Máximo 1 caracteres.',
             }"
           ></app-input>
         </div>
@@ -247,6 +247,7 @@
             [control]="formularioConductor.get('telefono')"
             [errors]="{
               required: 'Este campo es requerido.',
+              maxLength: 'Máximo 50 caracteres.',
             }"
           ></app-input>
         </div>
@@ -261,6 +262,7 @@
             [control]="formularioConductor.get('numero_licencia')"
             [errors]="{
               required: 'Este campo es requerido.',
+              maxLength: 'Máximo 50 caracteres.',
             }"
           ></app-input>
         </div>
