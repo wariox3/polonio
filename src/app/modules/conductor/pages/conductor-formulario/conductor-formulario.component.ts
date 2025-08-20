@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -45,6 +53,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   private _conductorRepository = inject(ConductorRepository);
   private _generalRepository = inject(GeneralRepository);
   private _activatedRoute = inject(ActivatedRoute);
+  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _devuelveDigitoVerificacionService = inject(DevuelveDigitoVerificacionService);
   private _router = inject(Router);
   private _destroy$ = new Subject<void>();
@@ -404,6 +413,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
 
     this.formularioConductor.get('numero_identificacion')!.setErrors(errores);
     this.formularioConductor.get('numero_identificacion')!.markAsTouched();
+    this._changeDetectorRef.detectChanges();
   }
 
   private _setValidators(fieldName: string, validators: ValidatorFn[]) {
