@@ -20,6 +20,7 @@ import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
+import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -66,11 +67,9 @@ export default class GuiaFormularioComponent implements OnInit {
   }
 
   inicializarFormulario() {
-    const fechaHoy = new Date();
-    const fechaFormateada = fechaHoy.toISOString().split('T')[0]; // Formato: 'YYYY-MM-DD'
     this.formularioGuia = this._formBuilder.group({
-      fecha: [fechaFormateada, Validators.required],
-      documento: [null, [Validators.maxLength(30)]],
+      fecha: [this._fechaService.obtenerFechaHoy(), Validators.required],
+      documento: [null, [Validators.maxLength(30), cambiarVacioPorNulo.validar]],
       remitente_nombre: [null, [Validators.required, Validators.maxLength(150)]],
       destinatario_nombre: [null, [Validators.required, Validators.maxLength(150)]],
       destinatario_direccion: [null, [Validators.required, Validators.maxLength(150)]],
