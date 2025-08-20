@@ -125,7 +125,7 @@
           ></app-select-search>
         </div>
         <div>
-          <app-label>Unidades</app-label>
+          <app-label [required]="true">Unidades</app-label>
           <app-input
             [placeholder]="'0'"
             formControlName="unidades"
@@ -135,7 +135,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Peso</app-label>
+          <app-label [required]="true">Peso</app-label>
           <app-input
             [placeholder]="'0'"
             formControlName="peso"
@@ -145,7 +145,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Volumen</app-label>
+          <app-label [required]="true">Volumen</app-label>
           <app-input
             [placeholder]="'0'"
             formControlName="volumen"
@@ -155,7 +155,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Peso facturado</app-label>
+          <app-label [required]="true">Peso facturado</app-label>
           <app-input
             [placeholder]="'0'"
             formControlName="peso_facturado"
@@ -165,7 +165,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Valor declarado</app-label>
+          <app-label [required]="true">Valor declarado</app-label>
           <app-input
             formControlName="declara"
             [type]="'number'"
@@ -174,7 +174,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Flete</app-label>
+          <app-label [required]="true">Flete</app-label>
           <app-input
             formControlName="flete"
             [type]="'number'"
@@ -183,7 +183,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Manejo</app-label>
+          <app-label [required]="true">Manejo</app-label>
           <app-input
             formControlName="manejo"
             [type]="'number'"
@@ -192,7 +192,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Cobro contra entrega</app-label>
+          <app-label [required]="true">Cobro contra entrega</app-label>
           <app-input
             formControlName="cobro_entrega"
             [type]="'number'"
@@ -201,7 +201,7 @@
           ></app-input>
         </div>
         <div>
-          <app-label>Recaudo</app-label>
+          <app-label [required]="true">Recaudo</app-label>
           <app-input
             formControlName="recaudo"
             [type]="'number'"
