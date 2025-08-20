@@ -156,6 +156,7 @@
             [errors]="{
               required: 'Este campo es requerido.',
               min: 'El valor debe ser mayor o igual a 0.',
+              maxLength: 'Máximo 20 caracteres.',
             }"
             placeholder="0.00"
           ></app-input>
@@ -171,6 +172,7 @@
             [errors]="{
               required: 'Este campo es requerido.',
               min: 'El valor debe ser mayor o igual a 0.',
+              maxLength: 'Máximo 20 caracteres.',
             }"
             placeholder="0.00"
           ></app-input>
@@ -183,7 +185,7 @@
             formControlName="comentario"
             [type]="'textarea'"
             [control]="formularioDespacho.get('comentario')"
-            [errors]="{ maxlength: 'Máximo 500 caracteres.' }"
+            [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
             placeholder="Comentarios adicionales..."
           ></app-input>
         </div>

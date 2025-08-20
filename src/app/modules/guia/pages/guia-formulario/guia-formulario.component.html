@@ -170,7 +170,11 @@
             formControlName="declara"
             [type]="'number'"
             [control]="formularioGuia.get('declara')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'Debe ser positivo.',
+              maxLength: 'Máximo 20 caracteres.',
+            }"
           ></app-input>
         </div>
         <div>
@@ -179,7 +183,11 @@
             formControlName="flete"
             [type]="'number'"
             [control]="formularioGuia.get('flete')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'Debe ser positivo.',
+              maxLength: 'Máximo 20 caracteres.',
+            }"
           ></app-input>
         </div>
         <div>
@@ -188,7 +196,11 @@
             formControlName="manejo"
             [type]="'number'"
             [control]="formularioGuia.get('manejo')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'Debe ser positivo.',
+              maxLength: 'Máximo 20 caracteres.',
+            }"
           ></app-input>
         </div>
         <div>
@@ -197,7 +209,11 @@
             formControlName="cobro_entrega"
             [type]="'number'"
             [control]="formularioGuia.get('cobro_entrega')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'Debe ser positivo.',
+              maxLength: 'Máximo 20 caracteres.',
+            }"
           ></app-input>
         </div>
         <div>
@@ -206,17 +222,23 @@
             formControlName="recaudo"
             [type]="'number'"
             [control]="formularioGuia.get('recaudo')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'Debe ser positivo.',
+              maxLength: 'Máximo 20 caracteres.',
+            }"
           ></app-input>
         </div>
 
         <div class="md:col-span-2">
           <label class="block text-sm font-medium text-gray-700">Comentario</label>
-          <textarea
-            rows="4"
-            class="w-full px-3 py-2 text-gray-700 border rounded-lg"
+          <app-input
             formControlName="comentario"
-          ></textarea>
+            [type]="'textarea'"
+            [control]="formularioGuia.get('comentario')"
+            [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
+            placeholder="Comentarios adicionales..."
+          ></app-input>
         </div>
         <div class="flex flex-col gap-2">
           <app-switch

@@ -81,13 +81,13 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
       ciudad_origen__nombre: [null],
       ciudad_destino: [null, [Validators.required]],
       ciudad_destino__nombre: [null],
-      pago: [0, [Validators.required, Validators.min(0)]],
+      pago: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
       comentario: [null, [Validators.maxLength(500), cambiarVacioPorNulo.validar]],
       ruta: [null, [Validators.required]],
       ruta__nombre: [null],
       operacion: [null, [Validators.required]],
       operacion__nombre: [null],
-      flete: [0, [Validators.required, Validators.min(0)]],
+      flete: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
     });
   }
 

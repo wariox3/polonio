@@ -138,6 +138,7 @@
             [errors]="{
               required: 'El valor declarado es requerido.',
               min: 'Debe ser mayor o igual a 0.',
+              maxLength: 'Debe ser menor a 14 digitos',
             }"
           ></app-input>
         </div>
@@ -154,6 +155,7 @@
             [errors]="{
               required: 'El pago es requerido.',
               min: 'Debe ser mayor o igual a 1.',
+              maxLength: 'Debe ser menor a 14 digitos',
             }"
           ></app-input>
         </div>
@@ -170,6 +172,7 @@
             [errors]="{
               required: 'El flete es requerido.',
               min: 'Debe ser mayor o igual a 1.',
+              maxLength: 'Debe ser menor a 14 digitos',
             }"
           ></app-input>
         </div>
@@ -186,6 +189,7 @@
             [errors]="{
               required: 'El manejo es requerido.',
               min: 'Debe ser mayor o igual a 0.',
+              maxLength: 'Debe ser menor a 14 digitos',
             }"
           ></app-input>
         </div>
@@ -193,13 +197,13 @@
         <!-- Comentario - Ocupa toda la fila -->
         <div class="md:col-span-2">
           <app-label>Comentario</app-label>
-          <div>
-            <textarea
-              rows="4"
-              class="w-full px-3 py-2 text-gray-700 border rounded-lg"
-              formControlName="comentario"
-            ></textarea>
-          </div>
+          <app-input
+            formControlName="comentario"
+            [type]="'textarea'"
+            [control]="formularioNegocio.get('comentario')"
+            [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
+            placeholder="Comentarios adicionales..."
+          ></app-input>
         </div>
       </div>
     </div>
