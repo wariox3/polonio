@@ -88,7 +88,7 @@ export default class GuiaFormularioComponent implements OnInit {
       contenido_verificado: [false],
       mercancia_peligrosa: [false],
       requiere_cita: [false],
-      comentario: [null, [Validators.maxLength(500)]],
+      comentario: [null, [Validators.maxLength(500), cambiarVacioPorNulo.validar]],
       contacto: [null, Validators.required],
       contacto__nombre: [null],
       cliente: [null, Validators.required],
