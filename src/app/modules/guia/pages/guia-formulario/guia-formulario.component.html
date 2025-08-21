@@ -98,6 +98,61 @@
             [errors]="{ maxLength: 'Máximo 30 caracteres.' }"
           ></app-input>
         </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700">Comentario</label>
+          <app-input
+            formControlName="comentario"
+            [type]="'textarea'"
+            [control]="formularioGuia.get('comentario')"
+            [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
+            placeholder="Comentarios adicionales..."
+          ></app-input>
+        </div>
+        <div class="flex flex-col gap-2">
+          <app-switch
+            [control]="getControl('contenido_verificado')"
+            titulo="Contenido verificado"
+          ></app-switch>
+          <app-switch
+            [control]="getControl('mercancia_peligrosa')"
+            titulo="Mercancía peligrosa"
+          ></app-switch>
+          <app-switch [control]="getControl('requiere_cita')" titulo="Requiere cita"></app-switch>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-5">
+    <div class="card-header">
+      <h3 class="card-title">Destinatario</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true">Destinatario</app-label>
+          <app-select-search
+            [control]="getControl('destinatario')"
+            [label]="'nombre_corto'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            (selectionChange)="modificarFormulario('destinatario_nombre', $event)"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('destinatario__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Destinatario nombre</app-label>
+          <app-input
+            formControlName="destinatario_nombre"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_nombre')"
+            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
+          ></app-input>
+        </div>
         <div>
           <app-label [required]="true">Destino</app-label>
           <app-select-search
@@ -111,6 +166,43 @@
             }"
           ></app-select-search>
         </div>
+        <div>
+          <app-label [required]="true">Destinatario dirección</app-label>
+          <app-input
+            formControlName="destinatario_direccion"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_direccion')"
+            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Destinatario teléfono</app-label>
+          <app-input
+            formControlName="destinatario_telefono"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_telefono')"
+            [errors]="{ maxLength: 'Máximo 50 caracteres.' }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label>Destinatario correo</app-label>
+          <app-input
+            formControlName="destinatario_correo"
+            [type]="'text'"
+            [control]="formularioGuia.get('destinatario_correo')"
+            [errors]="{ email: 'Correo inválido.', maxLength: 'Máximo 255 caracteres.' }"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-5">
+    <div class="card-header">
+      <h3 class="card-title">Liquidación</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <app-label [required]="true">Unidades</app-label>
           <app-input
@@ -214,88 +306,6 @@
               min: 'Debe ser positivo.',
               maxLength: 'Máximo 20 caracteres.',
             }"
-          ></app-input>
-        </div>
-
-        <div class="md:col-span-2">
-          <label class="block text-sm font-medium text-gray-700">Comentario</label>
-          <app-input
-            formControlName="comentario"
-            [type]="'textarea'"
-            [control]="formularioGuia.get('comentario')"
-            [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
-            placeholder="Comentarios adicionales..."
-          ></app-input>
-        </div>
-        <div class="flex flex-col gap-2">
-          <app-switch
-            [control]="getControl('contenido_verificado')"
-            titulo="Contenido verificado"
-          ></app-switch>
-          <app-switch
-            [control]="getControl('mercancia_peligrosa')"
-            titulo="Mercancía peligrosa"
-          ></app-switch>
-          <app-switch [control]="getControl('requiere_cita')" titulo="Requiere cita"></app-switch>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Destinatario</h3>
-    </div>
-    <div class="card-body">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <app-label [required]="true">Destinatario</app-label>
-          <app-select-search
-            [control]="getControl('destinatario')"
-            [label]="'nombre_corto'"
-            [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'general/contacto/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            (selectionChange)="modificarFormulario('destinatario_nombre', $event)"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('destinatario__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-        <div>
-          <app-label [required]="true">Destinatario nombre</app-label>
-          <app-input
-            formControlName="destinatario_nombre"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_nombre')"
-            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
-          ></app-input>
-        </div>
-        <div>
-          <app-label [required]="true">Destinatario dirección</app-label>
-          <app-input
-            formControlName="destinatario_direccion"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_direccion')"
-            [errors]="{ required: 'Campo obligatorio.', maxLength: 'Máximo 150 caracteres.' }"
-          ></app-input>
-        </div>
-        <div>
-          <app-label>Destinatario teléfono</app-label>
-          <app-input
-            formControlName="destinatario_telefono"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_telefono')"
-            [errors]="{ maxLength: 'Máximo 50 caracteres.' }"
-          ></app-input>
-        </div>
-        <div>
-          <app-label>Destinatario correo</app-label>
-          <app-input
-            formControlName="destinatario_correo"
-            [type]="'text'"
-            [control]="formularioGuia.get('destinatario_correo')"
-            [errors]="{ email: 'Correo inválido.', maxLength: 'Máximo 255 caracteres.' }"
           ></app-input>
         </div>
       </div>
