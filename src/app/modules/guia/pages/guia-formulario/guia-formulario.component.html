@@ -112,19 +112,6 @@
           ></app-select-search>
         </div>
         <div>
-          <app-label [required]="true">Ruta</app-label>
-          <app-select-search
-            [control]="getControl('ruta')"
-            [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'transporte/ruta/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('ruta__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-        <div>
           <app-label [required]="true">Unidades</app-label>
           <app-input
             [placeholder]="'0'"

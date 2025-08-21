@@ -108,8 +108,6 @@ export default class GuiaFormularioComponent implements OnInit {
       producto__nombre: [null],
       empaque: [null, Validators.required],
       empaque__nombre: [null],
-      ruta: [null],
-      ruta__nombre: [null],
       liquidacion: ['k'],
     });
   }
@@ -227,8 +225,6 @@ export default class GuiaFormularioComponent implements OnInit {
       producto__nombre: data.producto__nombre,
       empaque: data.empaque,
       empaque__nombre: data.empaque__nombre,
-      ruta: data.ruta,
-      ruta__nombre: data.ruta__nombre,
       zona: data.zona,
       zona__nombre: data.zona__nombre,
     });
