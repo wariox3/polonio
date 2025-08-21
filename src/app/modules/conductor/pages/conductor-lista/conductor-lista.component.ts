@@ -66,7 +66,11 @@ export default class ConductorListaComponent implements OnInit {
   }
 
   onFiltersChange(filtros: QueryParams): void {
-    this._filtrosActivos.set(filtros);
+    this._filtrosActivos.set({
+      ...filtros,
+      conductor: 'True',
+      serializador: 'lista',
+    });
     this.estadoPaginacion.update(estado => ({
       ...estado,
       paginaActual: 1,
