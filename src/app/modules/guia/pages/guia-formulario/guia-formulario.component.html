@@ -30,10 +30,10 @@
             [label]="'nombre_corto'"
             [errors]="{ required: 'Este campo es requerido.' }"
             [endpoint]="'general/contacto/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
+            [campoBusqueda]="'nombre_corto__icontains'"
             (selectionChange)="modificarFormulario('remitente_nombre', $event)"
             [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('cliente__nombre_corto').value,
+              nombre_corto__icontains: this.formularioGuia.get('cliente__nombre_corto').value,
               cliente: 'True',
               limit: 10,
             }"
@@ -123,10 +123,10 @@
             [label]="'nombre_corto'"
             [errors]="{ required: 'Este campo es requerido.' }"
             [endpoint]="'general/contacto/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
+            [campoBusqueda]="'nombre_corto__icontains'"
             (selectionChange)="modificarFormulario('destinatario_nombre', $event)"
             [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('destinatario__nombre').value,
+              nombre_corto__icontains: this.formularioGuia.get('destinatario__nombre').value,
               limit: 10,
             }"
           ></app-select-search>
