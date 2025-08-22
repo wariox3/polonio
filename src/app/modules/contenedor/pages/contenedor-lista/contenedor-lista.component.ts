@@ -5,7 +5,7 @@ import { AdvancedButtonComponent } from '@app/common/components/ui/advanced-butt
 import { ModalService } from '@app/common/services/modal.service';
 import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
 import { Store } from '@ngrx/store';
-import { finalize, Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, Observable, Subject } from 'rxjs';
 import { Contenedor, ContenedorLista } from '../../interfaces/contenedor.interface';
 import { ContenedorRepository } from '../../repositories/contenedor.repository';
 import {
@@ -14,11 +14,12 @@ import {
 } from '../../store/actions/contenedor.action';
 import { QueryParams } from '@app/core/interfaces/api.interface';
 import { environment } from '@environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-contenedor',
   standalone: true,
-  imports: [AdvancedButtonComponent, CommonModule],
+  imports: [AdvancedButtonComponent, CommonModule, FormsModule],
   templateUrl: './contenedor-lista.component.html',
   styleUrl: './contenedor-lista.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,20 +29,28 @@ export default class ContenedorListaComponent implements OnInit {
   private modalService = inject(ModalService);
   private store = inject(Store);
   private route = inject(Router);
+  private searchTerms = new Subject<string>();
 
   public contenedores = signal<ContenedorLista[]>([]);
   public loaders = signal<boolean[]>([]);
   public usuarioId = signal<string>('');
   public contenedorSeleccionado = signal<Contenedor | null>(null);
   public currentPage = signal<number>(1);
-  public searchTerms = signal<string>('');
   public digitalOceanUrl = environment.digitalOceanUrl;
   public searchTerm = '';
 
   ngOnInit(): void {
     this.initStoreData();
+    this.initSearchContenedor();
     this.getContenedores();
     this.store.dispatch(ContenedorActionBorrarInformacion());
+  }
+
+  initSearchContenedor() {
+    this.searchTerms.pipe(debounceTime(500), distinctUntilChanged()).subscribe(term => {
+      this.searchTerm = term;
+      this.getContenedores();
+    });
   }
 
   initStoreData() {
@@ -124,5 +133,14 @@ export default class ContenedorListaComponent implements OnInit {
 
   getModalInstaceState(id: string): Observable<boolean> {
     return this.modalService.isOpen$(id);
+  }
+
+  onSearchChange(term: string) {
+    this.currentPage.set(1);
+    this.searchTerms.next(term);
+  }
+
+  get totalItems(): number {
+    return this.contenedorRepository.totalItems() || 0;
   }
 }
