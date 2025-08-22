@@ -17,7 +17,11 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
     { clave: 'destinatario__correo', etiqueta: 'Correo' },
     { clave: 'unidades', etiqueta: 'Unidades' },
     { clave: 'peso', etiqueta: 'Peso', formato: valor => `${valor} kg` },
-    { clave: 'volumen', etiqueta: 'Volumen', formato: valor => `${valor} m³` },
+    {
+      clave: 'volumen',
+      etiqueta: 'Volumen (alto*largo*ancho*400)',
+      formato: valor => `${valor} m³`,
+    },
     { clave: 'peso_facturado', etiqueta: 'Peso facturado', formato: valor => `${valor} kg` },
     {
       clave: 'declara',
