@@ -69,6 +69,8 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
     this.formularioDespacho = this._formBuilder.group({
       fecha: [this._fechaService.obtenerFechaHoy(), [Validators.required]],
       contacto: [null],
+      servicio: [null, [Validators.required]],
+      servicio__nombre: [null],
       despacho_tipo: [null, [Validators.required]],
       despacho_tipo__nombre: [null],
       vehiculo: [null, [Validators.required]],

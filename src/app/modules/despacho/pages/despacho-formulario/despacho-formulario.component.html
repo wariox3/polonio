@@ -15,6 +15,20 @@
     </div>
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true">Servicio</app-label>
+          <app-select-search
+            [control]="getControl('servicio')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'transporte/servicio/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioDespacho.get('servicio__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
         <!-- Depacho tipo -->
         <div>
           <app-label [required]="true">Despacho tipo</app-label>
@@ -30,7 +44,7 @@
             }"
           ></app-select-search>
         </div>
-        <div></div>
+
         <!-- Vehículo -->
         <div>
           <app-label [required]="true">Vehículo</app-label>
