@@ -21,6 +21,7 @@ import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
+import { AlertaService } from '@app/common/services/alerta.service';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -43,6 +44,7 @@ export default class GuiaFormularioComponent implements OnInit {
   private _activatedRoute = inject(ActivatedRoute);
   private _guiaRepository = inject(GuiaRepository);
   private _operacionRepository = inject(OperacionRepository);
+  private _alertaService = inject(AlertaService);
   private _fechaService = inject(FechaService);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
@@ -114,9 +116,15 @@ export default class GuiaFormularioComponent implements OnInit {
 
   private _consultarInformacion() {
     //TODO: codigo temporal para la tarea 1685
-    this._operacionRepository
-      .consultaOperacionIngreso()
-      .subscribe(respuesta => this.modificarFormulario('ciudad_origen', respuesta[0]));
+    this._operacionRepository.consultaOperacionIngreso().subscribe(respuesta => {
+      if (respuesta.length === 0) {
+        this._alertaService.mostrarInfo('El usuario no tiene una operación asignada').then(() => {
+          this._router.navigate(['/movimiento/guia/lista']);
+        });
+        return;
+      }
+      this.modificarFormulario('ciudad_origen', respuesta[0]);
+    });
   }
 
   consultardetalle() {
