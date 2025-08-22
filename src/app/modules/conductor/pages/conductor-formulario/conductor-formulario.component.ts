@@ -74,9 +74,9 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   public identificacionIdApiDetalleSignal = signal(0);
 
   ngOnInit() {
+    this.consultarInformacion();
     this.inicializarFormulario();
     this.consultardetalle();
-    this.consultarInformacion();
     this._iniciarSuscripcionesFormularioConductor();
   }
 
@@ -171,9 +171,11 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
             nombre: item.nombre,
           }))
         );
-        this.formularioConductor.patchValue({
-          identificacion: this.filteredIdentificacionSignal()[0].valor,
-        });
+        if (this.detalleID() === 0) {
+          this.formularioConductor.patchValue({
+            identificacion: this.filteredIdentificacionSignal()[0].valor,
+          });
+        }
       }
     );
   }
@@ -216,7 +218,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
     this.informacionContacto = data;
 
     this.identificacionIdApiDetalleSignal.update(() => data.identificacion_id);
-    this.formularioConductor.setValue({
+    this.formularioConductor.patchValue({
       id: data.id,
       numero_identificacion: data.numero_identificacion,
       digito_verificacion: data.digito_verificacion,
