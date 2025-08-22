@@ -2,8 +2,8 @@ import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
 
 export const columnasConductorLista: ColumnaTabla[] = [
   { clave: 'id', nombre: 'ID' },
-  { clave: 'nombre_corto', nombre: 'Nombre' },
   { clave: 'numero_identificacion', nombre: 'Identificación' },
+  { clave: 'nombre_corto', nombre: 'Nombre' },
   { clave: 'telefono', nombre: 'Teléfono' },
   { clave: 'celular', nombre: 'Celular' },
   { clave: 'correo', nombre: 'Correo' },

@@ -5,14 +5,11 @@ export const columnasVehiculoLista: ColumnaTabla[] = [
   { clave: 'placa', nombre: 'Placa' },
   { clave: 'marca__nombre', nombre: 'Marca' },
   { clave: 'modelo', nombre: 'Modelo' },
-  { clave: 'motor', nombre: 'Motor' },
-  { clave: 'chasis', nombre: 'Chasis' },
-  { clave: 'ejes', nombre: 'Ejes' },
   { clave: 'celular', nombre: 'Celular' },
-  { clave: 'poliza', nombre: 'Póliza' },
-  { clave: 'vence_poliza', nombre: 'Vence póliza' },
-  { clave: 'tecnicomecanica', nombre: 'Tecnomecánica' },
-  { clave: 'vence_tecnicomecanica', nombre: 'Vence tecnomecánica' },
+  {
+    clave: 'poseedor__nombre_corto',
+    nombre: 'Poseedor',
+  },
   {
     clave: 'estado_revisado',
     nombre: 'Revisado',
