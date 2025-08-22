@@ -115,11 +115,10 @@
 
         <!-- Ruta -->
         <div>
-          <app-label [required]="true">Ruta</app-label>
+          <app-label>Ruta</app-label>
           <app-select-search
             [control]="getControl('ruta')"
             [label]="'nombre'"
-            [errors]="{ required: 'Este campo es requerido.' }"
             [endpoint]="'transporte/ruta/seleccionar/'"
             [campoBusqueda]="'nombre__icontains'"
             [parametrosEndpoint]="{
