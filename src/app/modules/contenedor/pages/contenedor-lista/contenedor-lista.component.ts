@@ -1,31 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdvancedButtonComponent } from '@app/common/components/ui/advanced-button/advanced-button.component';
+import { ModalService } from '@app/common/services/modal.service';
 import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
 import { Store } from '@ngrx/store';
-import { Contenedor } from '../../interfaces/contenedor.interface';
-import { ContenedorRepository } from '../../repositories/contenedor.repository';
-import { CommonModule } from '@angular/common';
 import { finalize, Observable } from 'rxjs';
-import { ModalStandardComponent } from '@app/common/components/ui/modals/modal-standard/modal-standard.component';
-import { ModalService } from '@app/common/services/modal.service';
-import { ContenedorEliminarComponent } from '../../components/contenedor-eliminar/contenedor-eliminar.component';
-import { ContenedorInvitarComponent } from '../../components/contenedor-invitar/contenedor-invitar.component';
+import { Contenedor, ContenedorLista } from '../../interfaces/contenedor.interface';
+import { ContenedorRepository } from '../../repositories/contenedor.repository';
 import {
   ContenedorActionBorrarInformacion,
   ContenedorActionInit,
 } from '../../store/actions/contenedor.action';
-import { Router } from '@angular/router';
+import { QueryParams } from '@app/core/interfaces/api.interface';
+import { environment } from '@environments/environment';
 
 @Component({
   selector: 'app-contenedor',
   standalone: true,
-  imports: [
-    AdvancedButtonComponent,
-    CommonModule,
-    ModalStandardComponent,
-    ContenedorEliminarComponent,
-    ContenedorInvitarComponent,
-  ],
+  imports: [AdvancedButtonComponent, CommonModule],
   templateUrl: './contenedor-lista.component.html',
   styleUrl: './contenedor-lista.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,10 +29,14 @@ export default class ContenedorListaComponent implements OnInit {
   private store = inject(Store);
   private route = inject(Router);
 
-  public contenedores = signal<Contenedor[]>([]);
+  public contenedores = signal<ContenedorLista[]>([]);
   public loaders = signal<boolean[]>([]);
   public usuarioId = signal<string>('');
   public contenedorSeleccionado = signal<Contenedor | null>(null);
+  public currentPage = signal<number>(1);
+  public searchTerms = signal<string>('');
+  public digitalOceanUrl = environment.digitalOceanUrl;
+  public searchTerm = '';
 
   ngOnInit(): void {
     this.initStoreData();
@@ -54,9 +51,18 @@ export default class ContenedorListaComponent implements OnInit {
   }
 
   getContenedores() {
-    this.contenedorRepository.getMisContenedores(this.usuarioId()).subscribe(resp => {
-      this.loaders.set(resp.contenedores.map(() => false));
-      this.contenedores.set(resp.contenedores);
+    const params: QueryParams = {
+      usuario_id: this.usuarioId(),
+      page: this.currentPage(),
+    };
+
+    if (this.searchTerm) {
+      params['contenedor__nombre'] = this.searchTerm;
+    }
+
+    this.contenedorRepository.getMisContenedores(params).subscribe(resp => {
+      this.loaders.set(resp.results.map(() => false));
+      this.contenedores.set(resp.results);
     });
   }
 

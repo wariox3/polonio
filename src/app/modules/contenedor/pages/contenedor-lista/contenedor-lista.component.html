@@ -19,9 +19,9 @@
         @for (contenedor of contenedores(); let idx = $index; track idx) {
           <tr>
             <td class="flex items-center">
-              <ng-container *ngIf="contenedor.imagen">
+              <ng-container *ngIf="contenedor.contenedor__imagen">
                 <img
-                  [src]="contenedor.imagen"
+                  [src]="digitalOceanUrl + contenedor.contenedor__imagen"
                   [alt]="'Error al cargar logo'"
                   width="120"
                   height="120"
@@ -32,7 +32,7 @@
 
               <div class="flex flex-col items-start ml-4">
                 <span class="text-dark font-bold">
-                  {{ contenedor.nombre }}
+                  {{ contenedor.contenedor__nombre }}
                 </span>
                 <!-- <span class="text-slate-400 mb-3 text-xs"
                   >{{ contenedor.subdominio }}{{ dominioApp }}</span
@@ -53,11 +53,16 @@
             <td></td>
             <td>
               <div>
-                <span class="badge badge-outline badge-success">{{ contenedor.plan_nombre }}</span>
+                <span class="badge badge-outline badge-success">{{
+                  contenedor.contenedor__plan__nombre
+                }}</span>
               </div>
             </td>
             <td>
-              <div class="text-xs">{{ contenedor.usuarios }} / {{ contenedor.usuarios_base }}</div>
+              <div class="text-xs">
+                {{ contenedor.contenedor__usuarios }} /
+                {{ contenedor.contenedor__plan__usuarios_base }}
+              </div>
             </td>
             <td>
               <div class="flex gap-4">
