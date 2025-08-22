@@ -64,30 +64,14 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   public arrCiudad = signal([]);
   public arrIdentificacion = signal([]);
   public arrRegimen = signal([]);
+  public arrCategoriaLicencia = signal([]);
   public arrTipoPersona = signal([]);
-  public filtroIdentificacionSignal = signal(1);
+  public filtroIdentificacionSignal = signal(2);
   public filteredIdentificacionSignal = computed(() =>
     this.arrIdentificacion().filter(item => item.tipo_persona === this.filtroIdentificacionSignal())
   );
   public formularioConductor: FormGroup;
   public identificacionIdApiDetalleSignal = signal(0);
-
-  private readonly VALIDATORS = {
-    nombre: [Validators.pattern(/^[a-zA-ZÑñ ]+$/), Validators.maxLength(50)],
-    nombreRequerido: [
-      Validators.required,
-      Validators.pattern(/^[a-zA-ZÑñ ]+$/),
-      Validators.maxLength(50),
-    ],
-    apellido: [Validators.pattern(/^[a-zA-ZÑñ ]+$/), Validators.maxLength(50)],
-    apellidoRequerido: [
-      Validators.required,
-      Validators.pattern(/^[a-zA-ZÑñ ]+$/),
-      Validators.maxLength(50),
-    ],
-    nombreCorto: [Validators.maxLength(200)],
-    nombreCortoRequerido: [Validators.required, Validators.maxLength(200)],
-  };
 
   ngOnInit() {
     this.inicializarFormulario();
@@ -104,20 +88,26 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   inicializarFormulario() {
     this.formularioConductor = this._formBuilder.group({
       id: [],
-      tipo_persona: [1, Validators.compose([Validators.required])],
-      regimen: [1, Validators.compose([Validators.required])],
+      tipo_persona: [2, Validators.compose([Validators.required])],
+      regimen: [2, Validators.compose([Validators.required])],
       numero_identificacion: ['', [Validators.required, Validators.maxLength(20)]],
       digito_verificacion: ['', [Validators.maxLength(1)]],
-      nombre1: [null, [Validators.maxLength(50)]],
+      nombre1: [
+        null,
+        [Validators.required, Validators.pattern(/^[a-zA-ZÑñ ]+$/), Validators.maxLength(50)],
+      ],
       nombre2: [null, [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
-      apellido1: [null, [Validators.maxLength(50)]],
+      apellido1: [
+        null,
+        [Validators.required, Validators.pattern(/^[a-zA-ZÑñ ]+$/), Validators.maxLength(50)],
+      ],
       apellido2: [null, [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
       nombre_corto: [null, [Validators.required, Validators.maxLength(200)]],
       direccion: [null, [Validators.required, Validators.maxLength(100)]],
       barrio: [null, [Validators.maxLength(200), cambiarVacioPorNulo.validar]],
       telefono: ['', [Validators.required, Validators.maxLength(50)]],
       celular: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
-      correo: ['', [Validators.required, Validators.email, Validators.maxLength(255)]],
+      correo: ['', [Validators.email, Validators.maxLength(255), cambiarVacioPorNulo.validar]],
       numero_licencia: ['', [Validators.required, Validators.maxLength(50)]],
       categoria_licencia: ['', [Validators.required, Validators.maxLength(2)]],
       fecha_vence_licencia: ['', [Validators.required]],
@@ -129,20 +119,10 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.actualizarNombreCorto();
     if (!this.formularioConductor.valid) {
       this.formularioConductor.markAllAsTouched();
       return;
-    }
-    if (this.formularioConductor.get('tipo_persona')?.value == 2) {
-      this.actualizarNombreCorto();
-    }
-    if (this.detalleID() > 0 && this.formularioConductor.get('tipo_persona')?.value == 1) {
-      this.formularioConductor.patchValue({
-        nombre1: null,
-        nombre2: null,
-        apellido1: null,
-        apellido2: null,
-      });
     }
     if (this.detalleID() === 0) {
       this._nuevoConductor();
@@ -155,13 +135,15 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
     zip(
       this._generalRepository.get('general/regimen/seleccionar/'),
       this._generalRepository.get('general/tipo_persona/seleccionar/'),
-      this._generalRepository.get('general/identificacion/seleccionar/')
+      this._generalRepository.get('general/identificacion/seleccionar/'),
+      this._generalRepository.get('transporte/categoria_licencia/seleccionar/')
     ).subscribe(
       (
         respuesta: [
           RespuestaSeleccionar[],
           RespuestaSeleccionar[],
           RespuestaSeleccionarIdentificacion[],
+          RespuestaSeleccionar[],
         ]
       ): void => {
         this.arrRegimen.set(
@@ -183,6 +165,12 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
             tipo_persona: item.tipo_persona,
           }))
         );
+        this.arrCategoriaLicencia.set(
+          respuesta[3].map((item: RespuestaSeleccionar) => ({
+            valor: item.id,
+            nombre: item.nombre,
+          }))
+        );
         this.formularioConductor.patchValue({
           identificacion: this.filteredIdentificacionSignal()[0].valor,
         });
@@ -200,14 +188,6 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   }
 
   private _editarConductor() {
-    if (this.formularioConductor.get('tipo_persona')?.value == 1) {
-      this.formularioConductor.patchValue({
-        nombre1: null,
-        nombre2: null,
-        apellido1: null,
-        apellido2: null,
-      });
-    }
     this._conductorRepository
       .editar(this.detalleID(), this.formularioConductor.value)
       .pipe(takeUntil(this._destroy$))
@@ -234,6 +214,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
 
   private poblarFormulario(data: Conductor) {
     this.informacionContacto = data;
+
     this.identificacionIdApiDetalleSignal.update(() => data.identificacion_id);
     this.formularioConductor.setValue({
       id: data.id,
@@ -250,7 +231,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       celular: data.celular,
       correo: data.correo,
       numero_licencia: data.numero_licencia,
-      categoria_licencia: data.categoria_licencia,
+      categoria_licencia: data.categoria_licencia_id,
       fecha_vence_licencia: data.fecha_vence_licencia,
       identificacion: data.identificacion_id,
       ciudad: data.ciudad_id,
@@ -294,68 +275,12 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   }
 
   private _iniciarSuscripcionesFormularioConductor() {
-    this.formularioConductor
-      .get('tipo_persona')
-      ?.valueChanges.pipe(takeUntil(this._destroy$))
-      .subscribe((valor: string) => {
-        const valorPersonaTipo = Number(valor) || 0;
-        this.filtroIdentificacionSignal.set(valorPersonaTipo);
-
-        if (valorPersonaTipo === 1) {
-          this._aplicarValidadoresPersonaNatural();
-        } else if (valorPersonaTipo === 2) {
-          this._aplicarValidadoresPersonaJuridica();
-        }
-      });
-
     merge(
       this.formularioConductor.get('numero_identificacion')!.valueChanges.pipe(debounceTime(300)),
-      this.formularioConductor.get('identificacion')!.valueChanges,
-      this.formularioConductor.get('tipo_persona')!.valueChanges
+      this.formularioConductor.get('identificacion')!.valueChanges
     )
       .pipe(takeUntil(this._destroy$))
       .subscribe(() => this._validarNumeroIdenficacionExistente());
-  }
-
-  private _aplicarValidadoresPersonaNatural() {
-    this._setValidators('nombre1', this.VALIDATORS.nombre);
-    this._setValidators('apellido1', this.VALIDATORS.apellido);
-    this._setValidators('nombre_corto', this.VALIDATORS.nombreCortoRequerido);
-
-    this._patchFormulario({
-      resetNombres: true,
-      asignarIdentificacion: true,
-    });
-  }
-
-  private _aplicarValidadoresPersonaJuridica() {
-    this._setValidators('nombre1', this.VALIDATORS.nombreRequerido);
-    this._setValidators('apellido1', this.VALIDATORS.apellidoRequerido);
-    this._setValidators('nombre_corto', this.VALIDATORS.nombreCorto);
-
-    this._patchFormulario({
-      resetNombres: false,
-      asignarIdentificacion: true,
-    });
-  }
-
-  private _patchFormulario(opts: { resetNombres: boolean; asignarIdentificacion: boolean }) {
-    const valores: any = { tipo_persona: this.filtroIdentificacionSignal() };
-
-    if (opts.resetNombres && this.detalleID() === 0) {
-      Object.assign(valores, {
-        nombre1: null,
-        nombre2: null,
-        apellido1: null,
-        apellido2: null,
-      });
-    }
-
-    if (opts.asignarIdentificacion) {
-      valores.identificacion = this.filteredIdentificacionSignal()[0]?.valor;
-    }
-
-    this.formularioConductor.patchValue(valores, { emitEvent: false });
   }
 
   private _validarNumeroIdenficacionExistente() {

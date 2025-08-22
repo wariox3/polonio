@@ -23,7 +23,8 @@ export interface Conductor {
   tipo_persona: number;
   regimen: number;
   numero_licencia: string;
-  categoria_licencia: string;
+  categoria_licencia_id: number | null;
+  categoria_licencia_nombre: string | null;
   fecha_vence_licencia: string;
   tipo_persona_id: number;
   regimen_id: number;

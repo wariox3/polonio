@@ -5,7 +5,7 @@
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 
-  <div class="card">
+  <div class="card mb-5">
     <div class="card-header">
       <h3 class="card-title">
         {{ detalleID() > 0 ? 'Editar conductor' : 'Nuevo conductor' }}
@@ -13,31 +13,6 @@
     </div>
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <app-label [required]="true"> Tipo persona </app-label>
-          <app-select
-            [control]="getControl('tipo_persona')"
-            [opciones]="arrTipoPersona()"
-          ></app-select>
-          @if (
-            formularioConductor.get('tipo_persona').hasError('required') &&
-            (formularioConductor.get('tipo_persona').dirty ||
-              formularioConductor.get('tipo_persona').touched)
-          ) {
-            <p class="text-sm text-red-600 mt-1">Este campo es requerido.</p>
-          }
-        </div>
-        <div>
-          <app-label [required]="true"> Régimen fiscal </app-label>
-          <app-select [control]="getControl('regimen')" [opciones]="arrRegimen()"></app-select>
-          @if (
-            formularioConductor.get('regimen').hasError('required') &&
-            (formularioConductor.get('regimen').dirty || formularioConductor.get('regimen').touched)
-          ) {
-            <p class="text-sm text-red-600 mt-1">Este campo es requerido.</p>
-          }
-        </div>
-
         <div>
           <app-label [required]="true"> identificación </app-label>
           <app-select
@@ -53,38 +28,97 @@
           }
         </div>
 
+        <section class="flex flex-row justify-between gap-2">
+          <div class="flex-auto">
+            <app-label [required]="true"> Número identificación </app-label>
+            <app-input
+              placeholder="Ingresa el número identificación"
+              formControlName="numero_identificacion"
+              [type]="'number'"
+              maxlength=""
+              [control]="formularioConductor.get('numero_identificacion')"
+              (blurEvent)="calcularDigitoVerificacion()"
+              [errors]="{
+                required: 'Este campo es requerido.',
+                min: 'Debe ser mayor o igual a 1900.',
+                max: 'No puede ser mayor al año actual.',
+                numeroIdentificacionExistente:
+                  'El conductor con el número y tipo de identificación seleccionados ya existe.',
+              }"
+            ></app-input>
+          </div>
+
+          <div>
+            <app-label> DV </app-label>
+            <app-input
+              placeholder="Digito verificación"
+              formControlName="digito_verificacion"
+              [type]="'number'"
+              [attr.disabled]="true"
+              maxlength=""
+              [control]="formularioConductor.get('digito_verificacion')"
+              [errors]="{
+                required: 'El modelo es requerido.',
+                min: 'Debe ser mayor o igual a 1900.',
+                maxLength: 'Máximo 1 caracteres.',
+              }"
+            ></app-input>
+          </div>
+        </section>
+
         <div>
-          <app-label [required]="true"> Número identificación </app-label>
+          <app-label [required]="true">Primer nombre</app-label>
           <app-input
-            placeholder="Ingresa el número identificación"
-            formControlName="numero_identificacion"
-            [type]="'number'"
-            maxlength=""
-            [control]="formularioConductor.get('numero_identificacion')"
-            (blurEvent)="calcularDigitoVerificacion()"
+            placeholder="Ingresa primer nombre"
+            formControlName="nombre1"
+            [type]="'text'"
+            [control]="formularioConductor.get('nombre1')"
             [errors]="{
               required: 'Este campo es requerido.',
-              min: 'Debe ser mayor o igual a 1900.',
-              max: 'No puede ser mayor al año actual.',
-              numeroIdentificacionExistente:
-                'El conductor con el número y tipo de identificación seleccionados ya existe.',
+              maxLength: 'Máximo 50 caracteres.',
+              pattern: 'Solo se permiten letras y espacios.',
             }"
           ></app-input>
         </div>
 
         <div>
-          <app-label> DV </app-label>
+          <app-label>Segundo nombre</app-label>
           <app-input
-            placeholder="Digito verificación"
-            formControlName="digito_verificacion"
-            [type]="'number'"
-            [attr.disabled]="true"
+            placeholder="Ingresa segundo nombre"
+            formControlName="nombre2"
+            [type]="'text'"
             maxlength=""
-            [control]="formularioConductor.get('digito_verificacion')"
+            [control]="formularioConductor.get('nombre2')"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label [required]="true">Primer apellido</app-label>
+          <app-input
+            placeholder="Ingresa primer apellido"
+            formControlName="apellido1"
+            [type]="'text'"
+            maxlength=""
+            [control]="formularioConductor.get('apellido1')"
             [errors]="{
-              required: 'El modelo es requerido.',
-              min: 'Debe ser mayor o igual a 1900.',
-              maxLength: 'Máximo 1 caracteres.',
+              required: 'Este campo es requerido.',
+              min: 'Debe ser un valor positivo.',
+              pattern: 'Solo se permiten letras y espacios.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Segundo apellido</app-label>
+          <app-input
+            placeholder="Ingresa segundo apellido"
+            formControlName="apellido2"
+            [type]="'text'"
+            maxlength=""
+            [control]="formularioConductor.get('apellido2')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              min: 'Debe ser un valor positivo.',
             }"
           ></app-input>
         </div>
@@ -103,110 +137,6 @@
               limit: 10,
             }"
           ></app-select-search>
-        </div>
-        @if (formularioConductor.value.tipo_persona === 1) {
-          <div>
-            <app-label [required]="true">Nombre corto</app-label>
-            <app-input
-              placeholder="Nombre corto"
-              formControlName="nombre_corto"
-              [type]="'text'"
-              maxlength=""
-              [control]="formularioConductor.get('nombre_corto')"
-              [errors]="{
-                required: 'Este campo es requerido.',
-                maxLength: 'Máximo 200 caracteres.',
-              }"
-            ></app-input>
-          </div>
-        }
-
-        @if (formularioConductor.value.tipo_persona === 2) {
-          <div>
-            <app-label [required]="true">Primer nombre</app-label>
-            <app-input
-              placeholder="Ingresa primer nombre"
-              formControlName="nombre1"
-              [type]="'text'"
-              maxlength=""
-              [control]="formularioConductor.get('nombre1')"
-              [errors]="{
-                required: 'Este campo es requerido.',
-                maxLength: 'Máximo 50 caracteres.',
-              }"
-            ></app-input>
-          </div>
-
-          <div>
-            <app-label>Segundo nombre</app-label>
-            <app-input
-              placeholder="Ingresa segundo nombre"
-              formControlName="nombre2"
-              [type]="'text'"
-              maxlength=""
-              [control]="formularioConductor.get('nombre2')"
-            ></app-input>
-          </div>
-
-          <div>
-            <app-label [required]="true">Primer apellido</app-label>
-            <app-input
-              placeholder="Ingresa primer apellido"
-              formControlName="apellido1"
-              [type]="'text'"
-              maxlength=""
-              [control]="formularioConductor.get('apellido1')"
-              [errors]="{
-                required: 'Este campo es requerido.',
-                min: 'Debe ser un valor positivo.',
-              }"
-            ></app-input>
-          </div>
-
-          <div>
-            <app-label>Segundo apellido</app-label>
-            <app-input
-              placeholder="Ingresa segundo apellido"
-              formControlName="apellido2"
-              [type]="'text'"
-              maxlength=""
-              [control]="formularioConductor.get('apellido2')"
-              [errors]="{
-                required: 'Este campo es requerido.',
-                min: 'Debe ser un valor positivo.',
-              }"
-            ></app-input>
-          </div>
-        }
-
-        <div>
-          <app-label [required]="true">Correo</app-label>
-          <app-input
-            placeholder="Correo"
-            formControlName="correo"
-            [type]="'text'"
-            maxlength=""
-            [control]="formularioConductor.get('correo')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-              email: 'Correo no valido',
-              maxLength: 'Máximo 255 caracteres.',
-            }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label>Celular</app-label>
-          <app-input
-            placeholder="Celular"
-            formControlName="celular"
-            [type]="'text'"
-            maxlength=""
-            [control]="formularioConductor.get('celular')"
-            [errors]="{
-              maxLength: 'Máximo 50 caracteres.',
-            }"
-          ></app-input>
         </div>
 
         <div>
@@ -253,7 +183,52 @@
         </div>
 
         <div>
-          <app-label [required]="true">Número licencia</app-label>
+          <app-label>Celular</app-label>
+          <app-input
+            placeholder="Celular"
+            formControlName="celular"
+            [type]="'text'"
+            maxlength=""
+            [control]="formularioConductor.get('celular')"
+            [errors]="{
+              maxLength: 'Máximo 50 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Correo</app-label>
+          <app-input
+            placeholder="Correo"
+            formControlName="correo"
+            [type]="'text'"
+            maxlength=""
+            [control]="formularioConductor.get('correo')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              email: 'Correo no valido',
+              maxLength: 'Máximo 255 caracteres.',
+            }"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Licencia</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true">Categoria</app-label>
+          <app-select
+            [control]="getControl('categoria_licencia')"
+            [opciones]="arrCategoriaLicencia()"
+          ></app-select>
+        </div>
+        <div>
+          <app-label [required]="true">Número</app-label>
           <app-input
             placeholder="número licencia"
             formControlName="numero_licencia"
@@ -268,22 +243,7 @@
         </div>
 
         <div>
-          <app-label [required]="true">Categoria licencia</app-label>
-          <app-input
-            placeholder="Categoria licencia"
-            formControlName="categoria_licencia"
-            [type]="'text'"
-            maxlength=""
-            [control]="formularioConductor.get('categoria_licencia')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-              maxLength: 'Máximo 2 caracteres.',
-            }"
-          ></app-input>
-        </div>
-
-        <div>
-          <app-label [required]="true">Fecha vence licencia</app-label>
+          <app-label [required]="true">Fecha vence</app-label>
           <app-input
             placeholder="Fecha de vencimiento de la licencia"
             formControlName="fecha_vence_licencia"

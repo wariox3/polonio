@@ -8,7 +8,6 @@ import { Conductor } from '../interfaces/conductor.interface';
  */
 export function obtenerCamposConductorDetalle(datos: Conductor): CampoDetalle[] {
   return [
-    { clave: 'tipo_persona', etiqueta: 'Tipo persona', filaCompleta: true },
     { clave: 'nombre_corto', etiqueta: 'Nombre', filaCompleta: true },
     { clave: 'nombre1', etiqueta: 'Primer nombre' },
     { clave: 'nombre2', etiqueta: 'Segundo  nombre' },
@@ -27,9 +26,8 @@ export function obtenerCamposConductorDetalle(datos: Conductor): CampoDetalle[] 
     { clave: 'celular', etiqueta: 'Celular' },
     { clave: 'correo', etiqueta: 'Correo' },
     { clave: 'numero_licencia', etiqueta: 'Licencia' },
-    { clave: 'categoria_licencia', etiqueta: 'Categoria' },
+    { clave: 'categoria_licencia_nombre', etiqueta: 'Categoria' },
     { clave: 'fecha_vence_licencia', etiqueta: 'Vence' },
     { clave: 'direccion', etiqueta: 'Dirección', filaCompleta: true },
-    { clave: 'regimen_nombre', etiqueta: 'Regimen', filaCompleta: true },
   ];
 }
