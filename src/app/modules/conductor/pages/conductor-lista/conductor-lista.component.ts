@@ -20,10 +20,11 @@ import { ConductorRepository } from '../../repositories/conductor.repository';
 })
 export default class ConductorListaComponent implements OnInit {
   private _conductorRepository = inject(ConductorRepository);
-  private _filtrosActivos = signal<QueryParams>({
+  private readonly parametrosBase = {
     conductor: 'True',
     serializador: 'lista',
-  });
+  };
+  private _filtrosActivos = signal<QueryParams>(this.parametrosBase);
 
   public conductoresSeleccionados = signal<Conductor[]>([]);
   public conductores = signal<Conductor[]>([]);
@@ -68,8 +69,7 @@ export default class ConductorListaComponent implements OnInit {
   onFiltersChange(filtros: QueryParams): void {
     this._filtrosActivos.set({
       ...filtros,
-      conductor: 'True',
-      serializador: 'lista',
+      ...this.parametrosBase,
     });
     this.estadoPaginacion.update(estado => ({
       ...estado,
