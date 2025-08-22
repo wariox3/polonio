@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -48,6 +48,7 @@ export default class GuiaFormularioComponent implements OnInit {
   private _fechaService = inject(FechaService);
   private _router = inject(Router);
   private destroy$ = new Subject<void>();
+
   public formularioGuia: FormGroup;
   public detalleID = signal(0);
   public arrCliente = signal([]);
@@ -85,7 +86,6 @@ export default class GuiaFormularioComponent implements OnInit {
       flete: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
       manejo: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
       recaudo: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
-      cobro_entrega: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
       estado_novedad_solucionada: [false],
       contenido_verificado: [false],
       mercancia_peligrosa: [false],
@@ -104,12 +104,12 @@ export default class GuiaFormularioComponent implements OnInit {
       ciudad_destino: [null, Validators.required],
       ciudad_destino__nombre: [null],
       despacho: [null],
-      servicio: [null, Validators.required],
-      servicio__nombre: [null],
-      producto: [null, Validators.required],
-      producto__nombre: [null],
-      empaque: [null, Validators.required],
-      empaque__nombre: [null],
+      servicio: [3, Validators.required],
+      servicio__nombre: ['PAQUETEO'],
+      producto: [1, Validators.required],
+      producto__nombre: ['VARIOS'],
+      empaque: [17, Validators.required],
+      empaque__nombre: ['VARIOS'],
       liquidacion: ['k'],
     });
   }
@@ -197,7 +197,6 @@ export default class GuiaFormularioComponent implements OnInit {
       flete: data.flete,
       manejo: data.manejo,
       recaudo: data.recaudo,
-      cobro_entrega: data.cobro_entrega,
       estado_recogido: data.estado_recogido,
       estado_ingreso: data.estado_ingreso,
       estado_embarcado: data.estado_embarcado,
@@ -249,8 +248,19 @@ export default class GuiaFormularioComponent implements OnInit {
       });
     }
     if (campo === 'destinatario_nombre') {
+      console.log(data);
       this.formularioGuia.patchValue({
         destinatario_nombre: data?.nombre_corto ?? null,
+        destinatario_direccion: data?.direccion ?? null,
+        destinatario_telefono: data?.celular ?? null,
+        destinatario_correo: data?.correo ?? null,
+      });
+    }
+    if (campo === 'remitente_nombre') {
+      this.formularioGuia.patchValue({
+        remitente_nombre: data?.nombre_corto ?? null,
+        contacto: data?.id,
+        contacto__nombre: data?.nombre_corto ?? null,
       });
     }
   }

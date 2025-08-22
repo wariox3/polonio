@@ -41,7 +41,7 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
     },
     {
       clave: 'cobro_entrega',
-      etiqueta: 'Cobro entrega',
+      etiqueta: 'Cobro contra entrega',
       formato: valor => formatearMonedaCOP(valor),
     },
     { clave: 'ciudad_origen__nombre', etiqueta: 'Origen' },

@@ -7,7 +7,7 @@ import {
   OnChanges,
   Output,
   signal,
-  SimpleChanges,
+  SimpleChanges, OnInit,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralRepository } from '@app/core';
@@ -21,7 +21,7 @@ import { finalize, tap } from 'rxjs';
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, NgSelectModule], // ✅ Aquí se importa
 })
-export class SelectSearchComponent implements OnChanges {
+export class SelectSearchComponent implements OnChanges, OnInit {
   private _generalRepository = inject(GeneralRepository);
   public loading = signal<boolean>(false);
   public options = signal<any[]>([]);
@@ -41,6 +41,12 @@ export class SelectSearchComponent implements OnChanges {
   @Output() valorBusqueda = new EventEmitter<string>();
 
   constructor() {}
+
+  ngOnInit(): void {
+    if (this.parametrosEndpoint) {
+      this._consultarData(this.parametrosEndpoint);
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['parametrosEndpoint'] && !changes['parametrosEndpoint'].firstChange) {
