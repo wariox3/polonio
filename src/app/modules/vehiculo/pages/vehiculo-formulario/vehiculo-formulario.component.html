@@ -4,7 +4,7 @@
 
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
-  <div class="card">
+  <div class="card mb-5">
     <div class="card-header">
       <h3 class="card-title">{{ detalleID() > 0 ? 'Editar vehículo' : 'Nuevo vehículo' }}</h3>
     </div>
@@ -295,7 +295,7 @@
           </div>
 
           <!-- Checkboxes -->
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2 mb-2">
             <app-switch [control]="getControl('propio')" titulo="Propio"></app-switch>
             <app-switch [control]="getControl('remolque')" titulo="Remolque"></app-switch>
             <app-switch [control]="getControl('estado_inactivo')" titulo="Inactivo"></app-switch>
@@ -312,9 +312,15 @@
             placeholder="Comentarios adicionales..."
           ></app-input>
         </div>
-
-        <h3 class="text-lg font-medium text-gray-800 mb-4">Información aseguradora</h3>
-
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Aseguradora</h3>
+    </div>
+    <div>
+      <div class="card-body">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <app-label [required]="true">Aseguradora</app-label>
