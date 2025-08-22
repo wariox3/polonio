@@ -248,7 +248,6 @@ export default class GuiaFormularioComponent implements OnInit {
       });
     }
     if (campo === 'destinatario_nombre') {
-      console.log(data);
       this.formularioGuia.patchValue({
         destinatario_nombre: data?.nombre_corto ?? null,
         destinatario_direccion: data?.direccion ?? null,
