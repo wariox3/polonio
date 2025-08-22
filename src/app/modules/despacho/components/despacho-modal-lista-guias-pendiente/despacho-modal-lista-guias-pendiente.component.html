@@ -1,0 +1,33 @@
+<a class="btn btn-primary rounded-r-none" (click)="openModal()"> Pendite </a>
+<app-modal-standard
+  [modalId]="'agregarGuiaPendiente'"
+  [title]="'Guias'"
+  [showCloseButton]="true"
+  [size]="'7xl'"
+  [closeOnOutsideClick]="true"
+  [closeOnEsc]="true"
+>
+  <div class="mb-2">
+    <app-paginador
+      [totalItems]="estadoPaginacion().totalItems"
+      [itemsPerPage]="estadoPaginacion().itemsPorPagina"
+      (pageChange)="onPageChange($event)"
+    ></app-paginador>
+  </div>
+
+  <div class="flex justify-end mb-2">
+    <button
+      class="btn btn-primary"
+      (click)="agregarGuias()"
+      [disabled]="guiasSeleccionadas().length === 0"
+    >
+      Agregar
+    </button>
+  </div>
+  <app-tabla
+    [columnas]="columnas"
+    [datos]="guias()"
+    [mostrarAcciones]="false"
+    (seleccionCambiada)="onSeleccionGuias($event)"
+  ></app-tabla>
+</app-modal-standard>

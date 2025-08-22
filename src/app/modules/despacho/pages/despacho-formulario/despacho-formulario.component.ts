@@ -19,7 +19,7 @@ import { Despacho } from '../../interfaces/despacho.interface';
 import { DespachoRepository } from '../../repositories/despacho.repository';
 import { FechaService } from '@app/common/services/fecha.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
-import { DespachoDetalleParametros } from '../../interfaces/despacho-detalle-parametros.interface';
+import { DespachoDetalleParametros } from '../../interfaces/despacho-detalle/despacho-detalle-parametros.interface';
 
 @Component({
   selector: 'app-despacho-formulario',
