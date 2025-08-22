@@ -95,5 +95,16 @@
         }
       </tbody>
     </table>
+
+    <!-- Paginador component -->
+    @if (contenedores().length > 0) {
+      <div class="flex justify-center my-4">
+        <app-paginador
+          (pageChange)="cambiarPaginacion($event)"
+          [totalItems]="totalItems"
+          [currentPage]="currentPage()"
+        ></app-paginador>
+      </div>
+    }
   </div>
 </div>
