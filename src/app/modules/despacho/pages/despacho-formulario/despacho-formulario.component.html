@@ -50,11 +50,10 @@
 
         <!-- Remolque -->
         <div>
-          <app-label [required]="true">Remolque</app-label>
+          <app-label>Remolque</app-label>
           <app-select-search
             [control]="getControl('remolque')"
             [label]="'placa'"
-            [errors]="{ required: 'Este campo es requerido.' }"
             [endpoint]="'transporte/vehiculo/seleccionar/'"
             [campoBusqueda]="'placa__icontains'"
             [parametrosEndpoint]="{

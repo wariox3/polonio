@@ -73,7 +73,7 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
       despacho_tipo__nombre: [null],
       vehiculo: [null, [Validators.required]],
       vehiculo__placa: [null],
-      remolque: [null, [Validators.required]],
+      remolque: [null],
       remolque__placa: [null],
       conductor: [null, [Validators.required]],
       conductor__nombre_corto: [null],
