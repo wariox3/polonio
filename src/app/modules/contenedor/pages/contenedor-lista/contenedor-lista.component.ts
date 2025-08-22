@@ -15,11 +15,12 @@ import {
 import { QueryParams } from '@app/core/interfaces/api.interface';
 import { environment } from '@environments/environment';
 import { FormsModule } from '@angular/forms';
+import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
 
 @Component({
   selector: 'app-contenedor',
   standalone: true,
-  imports: [AdvancedButtonComponent, CommonModule, FormsModule],
+  imports: [AdvancedButtonComponent, CommonModule, FormsModule, PaginadorComponent],
   templateUrl: './contenedor-lista.component.html',
   styleUrl: './contenedor-lista.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -138,6 +139,11 @@ export default class ContenedorListaComponent implements OnInit {
   onSearchChange(term: string) {
     this.currentPage.set(1);
     this.searchTerms.next(term);
+  }
+
+  cambiarPaginacion(page: number) {
+    this.currentPage.set(page);
+    this.getContenedores();
   }
 
   get totalItems(): number {
