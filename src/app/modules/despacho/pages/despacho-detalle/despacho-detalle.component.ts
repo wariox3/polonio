@@ -8,12 +8,13 @@ import {
   CampoDetalle,
   TablaDetallesComponent,
 } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
-import { obtenerCamposDespachoDetalle } from '../../mapping/despacho-detalle.mapeo';
+import { obtenerCamposDespachoDetalle } from '../../mapping/detalle/despacho-detalle.mapeo';
+import { DespachoTabGuiaComponent } from '../../components/despacho-tab-guia/despacho-tab-guia.component';
 
 @Component({
   selector: 'app-despacho-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule, TablaDetallesComponent],
+  imports: [CommonModule, RouterModule, TablaDetallesComponent, DespachoTabGuiaComponent],
   templateUrl: './despacho-detalle.component.html',
   styleUrl: './despacho-detalle.component.scss',
 })
@@ -22,6 +23,7 @@ export default class DespachoDetalleComponent implements OnInit, OnDestroy {
   private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
 
+  public activeTab: string = 'guia';
   public despachoSignal = signal<Despacho>({
     id: 0,
     vehiculo: 0,
