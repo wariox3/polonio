@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectorRef } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -14,12 +14,17 @@ import { LabelComponent } from '@app/common/components/ui/form/label/label.compo
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 
-import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { catchError, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Despacho } from '../../interfaces/despacho.interface';
 import { DespachoRepository } from '../../repositories/despacho.repository';
 import { FechaService } from '@app/common/services/fecha.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { DespachoDetalleParametros } from '../../interfaces/despacho-detalle/despacho-detalle-parametros.interface';
+import { AlertaService } from '@app/common/services/alerta.service';
+import { Store } from '@ngrx/store';
+import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
+import { Usuario } from '@app/modules/auth/interfaces/usuario.interface';
+import { OperacionRepository } from '@app/modules/operacion/repositories/operacion.repository';
 
 @Component({
   selector: 'app-despacho-formulario',
@@ -41,8 +46,12 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
   private _activatedRoute = inject(ActivatedRoute);
   private _despachoRepository = inject(DespachoRepository);
   private _fechaService = inject(FechaService);
-  public _router = inject(Router);
+  private _router = inject(Router);
   private destroy$ = new Subject<void>();
+  private _alertaService = inject(AlertaService);
+  private _store = inject(Store);
+  private _operacionRepository = inject(OperacionRepository);
+  private _changeDetectorRef = inject(ChangeDetectorRef);
 
   public formularioDespacho: FormGroup;
   public detalleID = signal(0);
@@ -53,9 +62,12 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
   public arrCiudadDestino = signal<RespuestaSeleccionar[]>([]);
   public arrRuta = signal<RespuestaSeleccionar[]>([]);
   public arrOperacion = signal<RespuestaSeleccionar[]>([]);
+  public usuarioOperacionId = signal<number | null>(null);
 
   ngOnInit() {
+    this._consultarDataInicial();
     this.inicializarFormulario();
+    this._consultarInformacion();
     this.consultardetalle();
     this._iniciarSuscripcionesFormularioVehiculo();
   }
@@ -160,6 +172,8 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
       operacion: data.operacion,
       operacion__nombre: data.operacion__nombre,
       flete: data.flete,
+      servicio: data.servicio,
+      servicio__nombre: data.servicio__nombre,
     });
   }
 
@@ -176,5 +190,55 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
 
   getControl(nombre: string): FormControl {
     return this.formularioDespacho.get(nombre) as FormControl;
+  }
+
+  private _consultarInformacion(): void {
+    if (this.usuarioOperacionId() === null) {
+      this._redireccionarSinOperacion();
+      return;
+    }
+
+    this._operacionRepository
+      .lista({ id: this.usuarioOperacionId()! })
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(respuesta => {
+          if (respuesta.count === 0 || respuesta.results.length === 0) {
+            this._redireccionarSinOperacion();
+            return [];
+          }
+          return [respuesta.results[0]];
+        }),
+        catchError(() => {
+          this._alertaService.mostrarError('Error al consultar la operación');
+          this._router.navigate(['/movimiento/guia/lista']);
+          return [];
+        })
+      )
+      .subscribe((operacion: Despacho) => {
+        if (operacion) {
+          this.formularioDespacho.patchValue({
+            operacion: operacion.id,
+          });
+        }
+      });
+  }
+
+  private _consultarDataInicial() {
+    this._store
+      .select(selectCurrentUser)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((user: Usuario | null) => !!user)
+      )
+      .subscribe(user => {
+        this.usuarioOperacionId.set(user.operacion_id);
+      });
+  }
+
+  private _redireccionarSinOperacion(): void {
+    this._alertaService
+      .mostrarInfo('El usuario no tiene una operación asignada')
+      .then(() => this._router.navigate(['/movimiento/despacho/lista']));
   }
 }

@@ -1,17 +1,11 @@
 <form [formGroup]="formularioDespacho" (ngSubmit)="guardar()">
   <div class="flex gap-2 mb-4">
-    <button
-      type="button"
-      class="btn btn-secondary"
-      (click)="_router.navigate(['/movimiento/despacho/lista'])"
-    >
-      Atrás
-    </button>
+    <a type="button" class="btn btn-secondary" routerLink="/movimiento/despacho/lista"> Atrás </a>
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
   <div class="card">
     <div class="card-header">
-      <h4 class="card-title">{{ detalleID() > 0 ? 'Editar' : 'Nuevo' }} Despacho</h4>
+      <h4 class="card-title">{{ detalleID() > 0 ? 'Editar' : 'Nuevo' }} despacho</h4>
     </div>
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -137,22 +131,6 @@
             [campoBusqueda]="'nombre__icontains'"
             [parametrosEndpoint]="{
               nombre__icontains: this.formularioDespacho.get('ruta__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-
-        <!-- Operación -->
-        <div>
-          <app-label [required]="true">Operación</app-label>
-          <app-select-search
-            [control]="getControl('operacion')"
-            [label]="'nombre'"
-            [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'transporte/operacion/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioDespacho.get('operacion__nombre').value,
               limit: 10,
             }"
           ></app-select-search>

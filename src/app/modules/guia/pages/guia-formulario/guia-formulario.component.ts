@@ -71,7 +71,7 @@ export default class GuiaFormularioComponent implements OnInit {
   public usuarioOperacionId = signal<number | null>(null);
 
   ngOnInit() {
-    this._loadInitialData();
+    this._consultarDataInicial();
     this.inicializarFormulario();
     this._consultarInformacion();
     this.consultardetalle();
@@ -164,7 +164,7 @@ export default class GuiaFormularioComponent implements OnInit {
     }
 
     this._operacionRepository
-      .consultaOperacionIngreso(this.usuarioOperacionId()!)
+      .lista({ id: this.usuarioOperacionId()! })
       .pipe(
         takeUntil(this.destroy$),
         switchMap(respuesta => {
@@ -295,7 +295,7 @@ export default class GuiaFormularioComponent implements OnInit {
     }
   }
 
-  private _loadInitialData() {
+  private _consultarDataInicial() {
     this._store
       .select(selectCurrentUser)
       .pipe(

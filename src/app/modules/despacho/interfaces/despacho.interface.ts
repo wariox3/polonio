@@ -19,4 +19,6 @@ export interface Despacho {
   operacion: number;
   operacion__nombre?: string;
   flete: number;
+  servicio: number;
+  servicio__nombre?: string;
 }

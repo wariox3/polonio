@@ -44,6 +44,7 @@ export default class DespachoDetalleComponent implements OnInit, OnDestroy {
     operacion__nombre: '',
     flete: 0,
     despacho_tipo: 0,
+    servicio: 0,
   });
 
   camposDetalle = computed<CampoDetalle[]>(() => {

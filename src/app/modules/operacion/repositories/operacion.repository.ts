@@ -33,8 +33,4 @@ export class OperacionRepository {
   eliminar(id: number) {
     return this._generalRepository.delete<Operacion>('transporte/operacion/', id);
   }
-
-  consultaOperacionIngreso(id: number) {
-    return this._generalRepository.get<RespuestaApi<Operacion>>('transporte/operacion/', { id });
-  }
 }
