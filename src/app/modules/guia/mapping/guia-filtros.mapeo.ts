@@ -2,28 +2,26 @@ import { FilterField } from '@app/common/components/ui/filtro/interface/filtro.i
 
 export const GUIA_LISTA_FILTERS: FilterField[] = [
   { name: 'id', displayName: 'Id', type: 'number' },
-  { name: 'numero', displayName: 'Número', type: 'number' },
-  { name: 'ingreso', displayName: 'Ingreso', type: 'string' },
-  { name: 'flete', displayName: 'Flete', type: 'number' },
-  { name: 'manejo', displayName: 'Manejo', type: 'number' },
-  { name: 'fecha_creacion', displayName: 'Fecha creación', type: 'date' },
-  { name: 'fecha_actualizacion', displayName: 'Fecha actualización', type: 'date' },
   {
-    name: 'estado_decodificado_alerta',
-    displayName: 'Alerta',
-    type: 'boolean',
+    name: 'ciudad_origen',
+    displayName: 'Ciudad origen',
+    type: 'relation',
+    relationConfig: {
+      endpoint: 'general/ciudad/seleccionar/',
+      valueField: 'id',
+      displayField: 'nombre',
+      searchField: 'nombre__icontains',
+    },
   },
-  // Ejemplo de campo de relación (descomenta y ajusta según tu API)
-  // {
-  //   name: 'conductor_id',
-  //   displayName: 'Conductor',
-  //   type: 'relation',
-  //   relationConfig: {
-  //     endpoint: 'transporte/conductor/',
-  //     valueField: 'id',
-  //     displayField: 'nombre_completo',
-  //     searchField: 'search',
-  //     preload: false
-  //   }
-  // }
+  {
+    name: 'ciudad_destino',
+    displayName: 'Ciudad destino',
+    type: 'relation',
+    relationConfig: {
+      endpoint: 'general/ciudad/seleccionar/',
+      valueField: 'id',
+      displayField: 'nombre',
+      searchField: 'nombre__icontains',
+    },
+  },
 ];
