@@ -7,7 +7,8 @@ import {
   OnChanges,
   Output,
   signal,
-  SimpleChanges, OnInit,
+  SimpleChanges,
+  OnInit,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralRepository } from '@app/core';

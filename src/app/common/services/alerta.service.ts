@@ -10,15 +10,15 @@ export interface IAlertOptions {
   icon?: 'success' | 'error' | 'warning' | 'info' | 'question';
   timer?: number;
   position?:
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'center'
-  | 'center-start'
-  | 'center-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end';
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'center'
+    | 'center-start'
+    | 'center-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end';
   showConfirmButton?: boolean;
   showCancelButton?: boolean;
   confirmButtonText?: string;
@@ -328,7 +328,7 @@ export class AlertaService {
 
   async mensajaEspera(
     text: string,
-    icon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'info',
+    icon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'info'
   ) {
     return await (Swal.fire({
       html: text,
