@@ -43,7 +43,6 @@ export default class ConductorListaComponent implements OnInit {
   consultarInformacion() {
     const parametros: QueryParams = {
       page: this.estadoPaginacion().paginaActual,
-      page_size: this.estadoPaginacion().itemsPorPagina,
       ...this._filtrosActivos(),
     };
 

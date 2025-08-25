@@ -38,7 +38,6 @@ export default class NegocioListaComponent implements OnInit {
   consultarInformacion() {
     const parametros: QueryParams = {
       page: this.estadoPaginacion().paginaActual,
-      page_size: this.estadoPaginacion().itemsPorPagina,
       ...this.filtrosActivos(),
     };
 
