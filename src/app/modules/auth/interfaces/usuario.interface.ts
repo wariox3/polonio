@@ -40,6 +40,8 @@ export interface Usuario {
   is_active: boolean;
   socio_id: number | null;
   verificado: boolean;
+  operacion_cargo_id: number | null;
+  operacion_id: number | null;
 }
 
 export interface RespuestaInvitacionUsuario {

@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
-import { RespuestaApi, QueryParams } from '@app/core/interfaces/api.interface';
+import { QueryParams, RespuestaApi } from '@app/core/interfaces/api.interface';
 import { Operacion } from '../interfaces/operacion.interface';
-import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 
 @Injectable({
   providedIn: 'root',
@@ -35,13 +34,7 @@ export class OperacionRepository {
     return this._generalRepository.delete<Operacion>('transporte/operacion/', id);
   }
 
-  consultaOperacionIngreso() {
-    //TODO: codigo temporal para la tarea 1685
-    return this._generalRepository.get<RespuestaSeleccionar[]>(
-      'transporte/operacion/seleccionar/',
-      {
-        id: 1,
-      }
-    );
+  consultaOperacionIngreso(id: number) {
+    return this._generalRepository.get<RespuestaApi<Operacion>>('transporte/operacion/', { id });
   }
 }

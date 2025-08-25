@@ -16,12 +16,16 @@ import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.co
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
 import { FechaService } from '@app/common/services/fecha.service';
 import { OperacionRepository } from '@app/modules/operacion/repositories/operacion.repository';
-import { filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { catchError, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { AlertaService } from '@app/common/services/alerta.service';
+import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
+import { Store } from '@ngrx/store';
+import { Usuario } from '@app/modules/auth/interfaces/usuario.interface';
+import { Despacho } from '@app/modules/despacho/interfaces/despacho.interface';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -47,6 +51,8 @@ export default class GuiaFormularioComponent implements OnInit {
   private _alertaService = inject(AlertaService);
   private _fechaService = inject(FechaService);
   private _router = inject(Router);
+  private _store = inject(Store);
+
   private destroy$ = new Subject<void>();
 
   public formularioGuia: FormGroup;
@@ -62,8 +68,10 @@ export default class GuiaFormularioComponent implements OnInit {
   public arrRuta = signal<RespuestaSeleccionar[]>([]);
   public arrZona = signal<RespuestaSeleccionar[]>([]);
   public arrCiudades = signal<RespuestaSeleccionar[]>([]);
+  public usuarioOperacionId = signal<number | null>(null);
 
   ngOnInit() {
+    this._loadInitialData();
     this.inicializarFormulario();
     this._consultarInformacion();
     this.consultardetalle();
@@ -114,19 +122,6 @@ export default class GuiaFormularioComponent implements OnInit {
     });
   }
 
-  private _consultarInformacion() {
-    //TODO: codigo temporal para la tarea 1685
-    this._operacionRepository.consultaOperacionIngreso().subscribe(respuesta => {
-      if (respuesta.length === 0) {
-        this._alertaService.mostrarInfo('El usuario no tiene una operación asignada').then(() => {
-          this._router.navigate(['/movimiento/guia/lista']);
-        });
-        return;
-      }
-      this.modificarFormulario('ciudad_origen', respuesta[0]);
-    });
-  }
-
   consultardetalle() {
     this._activatedRoute.params
       .pipe(
@@ -146,6 +141,12 @@ export default class GuiaFormularioComponent implements OnInit {
   onSubmit() {
     if (!this.formularioGuia.valid) {
       this.formularioGuia.markAllAsTouched();
+      Object.keys(this.formularioGuia.controls).forEach((campo: any) => {
+        const control = this.formularioGuia.get(campo);
+        if (control && control.invalid) {
+          console.warn(`Error en el campo "${campo}":`, control.errors);
+        }
+      });
       return;
     }
 
@@ -154,6 +155,36 @@ export default class GuiaFormularioComponent implements OnInit {
     } else {
       this._editarGuia();
     }
+  }
+
+  private _consultarInformacion(): void {
+    if (this.usuarioOperacionId() === null) {
+      this._redireccionarSinOperacion();
+      return;
+    }
+
+    this._operacionRepository
+      .consultaOperacionIngreso(this.usuarioOperacionId()!)
+      .pipe(
+        takeUntil(this.destroy$),
+        switchMap(respuesta => {
+          if (respuesta.count === 0 || respuesta.results.length === 0) {
+            this._redireccionarSinOperacion();
+            return [];
+          }
+          return [respuesta.results[0]];
+        }),
+        catchError(() => {
+          this._alertaService.mostrarError('Error al consultar la operación');
+          this._router.navigate(['/movimiento/guia/lista']);
+          return [];
+        })
+      )
+      .subscribe((operacion: Despacho) => {
+        if (operacion) {
+          this.modificarFormulario('ciudad_origen', operacion);
+        }
+      });
   }
 
   private _nuevoGuia() {
@@ -262,5 +293,23 @@ export default class GuiaFormularioComponent implements OnInit {
         contacto__nombre: data?.nombre_corto ?? null,
       });
     }
+  }
+
+  private _loadInitialData() {
+    this._store
+      .select(selectCurrentUser)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((user: Usuario | null) => !!user)
+      )
+      .subscribe(user => {
+        this.usuarioOperacionId.set(user.operacion_id);
+      });
+  }
+
+  private _redireccionarSinOperacion(): void {
+    this._alertaService
+      .mostrarInfo('El usuario no tiene una operación asignada')
+      .then(() => this._router.navigate(['/movimiento/guia/lista']));
   }
 }

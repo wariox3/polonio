@@ -11,8 +11,8 @@ export function obtenerCamposDespachoDetalle(): CampoDetalle[] {
     { clave: 'vehiculo__placa', etiqueta: 'Vehículo' },
     { clave: 'remolque__placa', etiqueta: 'Remolque' },
     { clave: 'conductor__nombre_corto', etiqueta: 'Conductor' },
-    { clave: 'ciudad_origen__nombre', etiqueta: 'Ciudad Origen' },
-    { clave: 'ciudad_destino__nombre', etiqueta: 'Ciudad Destino' },
+    { clave: 'ciudad_origen__nombre', etiqueta: 'Ciudad origen' },
+    { clave: 'ciudad_destino__nombre', etiqueta: 'Ciudad destino' },
     { clave: 'ruta__nombre', etiqueta: 'Ruta' },
     { clave: 'operacion__nombre', etiqueta: 'Operación' },
     {
