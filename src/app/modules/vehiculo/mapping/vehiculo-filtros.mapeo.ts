@@ -7,8 +7,8 @@ export const VEHICULO_LISTA_FILTERS: FilterField[] = [
   { name: 'modelo', displayName: 'Modelo', type: 'string' },
   { name: 'year', displayName: 'Año', type: 'number' },
   { name: 'color', displayName: 'Color', type: 'string' },
-  { name: 'fecha_creacion', displayName: 'Fecha Creación', type: 'date' },
-  { name: 'fecha_actualizacion', displayName: 'Fecha Actualización', type: 'date' },
+  { name: 'fecha_creacion', displayName: 'Fecha creación', type: 'date' },
+  { name: 'fecha_actualizacion', displayName: 'Fecha actualización', type: 'date' },
   // Ejemplo de campo de relación (descomenta y ajusta según tu API)
   // {
   //   name: 'conductor_id',

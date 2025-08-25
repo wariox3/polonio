@@ -6,8 +6,8 @@ export const GUIA_LISTA_FILTERS: FilterField[] = [
   { name: 'ingreso', displayName: 'Ingreso', type: 'string' },
   { name: 'flete', displayName: 'Flete', type: 'number' },
   { name: 'manejo', displayName: 'Manejo', type: 'number' },
-  { name: 'fecha_creacion', displayName: 'Fecha Creación', type: 'date' },
-  { name: 'fecha_actualizacion', displayName: 'Fecha Actualización', type: 'date' },
+  { name: 'fecha_creacion', displayName: 'Fecha creación', type: 'date' },
+  { name: 'fecha_actualizacion', displayName: 'Fecha actualización', type: 'date' },
   {
     name: 'estado_decodificado_alerta',
     displayName: 'Alerta',

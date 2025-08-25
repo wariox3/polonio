@@ -52,7 +52,7 @@ export const DESPACHO_LISTA_FILTERS: FilterField[] = [
   },
   {
     name: 'ciudad_destino',
-    displayName: 'Ciudad Destino',
+    displayName: 'Ciudad destino',
     type: 'relation',
     relationConfig: {
       endpoint: 'general/ciudad/seleccionar/',
