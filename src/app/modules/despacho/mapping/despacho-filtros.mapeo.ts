@@ -3,7 +3,7 @@ import { FilterField } from '@app/common/components/ui/filtro/interface/filtro.i
 export const DESPACHO_LISTA_FILTERS: FilterField[] = [
   {
     name: 'id',
-    displayName: 'ID',
+    displayName: 'Id',
     type: 'number',
   },
   {

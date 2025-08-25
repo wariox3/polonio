@@ -4,7 +4,7 @@ import { formatearMonedaCOP } from '@app/common/utils/formatters';
 export const columnasNegocioLista: ColumnaTabla[] = [
   {
     clave: 'id',
-    nombre: 'ID',
+    nombre: 'Id',
   },
   {
     clave: 'fecha',

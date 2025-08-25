@@ -3,7 +3,7 @@ import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
 export const columnasDespachoLista: ColumnaTabla[] = [
   {
     clave: 'id',
-    nombre: 'ID',
+    nombre: 'Id',
     ancho: '80px',
   },
   {

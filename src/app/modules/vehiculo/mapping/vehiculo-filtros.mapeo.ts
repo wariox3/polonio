@@ -1,7 +1,7 @@
 import { FilterField } from '@app/common/components/ui/filtro/interface/filtro.interface';
 
 export const VEHICULO_LISTA_FILTERS: FilterField[] = [
-  { name: 'id', displayName: 'ID', type: 'number' },
+  { name: 'id', displayName: 'Id', type: 'number' },
   { name: 'placa', displayName: 'Placa', type: 'string' },
   { name: 'marca', displayName: 'Marca', type: 'string' },
   { name: 'modelo', displayName: 'Modelo', type: 'string' },

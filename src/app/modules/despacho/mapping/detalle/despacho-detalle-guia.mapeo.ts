@@ -4,7 +4,7 @@ import { formatearFechaISO, formatearMonedaCOP } from '@app/common/utils/formatt
 export const columnasDespachoGuia: ColumnaTabla[] = [
   {
     clave: 'id',
-    nombre: 'ID',
+    nombre: 'Id',
     ancho: '80px',
   },
   {

@@ -4,7 +4,7 @@ import { formatearMonedaCOP } from '@app/common/utils/formatters';
 export const columnasDespachoModalGuiaPendiente: ColumnaTabla[] = [
   {
     clave: 'id',
-    nombre: 'ID',
+    nombre: 'Id',
     ancho: '80px',
   },
   {
