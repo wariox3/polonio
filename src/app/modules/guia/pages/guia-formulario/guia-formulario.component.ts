@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -26,6 +26,7 @@ import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.select
 import { Store } from '@ngrx/store';
 import { Usuario } from '@app/modules/auth/interfaces/usuario.interface';
 import { Despacho } from '@app/modules/despacho/interfaces/despacho.interface';
+import { Conductor } from '@app/modules/conductor/interfaces/conductor.interface';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -41,9 +42,8 @@ import { Despacho } from '@app/modules/despacho/interfaces/despacho.interface';
     SelectSearchComponent,
   ],
   templateUrl: './guia-formulario.component.html',
-  styleUrl: './guia-formulario.component.scss',
 })
-export default class GuiaFormularioComponent implements OnInit {
+export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   private _formBuilder = inject(FormBuilder);
   private _activatedRoute = inject(ActivatedRoute);
   private _guiaRepository = inject(GuiaRepository);
@@ -77,10 +77,22 @@ export default class GuiaFormularioComponent implements OnInit {
     this.consultardetalle();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   inicializarFormulario() {
     this.formularioGuia = this._formBuilder.group({
       fecha: [this._fechaService.obtenerFechaHoy(), Validators.required],
-      documento: [null, [Validators.maxLength(30), cambiarVacioPorNulo.validar]],
+      documento: [
+        null,
+        [
+          Validators.maxLength(30),
+          Validators.pattern(/^[a-zA-Z0-9,\- ]*$/),
+          cambiarVacioPorNulo.validar,
+        ],
+      ],
       remitente_nombre: [null, [Validators.required, Validators.maxLength(150)]],
       destinatario_nombre: [null, [Validators.required, Validators.maxLength(150)]],
       destinatario_direccion: [null, [Validators.required, Validators.maxLength(150)]],
@@ -182,7 +194,7 @@ export default class GuiaFormularioComponent implements OnInit {
       )
       .subscribe((operacion: Despacho) => {
         if (operacion) {
-          this.modificarFormulario('ciudad_origen', operacion);
+          this._actualizarCiudadOrigen(operacion);
         }
       });
   }
@@ -272,29 +284,6 @@ export default class GuiaFormularioComponent implements OnInit {
     return this.formularioGuia.get(nombre) as FormControl;
   }
 
-  modificarFormulario(campo: string, data: any) {
-    if (campo === 'ciudad_origen') {
-      this.formularioGuia.patchValue({
-        ciudad_origen: data.ciudad,
-      });
-    }
-    if (campo === 'destinatario_nombre') {
-      this.formularioGuia.patchValue({
-        destinatario_nombre: data?.nombre_corto ?? null,
-        destinatario_direccion: data?.direccion ?? null,
-        destinatario_telefono: data?.celular ?? null,
-        destinatario_correo: data?.correo ?? null,
-      });
-    }
-    if (campo === 'remitente_nombre') {
-      this.formularioGuia.patchValue({
-        remitente_nombre: data?.nombre_corto ?? null,
-        contacto: data?.id,
-        contacto__nombre: data?.nombre_corto ?? null,
-      });
-    }
-  }
-
   private _consultarDataInicial() {
     this._store
       .select(selectCurrentUser)
@@ -307,9 +296,32 @@ export default class GuiaFormularioComponent implements OnInit {
       });
   }
 
-  private _redireccionarSinOperacion(): void {
+  private _redireccionarSinOperacion() {
     this._alertaService
       .mostrarInfo('El usuario no tiene una operación asignada')
       .then(() => this._router.navigate(['/movimiento/guia/lista']));
+  }
+
+  private _actualizarCiudadOrigen(data: Despacho) {
+    this.formularioGuia.patchValue({
+      ciudad_origen: data.ciudad_origen,
+    });
+  }
+
+  public actualizarDestinatario(data: Conductor) {
+    this.formularioGuia.patchValue({
+      destinatario_nombre: data?.nombre_corto ?? null,
+      destinatario_direccion: data?.direccion ?? null,
+      destinatario_telefono: data?.celular ?? null,
+      destinatario_correo: data?.correo ?? null,
+    });
+  }
+
+  public actualizarRemitente(data: Conductor) {
+    this.formularioGuia.patchValue({
+      remitente_nombre: data?.nombre_corto ?? null,
+      contacto: data?.id,
+      contacto__nombre: data?.nombre_corto ?? null,
+    });
   }
 }

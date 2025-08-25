@@ -1,7 +1,7 @@
 import { FilterField } from '@app/common/components/ui/filtro/interface/filtro.interface';
 
 export const GUIA_LISTA_FILTERS: FilterField[] = [
-  { name: 'id', displayName: 'ID', type: 'number' },
+  { name: 'id', displayName: 'Id', type: 'number' },
   { name: 'numero', displayName: 'Número', type: 'number' },
   { name: 'ingreso', displayName: 'Ingreso', type: 'string' },
   { name: 'flete', displayName: 'Flete', type: 'number' },

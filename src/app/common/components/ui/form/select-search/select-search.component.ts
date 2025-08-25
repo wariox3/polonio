@@ -38,7 +38,7 @@ export class SelectSearchComponent implements OnChanges, OnInit {
   @Input({ required: true }) control!: FormControl;
   @Input() errors: { [key: string]: string } = {};
 
-  @Output() selectionChange = new EventEmitter<any[]>();
+  @Output() selectionChange = new EventEmitter<any>();
   @Output() valorBusqueda = new EventEmitter<string>();
 
   constructor() {}
