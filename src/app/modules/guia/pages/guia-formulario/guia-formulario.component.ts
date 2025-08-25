@@ -214,7 +214,7 @@ export default class GuiaFormularioComponent implements OnInit {
       contacto: data.contacto,
       contacto__nombre: data.contacto,
       cliente: data.cliente,
-      cliente__nombre_corto: data.cliente__nombre_corto,
+      cliente__nombre_corto: data.contacto__nombre_corto,
       destinatario: data.destinatario,
       destinatario__nombre: data.destinatario__nombre_corto,
       operacion_ingreso: data.operacion_ingreso,
