@@ -7,15 +7,26 @@ import { formatearMonedaCOP, formatearFechaISO } from '@app/common/utils/formatt
  */
 export function obtenerCamposNegocioDetalle(): CampoDetalle[] {
   return [
-    { clave: 'id', etiqueta: 'ID' },
     {
       clave: 'fecha',
       etiqueta: 'Fecha',
       formato: valor => formatearFechaISO(valor),
     },
     { clave: 'contacto__nombre_corto', etiqueta: 'Contacto' },
+    {
+      clave: 'pago',
+      etiqueta: 'Pago',
+      formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
+    },
     { clave: 'ciudad_origen__nombre', etiqueta: 'Origen' },
     { clave: 'ciudad_destino__nombre', etiqueta: 'Destino' },
+    {
+      clave: 'flete',
+      etiqueta: 'Flete',
+      formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
+    },
     { clave: 'unidades', etiqueta: 'Unidades' },
     {
       clave: 'peso',
@@ -23,29 +34,22 @@ export function obtenerCamposNegocioDetalle(): CampoDetalle[] {
       formato: valor => `${valor} kg`,
     },
     {
+      clave: 'declara',
+      etiqueta: 'Declarado',
+      formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
+    },
+    {
       clave: 'volumen',
       etiqueta: 'Volumen',
       formato: valor => `${valor} m³`,
     },
-    {
-      clave: 'declara',
-      etiqueta: 'Valor Declarado',
-      formato: valor => formatearMonedaCOP(valor),
-    },
-    {
-      clave: 'pago',
-      etiqueta: 'Pago',
-      formato: valor => formatearMonedaCOP(valor),
-    },
-    {
-      clave: 'flete',
-      etiqueta: 'Flete',
-      formato: valor => formatearMonedaCOP(valor),
-    },
+    { clave: '', etiqueta: '' },
     {
       clave: 'manejo',
       etiqueta: 'Manejo',
       formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
     },
     {
       clave: 'comentario',
