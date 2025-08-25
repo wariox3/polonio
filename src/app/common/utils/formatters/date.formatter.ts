@@ -3,11 +3,17 @@
  * @param valor Fecha a formatear (string, Date o timestamp)
  * @returns Cadena de fecha en formato YYYY-MM-DD
  */
-export function formatearFechaISO(valor: string | Date | number): string {
-  if (valor === null || valor === undefined) {
-    return '';
+export function formatearFechaISO(valor: any): string {
+  if (!valor) return '';
+
+  const fecha = new Date(valor);
+
+  // Verificar si la fecha es válida
+  if (isNaN(fecha.getTime())) {
+    return ''; // o podrías devolver "Fecha inválida"
   }
-  return new Date(valor).toISOString().split('T')[0];
+
+  return fecha.toISOString().slice(0, 19).replace('T', ' ');
 }
 
 /**
