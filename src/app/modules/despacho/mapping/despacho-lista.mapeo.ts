@@ -23,12 +23,12 @@ export const columnasDespachoLista: ColumnaTabla[] = [
   },
   {
     clave: 'ciudad_origen__nombre',
-    nombre: 'Ciudad Origen',
+    nombre: 'Origen',
     ancho: '150px',
   },
   {
     clave: 'ciudad_destino__nombre',
-    nombre: 'Ciudad Destino',
+    nombre: 'Destino',
     ancho: '150px',
   },
   {

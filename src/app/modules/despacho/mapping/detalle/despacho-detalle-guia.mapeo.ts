@@ -44,7 +44,7 @@ export const columnasDespachoGuia: ColumnaTabla[] = [
   },
   {
     clave: 'cobro_entrega',
-    nombre: 'Cobro Entrega',
+    nombre: 'Cobro entrega',
     formato: valor => formatearMonedaCOP(valor),
     alineacion: 'derecha',
   },
