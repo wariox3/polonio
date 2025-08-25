@@ -25,9 +25,11 @@ export function obtenerCamposConductorDetalle(datos: Conductor): CampoDetalle[] 
     { clave: 'telefono', etiqueta: 'Teléfono' },
     { clave: 'celular', etiqueta: 'Celular' },
     { clave: 'correo', etiqueta: 'Correo' },
+    { clave: 'direccion', etiqueta: 'Dirección' },
+    { clave: '', etiqueta: '' },
     { clave: 'numero_licencia', etiqueta: 'Licencia' },
     { clave: 'categoria_licencia_nombre', etiqueta: 'Categoria' },
     { clave: 'fecha_vence_licencia', etiqueta: 'Vence' },
-    { clave: 'direccion', etiqueta: 'Dirección', filaCompleta: true },
+    { clave: '', etiqueta: '' },
   ];
 }
