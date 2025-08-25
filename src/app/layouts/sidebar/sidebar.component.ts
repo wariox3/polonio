@@ -62,7 +62,7 @@ export class SidebarComponent implements OnInit {
       abierto: false,
       children: [
         {
-          nombre: 'Vehiculo',
+          nombre: 'Vehículo',
           link: '/administracion/vehiculo/lista',
         },
         {
