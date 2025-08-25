@@ -42,7 +42,7 @@ export function obtenerCamposNegocioDetalle(): CampoDetalle[] {
     {
       clave: 'volumen',
       etiqueta: 'Volumen',
-      formato: valor => `${valor} m³`,
+      formato: valor => `${valor}`,
     },
     { clave: '', etiqueta: '' },
     {
