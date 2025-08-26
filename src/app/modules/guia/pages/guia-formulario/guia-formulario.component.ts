@@ -192,11 +192,13 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
           return [];
         })
       )
-      .subscribe((operacion: Despacho) => {
-        if (operacion) {
-          this._actualizarCiudadOrigen(operacion);
+      .subscribe(
+        (operacion: { id: number; nombre: string; ciudad: number; ciudad__nombre: string }) => {
+          if (operacion) {
+            this._actualizarCiudadOrigen(operacion);
+          }
         }
-      });
+      );
   }
 
   private _nuevoGuia() {
@@ -302,10 +304,19 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       .then(() => this._router.navigate(['/movimiento/guia/lista']));
   }
 
-  private _actualizarCiudadOrigen(data: Despacho) {
+  private _actualizarCiudadOrigen(data: {
+    id: number;
+    nombre: string;
+    ciudad: number;
+    ciudad__nombre: string;
+  }) {
+    console.log(data);
+
     this.formularioGuia.patchValue({
-      ciudad_origen: data.ciudad_origen,
+      ciudad_origen: data.id,
     });
+
+    console.log(this.formularioGuia.value);
   }
 
   public actualizarDestinatario(data: Conductor) {
