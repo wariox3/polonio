@@ -14,19 +14,19 @@ import { LabelComponent } from '@app/common/components/ui/form/label/label.compo
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
+import { AlertaService } from '@app/common/services/alerta.service';
 import { FechaService } from '@app/common/services/fecha.service';
+import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
+import { Usuario } from '@app/modules/auth/interfaces/usuario.interface';
+import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
+import { Conductor } from '@app/modules/conductor/interfaces/conductor.interface';
+import { CiudadOperacion } from '@app/modules/operacion/interfaces/ciudad-operacion.interface';
 import { OperacionRepository } from '@app/modules/operacion/repositories/operacion.repository';
+import { Store } from '@ngrx/store';
 import { catchError, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
-import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
-import { AlertaService } from '@app/common/services/alerta.service';
-import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
-import { Store } from '@ngrx/store';
-import { Usuario } from '@app/modules/auth/interfaces/usuario.interface';
-import { Despacho } from '@app/modules/despacho/interfaces/despacho.interface';
-import { Conductor } from '@app/modules/conductor/interfaces/conductor.interface';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -192,13 +192,11 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
           return [];
         })
       )
-      .subscribe(
-        (operacion: { id: number; nombre: string; ciudad: number; ciudad__nombre: string }) => {
-          if (operacion) {
-            this._actualizarCiudadOrigen(operacion);
-          }
+      .subscribe((operacion: CiudadOperacion) => {
+        if (operacion) {
+          this._actualizarCiudadOrigen(operacion);
         }
-      );
+      });
   }
 
   private _nuevoGuia() {
@@ -304,19 +302,10 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       .then(() => this._router.navigate(['/movimiento/guia/lista']));
   }
 
-  private _actualizarCiudadOrigen(data: {
-    id: number;
-    nombre: string;
-    ciudad: number;
-    ciudad__nombre: string;
-  }) {
-    console.log(data);
-
+  private _actualizarCiudadOrigen(data: CiudadOperacion) {
     this.formularioGuia.patchValue({
       ciudad_origen: data.id,
     });
-
-    console.log(this.formularioGuia.value);
   }
 
   public actualizarDestinatario(data: Conductor) {
