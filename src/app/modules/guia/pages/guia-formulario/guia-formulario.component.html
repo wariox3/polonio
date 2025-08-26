@@ -239,7 +239,10 @@
             formControlName="peso_facturado"
             [type]="'number'"
             [control]="formularioGuia.get('peso_facturado')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'El valor no puede ser cero o inferior.',
+            }"
           ></app-input>
         </div>
         <div>

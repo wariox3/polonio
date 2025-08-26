@@ -101,7 +101,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       unidades: [0, [Validators.required, Validators.min(1)]],
       peso: [0, [Validators.required, Validators.min(1)]],
       volumen: [0, [Validators.required, Validators.min(1)]],
-      peso_facturado: [0, [Validators.required, Validators.min(0)]],
+      peso_facturado: [0, [Validators.required, Validators.min(1)]],
       declara: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
       flete: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
       manejo: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
