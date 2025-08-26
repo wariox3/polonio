@@ -111,4 +111,8 @@ export default class GuiaListaComponent implements OnInit {
       totalPaginas: Math.ceil(count / estado.itemsPorPagina),
     }));
   }
+
+  exportarExcel() {
+    this._guiaRepository.descargarExcel(this.filtrosActivos());
+  }
 }

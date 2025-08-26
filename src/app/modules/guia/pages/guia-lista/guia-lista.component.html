@@ -22,7 +22,29 @@
         (pageChange)="onPageChange($event)"
       ></app-paginador>
       <div class="flex">
-        <a class="btn btn-primary rounded-r-none" routerLink="/movimiento/guia/nuevo"> Nuevo </a>
+        <div
+          class="dropdown"
+          data-dropdown="true"
+          data-dropdown-trigger="click"
+          data-dropdown-dismiss="true"
+        >
+          <button class="dropdown-toggle btn btn-secondary flex items-center rounded-r-none">
+            Exportar
+          </button>
+          <div class="dropdown-content w-full max-w-56 py-2">
+            <div class="menu menu-default flex flex-col w-full">
+              <div class="menu-item">
+                <button class="menu-link" (click)="exportarExcel()">
+                  <span class="menu-icon">
+                    <i class="ki-filled ki-document"></i>
+                  </span>
+                  <span class="menu-title">Excel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="btn btn-primary rounded-none" routerLink="/movimiento/guia/nuevo"> Nuevo </a>
         <button
           class="btn btn-danger rounded-l-none"
           (click)="eliminar()"

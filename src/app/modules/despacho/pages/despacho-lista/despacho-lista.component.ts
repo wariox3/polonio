@@ -104,4 +104,8 @@ export default class DespachoListaComponent implements OnInit {
       totalPaginas: Math.ceil(count / estado.itemsPorPagina),
     }));
   }
+
+  exportarExcel() {
+    this._despachoRepository.descargarExcel(this.filtrosActivos());
+  }
 }

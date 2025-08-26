@@ -9,7 +9,7 @@ import { Despacho } from '../interfaces/despacho.interface';
 export class DespachoRepository {
   private _generalRepository = inject(GeneralRepository);
 
-  constructor() {}
+  constructor() { }
 
   lista(queryParams: QueryParams = {}) {
     return this._generalRepository.get<RespuestaApi<Despacho>>('transporte/despacho/', queryParams);
@@ -29,5 +29,12 @@ export class DespachoRepository {
 
   eliminar(id: number) {
     return this._generalRepository.delete<Despacho>('transporte/despacho/', id);
+  }
+
+  descargarExcel(data: QueryParams) {
+    this._generalRepository.descargarArchivos('transporte/despacho/', {
+      excel: 1,
+      ...data,
+    });
   }
 }

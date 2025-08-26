@@ -30,4 +30,11 @@ export class GuiaRepository {
   eliminar(id: number) {
     return this._generalRepository.delete<Guia>('transporte/guia/', id);
   }
+
+  descargarExcel(data: QueryParams) {
+    this._generalRepository.descargarArchivos('transporte/guia/', {
+      excel: 1,
+      ...data,
+    });
+  }
 }
