@@ -11,7 +11,7 @@ export const DESPACHO_LISTA_FILTERS: FilterField[] = [
     displayName: 'Vehículo',
     type: 'relation',
     relationConfig: {
-      endpoint: 'administracion/vehiculo/seleccionar/',
+      endpoint: 'transporte/vehiculo/seleccionar/',
       valueField: 'id',
       displayField: 'placa',
       searchField: 'placa',
@@ -22,10 +22,13 @@ export const DESPACHO_LISTA_FILTERS: FilterField[] = [
     displayName: 'Remolque',
     type: 'relation',
     relationConfig: {
-      endpoint: 'administracion/vehiculo/seleccionar/',
+      endpoint: 'transporte/vehiculo/seleccionar/',
       valueField: 'id',
       displayField: 'placa',
       searchField: 'placa',
+      queryParams: {
+        remolque: 'True',
+      },
     },
   },
   {
@@ -33,10 +36,13 @@ export const DESPACHO_LISTA_FILTERS: FilterField[] = [
     displayName: 'Conductor',
     type: 'relation',
     relationConfig: {
-      endpoint: 'administracion/conductor/seleccionar/',
+      endpoint: 'general/contacto/seleccionar/',
       valueField: 'id',
       displayField: 'nombre_corto',
       searchField: 'nombre_corto',
+      queryParams: {
+        conductor: 'True',
+      },
     },
   },
   {
@@ -66,7 +72,7 @@ export const DESPACHO_LISTA_FILTERS: FilterField[] = [
     displayName: 'Ruta',
     type: 'relation',
     relationConfig: {
-      endpoint: 'general/ruta/seleccionar/',
+      endpoint: 'transporte/ruta/seleccionar/',
       valueField: 'id',
       displayField: 'nombre',
       searchField: 'nombre',
@@ -77,25 +83,10 @@ export const DESPACHO_LISTA_FILTERS: FilterField[] = [
     displayName: 'Operación',
     type: 'relation',
     relationConfig: {
-      endpoint: 'general/operacion/seleccionar/',
+      endpoint: 'transporte/operacion/seleccionar/',
       valueField: 'id',
       displayField: 'nombre',
       searchField: 'nombre',
     },
-  },
-  {
-    name: 'pago',
-    displayName: 'Pago',
-    type: 'number',
-  },
-  {
-    name: 'flete',
-    displayName: 'Flete',
-    type: 'number',
-  },
-  {
-    name: 'comentario',
-    displayName: 'Comentario',
-    type: 'string',
   },
 ];
