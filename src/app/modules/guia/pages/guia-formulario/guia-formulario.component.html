@@ -200,7 +200,10 @@
             formControlName="unidades"
             [type]="'number'"
             [control]="formularioGuia.get('unidades')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'El valor no puede ser cero o inferior.',
+            }"
           ></app-input>
         </div>
         <div>
@@ -210,7 +213,10 @@
             formControlName="peso"
             [type]="'number'"
             [control]="formularioGuia.get('peso')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'El valor no puede ser cero o inferior.',
+            }"
           ></app-input>
         </div>
         <div>
@@ -220,7 +226,10 @@
             formControlName="volumen"
             [type]="'number'"
             [control]="formularioGuia.get('volumen')"
-            [errors]="{ required: 'Campo obligatorio.', min: 'Debe ser positivo.' }"
+            [errors]="{
+              required: 'Campo obligatorio.',
+              min: 'El valor no puede ser cero o inferior.',
+            }"
           ></app-input>
         </div>
         <div>
