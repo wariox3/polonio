@@ -3,5 +3,15 @@ import { FilterField } from '@app/common/components/ui/filtro/interface/filtro.i
 export const OPERACION_LISTA_FILTERS: FilterField[] = [
   { name: 'id', displayName: 'Id', type: 'number' },
   { name: 'nombre', displayName: 'Nombre', type: 'string' },
-  { name: 'ciudad__nombre', displayName: 'Ciudad', type: 'string' },
+  {
+    name: 'ciudad',
+    displayName: 'Ciudad',
+    type: 'relation',
+    relationConfig: {
+      endpoint: 'general/ciudad/seleccionar/',
+      valueField: 'id',
+      displayField: 'nombre',
+      searchField: 'nombre__icontains',
+    },
+  },
 ];
