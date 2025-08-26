@@ -2,8 +2,8 @@ import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
 
 export const columnasGuiaLista: ColumnaTabla[] = [
   { clave: 'id', nombre: 'Id' },
-  { clave: 'operacion_ingreso__nombre', nombre: 'Oi', tooltip: 'Operación ingreso' },
-  { clave: 'operacion_cargo__nombre', nombre: 'Oc', tooltip: 'Operación cargo' },
+  { clave: 'operacion_ingreso__nombre', nombre: 'OI', tooltip: 'Operación ingreso' },
+  { clave: 'operacion_cargo__nombre', nombre: 'OC', tooltip: 'Operación cargo' },
   { clave: 'servicio__nombre', nombre: 'Servicio' },
   { clave: 'fecha', nombre: 'Fecha' },
   { clave: 'contacto__nombre_corto', nombre: 'Cliente' },
