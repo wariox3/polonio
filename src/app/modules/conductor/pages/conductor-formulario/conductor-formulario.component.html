@@ -35,7 +35,6 @@
               placeholder="Ingresa el número identificación"
               formControlName="numero_identificacion"
               [type]="'number'"
-              maxlength=""
               [control]="formularioConductor.get('numero_identificacion')"
               (blurEvent)="calcularDigitoVerificacion()"
               [errors]="{
@@ -55,7 +54,7 @@
               formControlName="digito_verificacion"
               [type]="'number'"
               [attr.disabled]="true"
-              maxlength=""
+              [readonly]="true"
               [control]="formularioConductor.get('digito_verificacion')"
               [errors]="{
                 required: 'El modelo es requerido.',
@@ -87,7 +86,6 @@
             placeholder="Ingresa segundo nombre"
             formControlName="nombre2"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('nombre2')"
           ></app-input>
         </div>
@@ -98,7 +96,6 @@
             placeholder="Ingresa primer apellido"
             formControlName="apellido1"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('apellido1')"
             [errors]="{
               required: 'Este campo es requerido.',
@@ -114,7 +111,6 @@
             placeholder="Ingresa segundo apellido"
             formControlName="apellido2"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('apellido2')"
             [errors]="{
               required: 'Este campo es requerido.',
@@ -145,7 +141,6 @@
             placeholder="Dirección"
             formControlName="direccion"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('direccion')"
             [errors]="{
               required: 'Este campo es requerido.',
@@ -159,7 +154,6 @@
             placeholder="Barrio"
             formControlName="barrio"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('barrio')"
             [errors]="{
               maxLength: 'Máximo 200 caracteres.',
@@ -173,7 +167,6 @@
             placeholder="Teléfono"
             formControlName="telefono"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('telefono')"
             [errors]="{
               required: 'Este campo es requerido.',
@@ -188,7 +181,6 @@
             placeholder="Celular"
             formControlName="celular"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('celular')"
             [errors]="{
               maxLength: 'Máximo 50 caracteres.',
@@ -197,12 +189,11 @@
         </div>
 
         <div>
-          <app-label>Correo</app-label>
+          <app-label [required]="true">Correo</app-label>
           <app-input
             placeholder="Correo"
             formControlName="correo"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('correo')"
             [errors]="{
               required: 'Este campo es requerido.',
@@ -233,7 +224,6 @@
             placeholder="número licencia"
             formControlName="numero_licencia"
             [type]="'text'"
-            maxlength=""
             [control]="formularioConductor.get('numero_licencia')"
             [errors]="{
               required: 'Este campo es requerido.',
@@ -248,7 +238,6 @@
             placeholder="Fecha de vencimiento de la licencia"
             formControlName="fecha_vence_licencia"
             [type]="'date'"
-            maxlength=""
             [control]="formularioConductor.get('fecha_vence_licencia')"
             [errors]="{
               required: 'Este campo es requerido.',

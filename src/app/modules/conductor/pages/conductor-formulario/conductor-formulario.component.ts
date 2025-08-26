@@ -107,7 +107,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       barrio: [null, [Validators.maxLength(200), cambiarVacioPorNulo.validar]],
       telefono: ['', [Validators.required, Validators.maxLength(50)]],
       celular: ['', [Validators.maxLength(50), cambiarVacioPorNulo.validar]],
-      correo: ['', [Validators.email, Validators.maxLength(255), cambiarVacioPorNulo.validar]],
+      correo: [null, [Validators.email, Validators.maxLength(255), Validators.required]],
       numero_licencia: ['', [Validators.required, Validators.maxLength(50)]],
       categoria_licencia: ['', [Validators.required, Validators.maxLength(2)]],
       fecha_vence_licencia: ['', [Validators.required]],
