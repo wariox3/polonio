@@ -314,6 +314,8 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       destinatario_direccion: data?.direccion ?? null,
       destinatario_telefono: data?.celular ?? null,
       destinatario_correo: data?.correo ?? null,
+      ciudad_destino: data?.ciudad ?? null,
+      ciudad_destino__nombre: data?.ciudad__nombre ?? null,
     });
   }
 
