@@ -19,6 +19,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
         (input)="onInput($event)"
         (blur)="onBlur()"
         [disabled]="disabled"
+        [readonly]="readonly"
         class="input"
       />
       @if (shouldShowErrors()) {
@@ -44,6 +45,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() type: string = 'text'; // Tipo de input (text, email, password, etc.)
   @Input() errors: { [key: string]: string } = {}; // Mapa de errores personalizados
   @Input() disabled: boolean = false;
+  @Input() readonly: boolean = false; // Propiedad para hacer el input de solo lectura
 
   @Input() invalid: boolean | undefined = false;
   @Input() dirty: boolean | undefined = false;
