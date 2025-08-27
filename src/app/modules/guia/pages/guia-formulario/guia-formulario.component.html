@@ -128,8 +128,11 @@
             [endpoint]="'general/contacto/seleccionar/'"
             [campoBusqueda]="'nombre_corto__icontains'"
             (selectionChange)="actualizarDestinatario($event)"
+            [mostrarNuevo]="true"
+            (nuevoSeleccionado)="abrirFormularioNuevo($event)"
             [parametrosEndpoint]="{
-              nombre_corto__icontains: this.formularioGuia.get('destinatario__nombre').value,
+              nombre_corto__icontains: this.formularioGuia.get('destinatario_nombre_busqueda')
+                .value,
               limit: 10,
             }"
           ></app-select-search>
@@ -301,3 +304,14 @@
     </div>
   </div>
 </form>
+@defer (on idle) {
+  <app-modal-standard modalId="modalNuevo" size="7xl">
+    <div>
+      <app-conductor-formulario
+        [visualizarBtnAtras]="false"
+        [navegarAlGuardar]="false"
+        (conductorCreado)="onClienteCreado($event)"
+      ></app-conductor-formulario>
+    </div>
+  </app-modal-standard>
+}

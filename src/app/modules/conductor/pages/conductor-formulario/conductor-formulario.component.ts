@@ -3,9 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  EventEmitter,
   inject,
+  Input,
   OnDestroy,
   OnInit,
+  Output,
   signal,
 } from '@angular/core';
 import {
@@ -72,6 +75,10 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   );
   public formularioConductor: FormGroup;
   public identificacionIdApiDetalleSignal = signal(0);
+
+  @Input() visualizarBtnAtras = true;
+  @Input() navegarAlGuardar = true;
+  @Output() conductorCreado = new EventEmitter<Conductor>();
 
   ngOnInit() {
     this.consultarInformacion();
@@ -185,6 +192,10 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       .nuevo(this.formularioConductor.value)
       .pipe(takeUntil(this._destroy$))
       .subscribe(respuesta => {
+        if (!this.navegarAlGuardar) {
+          this.conductorCreado.emit(respuesta);
+          return;
+        }
         this._router.navigate(['administracion/conductor/detalle/', respuesta.id]);
       });
   }

@@ -1,7 +1,8 @@
 <form [formGroup]="formularioConductor" (ngSubmit)="onSubmit()">
   <div class="flex gap-2 mb-4">
-    <a class="btn btn-secondary" routerLink="/administracion/conductor/lista"> Atrás </a>
-
+    @if (visualizarBtnAtras) {
+      <a class="btn btn-secondary" routerLink="/administracion/conductor/lista"> Atrás </a>
+    }
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 
@@ -14,7 +15,7 @@
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <app-label [required]="true"> identificación </app-label>
+          <app-label [required]="true"> Identificación </app-label>
           <app-select
             [control]="getControl('identificacion')"
             [opciones]="filteredIdentificacionSignal()"

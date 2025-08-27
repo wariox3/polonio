@@ -27,6 +27,9 @@ import { catchError, filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
+import { ModalService } from '@app/common/services/modal.service';
+import { ModalStandardComponent } from '@app/common/components/ui/modals/modal-standard/modal-standard.component';
+import ConductorFormularioComponent from '@app/modules/conductor/pages/conductor-formulario/conductor-formulario.component';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -40,6 +43,8 @@ import { GuiaRepository } from '../../repositories/guia.repository';
     SwitchComponent,
     RouterModule,
     SelectSearchComponent,
+    ModalStandardComponent,
+    ConductorFormularioComponent,
   ],
   templateUrl: './guia-formulario.component.html',
 })
@@ -52,6 +57,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   private _fechaService = inject(FechaService);
   private _router = inject(Router);
   private _store = inject(Store);
+  private _modalService = inject(ModalService);
 
   private destroy$ = new Subject<void>();
 
@@ -116,7 +122,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       cliente: [null, Validators.required],
       cliente__nombre_corto: [null],
       destinatario: [null, Validators.required],
-      destinatario__nombre: [null],
+      destinatario_nombre_busqueda: [null],
       operacion_ingreso: [1, Validators.required],
       operacion_cargo: [1, Validators.required],
       operacion_cargo__nombre: [null],
@@ -259,7 +265,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       cliente: data.cliente,
       cliente__nombre_corto: data.contacto__nombre_corto,
       destinatario: data.destinatario,
-      destinatario__nombre: data.destinatario__nombre_corto,
+      destinatario_nombre_busqueda: data.destinatario__nombre_corto,
       operacion_ingreso: data.operacion_ingreso,
       operacion_ingreso__nombre: data.operacion_ingreso__nombre,
       operacion_cargo: data.operacion_cargo,
@@ -312,7 +318,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
     this.formularioGuia.patchValue({
       destinatario_nombre: data?.nombre_corto ?? null,
       destinatario_direccion: data?.direccion ?? null,
-      destinatario_telefono: data?.celular ?? null,
+      destinatario_telefono: data?.telefono ?? null,
       destinatario_correo: data?.correo ?? null,
       ciudad_destino: data?.ciudad ?? null,
       ciudad_destino__nombre: data?.ciudad__nombre ?? null,
@@ -324,6 +330,28 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       remitente_nombre: data?.nombre_corto ?? null,
       contacto: data?.id,
       contacto__nombre: data?.nombre_corto ?? null,
+    });
+  }
+
+  abrirFormularioNuevo(data: boolean) {
+    if (data) {
+      this._modalService.open('modalNuevo');
+    }
+  }
+
+  onClienteCreado(conductor: Conductor) {
+    // cierra el modal
+    this._modalService.close('modalNuevo');
+
+    this.formularioGuia.patchValue({
+      destinatario: conductor.id,
+      destinatario_nombre: conductor.nombre_corto,
+      destinatario_nombre_busqueda: conductor.nombre_corto,
+      destinatario_direccion: conductor?.direccion ?? null,
+      destinatario_telefono: conductor?.telefono ?? null,
+      destinatario_correo: conductor?.correo ?? null,
+      ciudad_destino: conductor?.ciudad_id ?? null,
+      ciudad_destino__nombre: conductor?.ciudad_nombre ?? null,
     });
   }
 }
