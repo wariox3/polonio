@@ -4,7 +4,7 @@ export const OPERACION_LISTA_FILTERS: FilterField[] = [
   { name: 'id', displayName: 'Id', type: 'number' },
   { name: 'nombre', displayName: 'Nombre', type: 'string' },
   {
-    name: 'ciudad',
+    name: 'ciudad_id',
     displayName: 'Ciudad',
     type: 'relation',
     relationConfig: {
