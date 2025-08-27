@@ -24,4 +24,6 @@ export interface Contacto {
   regimen: number;
   tipo_persona_id: number;
   regimen_id: number;
+  conductor: boolean;
+  cliente: boolean;
 }

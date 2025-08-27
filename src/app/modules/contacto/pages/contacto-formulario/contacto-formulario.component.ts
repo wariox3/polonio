@@ -26,7 +26,6 @@ import { SelectSearchComponent } from '@app/common/components/ui/form/select-sea
 import { SelectComponent } from '@app/common/components/ui/form/select/select.component';
 import { RespuestaSeleccionarIdentificacion } from '@app/common/interfaces/identificacion.interface';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
-import { AlertaService } from '@app/common/services/alerta.service';
 import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { GeneralRepository } from '@app/core';
@@ -57,7 +56,6 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
   private _contactoRepository = inject(ContactoRepository);
   private _generalRepository = inject(GeneralRepository);
   private _activatedRoute = inject(ActivatedRoute);
-  private _alertaService = inject(AlertaService);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _devuelveDigitoVerificacionService = inject(DevuelveDigitoVerificacionService);
   private _router = inject(Router);

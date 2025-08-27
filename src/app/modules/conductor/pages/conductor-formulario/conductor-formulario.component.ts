@@ -1,3 +1,4 @@
+import { Conductor } from '@app/modules/conductor/interfaces/conductor.interface';
 import { CommonModule } from '@angular/common';
 import {
   ChangeDetectorRef,
@@ -32,7 +33,6 @@ import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio
 import { GeneralRepository } from '@app/core';
 import { debounceTime, filter, merge, Subject, switchMap, takeUntil, zip } from 'rxjs';
 import { ConductorDetalleParametros } from '../../interfaces/conductor-detalle-parametros.interface';
-import { Conductor } from '../../interfaces/conductor.interface';
 import { ValidarNumeroIdentificacion } from '../../interfaces/validar-numero-identificacion.interface';
 import { ConductorRepository } from '../../repositories/conductor.repository';
 
@@ -359,15 +359,17 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   }
 
   private _visualizarEditarRegistro(conductor: Conductor) {
-    this._alertaService
-      .confirmar(
-        'Ya existe un registro con estos datos, pero no está configurado como conductor.',
-        '¿Desea habilitarlo como conductor?'
-      )
-      .then(resultado => {
-        if (resultado.isConfirmed) {
-          this._router.navigate(['/administracion/conductor/editar', conductor.id]);
-        }
-      });
+    if (conductor.conductor === false) {
+      this._alertaService
+        .confirmar(
+          'Ya existe un registro con estos datos, pero no está configurado como conductor.',
+          '¿Desea habilitarlo como conductor?'
+        )
+        .then(resultado => {
+          if (resultado.isConfirmed) {
+            this._router.navigate(['/administracion/conductor/editar', conductor.id]);
+          }
+        });
+    }
   }
 }

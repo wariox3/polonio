@@ -50,6 +50,8 @@ export default class conductorDetalleComponent implements OnInit, OnDestroy {
     regimen: 0,
     tipo_persona_id: 0,
     regimen_id: 0,
+    conductor: false,
+    cliente: false,
   });
   camposDetalle = computed<CampoDetalle[]>(() => {
     return obtenerCamposConductorDetalle(this.vehiculosSignal());
