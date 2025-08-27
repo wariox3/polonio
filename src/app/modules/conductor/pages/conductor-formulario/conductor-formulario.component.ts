@@ -360,7 +360,10 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
 
   private _visualizarEditarRegistro(conductor: Conductor) {
     this._alertaService
-      .confirmar('Desea ir a editar', 'Registro ya existente', { toast: true })
+      .confirmar(
+        'Ya existe un registro con estos datos, pero no está configurado como conductor.',
+        '¿Desea habilitarlo como conductor?'
+      )
       .then(resultado => {
         if (resultado.isConfirmed) {
           this._router.navigate(['/administracion/conductor/editar', conductor.id]);
