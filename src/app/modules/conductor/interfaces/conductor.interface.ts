@@ -1,31 +1,8 @@
-export interface Conductor {
-  id: number;
-  identificacion: number;
-  identificacion_id: number;
-  identificacion__nombre: string;
-  digito_verificacion: number;
-  ciudad: number;
-  ciudad_id: number;
-  ciudad_nombre: string;
-  ciudad__nombre: string;
-  ciudad__estado__nombre: string;
-  numero_identificacion: string;
-  nombre_corto: string;
-  nombre1: string;
-  nombre2: string;
-  apellido1: string;
-  apellido2: string;
-  direccion: string;
-  barrio: string;
-  telefono: string;
-  celular: string;
-  correo: string;
-  tipo_persona: number;
-  regimen: number;
+import { Contacto } from '@app/modules/contacto/interfaces/contacto.interface';
+
+export interface Conductor extends Contacto {
   numero_licencia: string;
   categoria_licencia_id: number | null;
   categoria_licencia_nombre: string | null;
   fecha_vence_licencia: string;
-  tipo_persona_id: number;
-  regimen_id: number;
 }

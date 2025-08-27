@@ -29,7 +29,8 @@ import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
 import { ModalService } from '@app/common/services/modal.service';
 import { ModalStandardComponent } from '@app/common/components/ui/modals/modal-standard/modal-standard.component';
-import ConductorFormularioComponent from '@app/modules/conductor/pages/conductor-formulario/conductor-formulario.component';
+import ContactoFormularioComponent from '@app/modules/contacto/pages/contacto-formulario/contacto-formulario.component';
+import { Contacto } from '@app/modules/contacto/interfaces/contacto.interface';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -44,7 +45,7 @@ import ConductorFormularioComponent from '@app/modules/conductor/pages/conductor
     RouterModule,
     SelectSearchComponent,
     ModalStandardComponent,
-    ConductorFormularioComponent,
+    ContactoFormularioComponent,
   ],
   templateUrl: './guia-formulario.component.html',
 })
@@ -339,7 +340,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
     }
   }
 
-  onClienteCreado(conductor: Conductor) {
+  onClienteCreado(conductor: Contacto) {
     // cierra el modal
     this._modalService.close('modalNuevo');
 

@@ -1,0 +1,203 @@
+<form [formGroup]="formularioConductor" (ngSubmit)="onSubmit()">
+  <div class="flex gap-2 mb-4">
+    @if (visualizarBtnAtras) {
+      <a class="btn btn-secondary" routerLink="/administracion/conductor/lista"> Atrás </a>
+    }
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+
+  <div class="card mb-5">
+    <div class="card-header">
+      <h3 class="card-title">Nuevo contacto</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true"> Identificación </app-label>
+          <app-select
+            formControlName="identificacion"
+            [control]="formularioConductor.get('identificacion')"
+            [opciones]="filteredIdentificacionSignal()"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+          ></app-select>
+        </div>
+
+        <section class="flex flex-row justify-between gap-2">
+          <div class="flex-auto">
+            <app-label [required]="true"> Número identificación </app-label>
+            <app-input
+              placeholder="Ingresa el número identificación"
+              formControlName="numero_identificacion"
+              [type]="'number'"
+              [control]="formularioConductor.get('numero_identificacion')"
+              (blurEvent)="calcularDigitoVerificacion()"
+              [errors]="{
+                required: 'Este campo es requerido.',
+                min: 'Debe ser mayor o igual a 1900.',
+                max: 'No puede ser mayor al año actual.',
+                numeroIdentificacionExistente:
+                  'El conductor con el número y tipo de identificación seleccionados ya existe.',
+              }"
+            ></app-input>
+          </div>
+
+          <div>
+            <app-label> DV </app-label>
+            <app-input
+              placeholder="Digito verificación"
+              formControlName="digito_verificacion"
+              [type]="'number'"
+              [readonly]="true"
+              [control]="formularioConductor.get('digito_verificacion')"
+              [errors]="{
+                required: 'El modelo es requerido.',
+                min: 'Debe ser mayor o igual a 1900.',
+                maxLength: 'Máximo 1 caracteres.',
+              }"
+            ></app-input>
+          </div>
+        </section>
+
+        <div>
+          <app-label [required]="true">Primer nombre</app-label>
+          <app-input
+            placeholder="Ingresa primer nombre"
+            formControlName="nombre1"
+            [type]="'text'"
+            [control]="formularioConductor.get('nombre1')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              maxLength: 'Máximo 50 caracteres.',
+              pattern: 'Solo se permiten letras y espacios.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Segundo nombre</app-label>
+          <app-input
+            placeholder="Ingresa segundo nombre"
+            formControlName="nombre2"
+            [type]="'text'"
+            [control]="formularioConductor.get('nombre2')"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label [required]="true">Primer apellido</app-label>
+          <app-input
+            placeholder="Ingresa primer apellido"
+            formControlName="apellido1"
+            [type]="'text'"
+            [control]="formularioConductor.get('apellido1')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              min: 'Debe ser un valor positivo.',
+              pattern: 'Solo se permiten letras y espacios.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Segundo apellido</app-label>
+          <app-input
+            placeholder="Ingresa segundo apellido"
+            formControlName="apellido2"
+            [type]="'text'"
+            [control]="formularioConductor.get('apellido2')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              min: 'Debe ser un valor positivo.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label [required]="true">Ciudad</app-label>
+          <app-select-search
+            [control]="getControl('ciudad')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioConductor.get('ciudad__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+
+        <div>
+          <app-label [required]="true">Dirección</app-label>
+          <app-input
+            placeholder="Dirección"
+            formControlName="direccion"
+            [type]="'text'"
+            [control]="formularioConductor.get('direccion')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Barrio</app-label>
+          <app-input
+            placeholder="Barrio"
+            formControlName="barrio"
+            [type]="'text'"
+            [control]="formularioConductor.get('barrio')"
+            [errors]="{
+              maxLength: 'Máximo 200 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label [required]="true">Teléfono</app-label>
+          <app-input
+            placeholder="Teléfono"
+            formControlName="telefono"
+            [type]="'text'"
+            [control]="formularioConductor.get('telefono')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              maxLength: 'Máximo 50 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Celular</app-label>
+          <app-input
+            placeholder="Celular"
+            formControlName="celular"
+            [type]="'text'"
+            [control]="formularioConductor.get('celular')"
+            [errors]="{
+              maxLength: 'Máximo 50 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label [required]="true">Correo</app-label>
+          <app-input
+            placeholder="Correo"
+            formControlName="correo"
+            [type]="'text'"
+            [control]="formularioConductor.get('correo')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              email: 'Correo no valido',
+              maxLength: 'Máximo 255 caracteres.',
+            }"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

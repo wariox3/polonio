@@ -307,11 +307,11 @@
 @defer (on idle) {
   <app-modal-standard modalId="modalNuevo" size="7xl">
     <div>
-      <app-conductor-formulario
+      <app-contacto-formulario
         [visualizarBtnAtras]="false"
         [navegarAlGuardar]="false"
         (conductorCreado)="onClienteCreado($event)"
-      ></app-conductor-formulario>
+      ></app-contacto-formulario>
     </div>
   </app-modal-standard>
 }
