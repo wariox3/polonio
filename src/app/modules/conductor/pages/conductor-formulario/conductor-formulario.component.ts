@@ -17,7 +17,6 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -27,12 +26,14 @@ import { SelectSearchComponent } from '@app/common/components/ui/form/select-sea
 import { SelectComponent } from '@app/common/components/ui/form/select/select.component';
 import { RespuestaSeleccionarIdentificacion } from '@app/common/interfaces/identificacion.interface';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
+import { AlertaService } from '@app/common/services/alerta.service';
 import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { GeneralRepository } from '@app/core';
 import { debounceTime, filter, merge, Subject, switchMap, takeUntil, zip } from 'rxjs';
 import { ConductorDetalleParametros } from '../../interfaces/conductor-detalle-parametros.interface';
 import { Conductor } from '../../interfaces/conductor.interface';
+import { ValidarNumeroIdentificacion } from '../../interfaces/validar-numero-identificacion.interface';
 import { ConductorRepository } from '../../repositories/conductor.repository';
 
 @Component({
@@ -56,6 +57,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
   private _conductorRepository = inject(ConductorRepository);
   private _generalRepository = inject(GeneralRepository);
   private _activatedRoute = inject(ActivatedRoute);
+  private _alertaService = inject(AlertaService);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _devuelveDigitoVerificacionService = inject(DevuelveDigitoVerificacionService);
   private _router = inject(Router);
@@ -327,7 +329,7 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: respuesta => {
-          this._actualizarErroresNumeroIdentificacion(respuesta.validacion);
+          this._actualizarErroresNumeroIdentificacion(respuesta);
         },
       });
   }
@@ -344,20 +346,25 @@ export default class ConductorFormularioComponent implements OnInit, OnDestroy {
     return numeroIdentificacionCambio || identificacionIdCambio;
   }
 
-  private _actualizarErroresNumeroIdentificacion(esValido: boolean) {
-    const errores: { numeroIdentificacionExistente: boolean } | null = esValido
+  private _actualizarErroresNumeroIdentificacion(data: ValidarNumeroIdentificacion) {
+    const errores: { numeroIdentificacionExistente: boolean } | null = data.validacion
       ? { numeroIdentificacionExistente: true }
       : null;
-
+    if (errores) {
+      this._visualizarEditarRegistro(data.contacto);
+    }
     this.formularioConductor.get('numero_identificacion')!.setErrors(errores);
     this.formularioConductor.get('numero_identificacion')!.markAsTouched();
     this._changeDetectorRef.detectChanges();
   }
 
-  private _setValidators(fieldName: string, validators: ValidatorFn[]) {
-    const control = this.formularioConductor.get(fieldName);
-    control?.clearValidators();
-    control?.setValidators(validators);
-    control?.updateValueAndValidity();
+  private _visualizarEditarRegistro(conductor: Conductor) {
+    this._alertaService
+      .confirmar('Desea ir a editar', 'Registro ya existente', { toast: true })
+      .then(resultado => {
+        if (resultado.isConfirmed) {
+          this._router.navigate(['/administracion/conductor/editar', conductor.id]);
+        }
+      });
   }
 }

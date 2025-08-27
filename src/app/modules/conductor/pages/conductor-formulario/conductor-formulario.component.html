@@ -17,16 +17,13 @@
         <div>
           <app-label [required]="true"> Identificación </app-label>
           <app-select
-            [control]="getControl('identificacion')"
+            formControlName="identificacion"
+            [control]="formularioConductor.get('identificacion')"
             [opciones]="filteredIdentificacionSignal()"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
           ></app-select>
-          @if (
-            formularioConductor.get('identificacion').hasError('required') &&
-            (formularioConductor.get('identificacion').dirty ||
-              formularioConductor.get('identificacion').touched)
-          ) {
-            <p class="text-sm text-red-600 mt-1">Este campo es requerido.</p>
-          }
         </div>
 
         <section class="flex flex-row justify-between gap-2">

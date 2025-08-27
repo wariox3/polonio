@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
 import { RespuestaApi, QueryParams } from '@app/core/interfaces/api.interface';
 import { Conductor } from '../interfaces/conductor.interface';
+import { ValidarNumeroIdentificacion } from '../interfaces/validar-numero-identificacion.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export class ConductorRepository {
   }
 
   validarNumeroIdentificacion(data: { identificacion_id: number; numero_identificacion: string }) {
-    return this._generalRepository.post<{ validacion: boolean; codigo: number }>(
+    return this._generalRepository.post<ValidarNumeroIdentificacion>(
       `general/contacto/validar/`,
       data
     );
