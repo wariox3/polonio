@@ -76,6 +76,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   public arrZona = signal<RespuestaSeleccionar[]>([]);
   public arrCiudades = signal<RespuestaSeleccionar[]>([]);
   public usuarioOperacionId = signal<number | null>(null);
+  public modalAbierto = signal(false);
 
   ngOnInit() {
     this._consultarDataInicial();
@@ -160,12 +161,6 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (!this.formularioGuia.valid) {
       this.formularioGuia.markAllAsTouched();
-      Object.keys(this.formularioGuia.controls).forEach((campo: any) => {
-        const control = this.formularioGuia.get(campo);
-        if (control && control.invalid) {
-          console.warn(`Error en el campo "${campo}":`, control.errors);
-        }
-      });
       return;
     }
 
@@ -335,7 +330,10 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   }
 
   abrirFormularioNuevo(data: boolean) {
+    console.log(data);
+
     if (data) {
+      this.modalAbierto.set(true);
       this._modalService.open('modalNuevo');
     }
   }
@@ -343,7 +341,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   onClienteCreado(conductor: Contacto) {
     // cierra el modal
     this._modalService.close('modalNuevo');
-
+    this.modalAbierto.set(false); // destruye defer
     this.formularioGuia.patchValue({
       destinatario: conductor.id,
       destinatario_nombre: conductor.nombre_corto,

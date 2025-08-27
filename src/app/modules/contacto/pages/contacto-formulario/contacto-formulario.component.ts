@@ -83,7 +83,6 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.consultarInformacion();
     this.inicializarFormulario();
-    this.consultardetalle();
     this._iniciarSuscripcionesFormularioConductor();
   }
 
@@ -204,49 +203,6 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
       .subscribe(respuesta => {
         this._router.navigate(['administracion/contacto/detalle/', respuesta.id]);
       });
-  }
-
-  consultardetalle() {
-    this._activatedRoute.params
-      .pipe(
-        takeUntil(this._destroy$),
-        filter((param: DetalleParametros) => !!param.id),
-        switchMap((param: DetalleParametros) => {
-          const id = Number(param.id);
-          this.detalleID.set(id);
-          return this._contactoRepository.detalle(id);
-        })
-      )
-      .subscribe((respuesta: Contacto) => {
-        this.poblarFormulario(respuesta);
-      });
-  }
-
-  private poblarFormulario(data: Contacto) {
-    this.informacionContacto = data;
-
-    this.identificacionIdApiDetalleSignal.update(() => data.identificacion_id);
-    this.formularioConductor.patchValue({
-      id: data.id,
-      numero_identificacion: data.numero_identificacion,
-      digito_verificacion: data.digito_verificacion,
-      nombre1: data.nombre1,
-      nombre2: data.nombre2,
-      apellido1: data.apellido1,
-      apellido2: data.apellido2,
-      nombre_corto: data.nombre_corto,
-      direccion: data.direccion,
-      barrio: data.barrio,
-      telefono: data.telefono,
-      celular: data.celular,
-      correo: data.correo,
-      identificacion: data.identificacion_id,
-      ciudad: data.ciudad_id,
-      ciudad__nombre: data.ciudad_nombre,
-      tipo_persona: data.tipo_persona_id,
-      regimen: data.regimen_id,
-      contacto: true,
-    });
   }
 
   getControl(nombre: string): FormControl {

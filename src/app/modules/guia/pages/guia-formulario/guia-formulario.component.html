@@ -304,14 +304,13 @@
     </div>
   </div>
 </form>
-@defer (on idle) {
-  <app-modal-standard modalId="modalNuevo" size="7xl">
-    <div>
-      <app-contacto-formulario
-        [visualizarBtnAtras]="false"
-        [navegarAlGuardar]="false"
-        (conductorCreado)="onClienteCreado($event)"
-      ></app-contacto-formulario>
-    </div>
-  </app-modal-standard>
-}
+<app-modal-standard modalId="modalNuevo" size="7xl">
+  @defer (when modalAbierto()) {
+    <app-contacto-formulario
+      [visualizarBtnAtras]="false"
+      [navegarAlGuardar]="false"
+      (conductorCreado)="onClienteCreado($event)"
+    >
+    </app-contacto-formulario>
+  }
+</app-modal-standard>
