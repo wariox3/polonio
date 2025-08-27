@@ -214,16 +214,13 @@
         <div>
           <app-label [required]="true">Categoria</app-label>
           <app-select
-            [control]="getControl('categoria_licencia')"
+            formControlName="categoria_licencia"
+            [control]="formularioConductor.get('categoria_licencia')"
             [opciones]="arrCategoriaLicencia()"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
           ></app-select>
-          @if (
-            formularioConductor.get('categoria_licencia').hasError('required') &&
-            (formularioConductor.get('categoria_licencia').dirty ||
-              formularioConductor.get('categoria_licencia').touched)
-          ) {
-            <p class="text-sm text-red-600 mt-1">Este campo es requerido.</p>
-          }
         </div>
         <div>
           <app-label [required]="true">Número</app-label>

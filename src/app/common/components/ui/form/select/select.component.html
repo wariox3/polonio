@@ -1,8 +1,19 @@
-<select class="select mt-1" name="select" [formControl]="control">
-  <option value="0">Seleccionar</option>
+<select
+  class="select mt-1"
+  [value]="value ?? ''"
+  (change)="onSelectChange($event)"
+  [disabled]="disabled"
+>
+  <option value="" disabled>Seleccionar</option>
   @for (opcion of opciones; track $index) {
     <option [value]="opcion.valor">
       {{ opcion.nombre }}
     </option>
   }
 </select>
+
+@if (error) {
+  <p class="text-sm text-red-600 mt-1">
+    {{ error }}
+  </p>
+}
