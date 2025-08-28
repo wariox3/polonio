@@ -1,4 +1,5 @@
 import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
+import { formatearMonedaCOP } from '@app/common/utils/formatters';
 
 export const columnasDespachoLista: ColumnaTabla[] = [
   {
@@ -6,14 +7,23 @@ export const columnasDespachoLista: ColumnaTabla[] = [
     nombre: 'Id',
     ancho: '80px',
   },
+  //servicio
   {
-    clave: 'vehiculo__placa',
-    nombre: 'Vehículo',
+    clave: 'servicio__nombre',
+    nombre: 'Servicio',
+  },
+  {
+    clave: 'fecha',
+    nombre: 'Fecha',
+  },
+  {
+    clave: 'operacion__nombre',
+    nombre: 'Operación',
     ancho: '120px',
   },
   {
-    clave: 'remolque__placa',
-    nombre: 'Remolque',
+    clave: 'vehiculo__placa',
+    nombre: 'Vehículo',
     ancho: '120px',
   },
   {
@@ -32,23 +42,44 @@ export const columnasDespachoLista: ColumnaTabla[] = [
     ancho: '150px',
   },
   {
-    clave: 'ruta__nombre',
-    nombre: 'Ruta',
-    ancho: '120px',
-  },
-  {
-    clave: 'operacion__nombre',
-    nombre: 'Operación',
-    ancho: '120px',
-  },
-  {
     clave: 'pago',
     nombre: 'Pago',
     ancho: '100px',
+    alineacion: 'derecha',
+    formato: valor => formatearMonedaCOP(valor),
   },
   {
-    clave: 'flete',
-    nombre: 'Flete',
-    ancho: '100px',
+    clave: 'guias',
+    nombre: 'Guías',
+  },
+  {
+    clave: 'unidades',
+    nombre: 'Unidades',
+  },
+  {
+    clave: 'peso',
+    nombre: 'Peso',
+  },
+  {
+    clave: 'volumen',
+    nombre: 'Volumen',
+  },
+  {
+    clave: 'estado_aprobado',
+    nombre: 'A',
+    tooltip: 'Aprobado',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
+  },
+  {
+    clave: 'estado_entregado',
+    nombre: 'E',
+    tooltip: 'Entregado',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
+  },
+  {
+    clave: 'estado_soporte',
+    nombre: 'S',
+    tooltip: 'Soporte',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
   },
 ];
