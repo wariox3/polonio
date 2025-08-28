@@ -19,7 +19,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
@@ -29,11 +29,10 @@ import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccion
 import { DevuelveDigitoVerificacionService } from '@app/common/services/devuelve-digito-verificacion.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
 import { GeneralRepository } from '@app/core';
-import { debounceTime, filter, merge, Subject, switchMap, takeUntil, zip } from 'rxjs';
 import { Contacto } from '@app/modules/contacto/interfaces/contacto.interface';
 import { ContactoRepository } from '@app/modules/contacto/repositories/contacto.repository';
+import { debounceTime, merge, Subject, takeUntil, zip } from 'rxjs';
 import { ValidarNumeroIdentificacion } from '../../interfaces/validar-numero-identificacion.interface';
-import { DetalleParametros } from '@app/common/interfaces/detalle-parametros.interface';
 
 @Component({
   selector: 'app-contacto-formulario',
@@ -55,7 +54,6 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
   private _formBuilder = inject(FormBuilder);
   private _contactoRepository = inject(ContactoRepository);
   private _generalRepository = inject(GeneralRepository);
-  private _activatedRoute = inject(ActivatedRoute);
   private _changeDetectorRef = inject(ChangeDetectorRef);
   private _devuelveDigitoVerificacionService = inject(DevuelveDigitoVerificacionService);
   private _router = inject(Router);
