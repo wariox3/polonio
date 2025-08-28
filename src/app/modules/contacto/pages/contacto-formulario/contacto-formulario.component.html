@@ -1,4 +1,4 @@
-<form [formGroup]="formularioConductor" (ngSubmit)="onSubmit()">
+<form [formGroup]="formularioContacto" (ngSubmit)="onSubmit()">
   <div class="flex gap-2 mb-4">
     @if (visualizarBtnAtras) {
       <a class="btn btn-secondary" routerLink="/administracion/conductor/lista"> Atrás </a>
@@ -16,7 +16,7 @@
           <app-label [required]="true"> Identificación </app-label>
           <app-select
             formControlName="identificacion"
-            [control]="formularioConductor.get('identificacion')"
+            [control]="formularioContacto.get('identificacion')"
             [opciones]="filteredIdentificacionSignal()"
             [errors]="{
               required: 'Este campo es requerido.',
@@ -31,7 +31,7 @@
               placeholder="Ingresa el número identificación"
               formControlName="numero_identificacion"
               [type]="'number'"
-              [control]="formularioConductor.get('numero_identificacion')"
+              [control]="formularioContacto.get('numero_identificacion')"
               (blurEvent)="calcularDigitoVerificacion()"
               [errors]="{
                 required: 'Este campo es requerido.',
@@ -50,7 +50,7 @@
               formControlName="digito_verificacion"
               [type]="'number'"
               [readonly]="true"
-              [control]="formularioConductor.get('digito_verificacion')"
+              [control]="formularioContacto.get('digito_verificacion')"
               [errors]="{
                 required: 'El modelo es requerido.',
                 min: 'Debe ser mayor o igual a 1900.',
@@ -66,7 +66,7 @@
             placeholder="Ingresa primer nombre"
             formControlName="nombre1"
             [type]="'text'"
-            [control]="formularioConductor.get('nombre1')"
+            [control]="formularioContacto.get('nombre1')"
             [errors]="{
               required: 'Este campo es requerido.',
               maxLength: 'Máximo 50 caracteres.',
@@ -81,7 +81,7 @@
             placeholder="Ingresa segundo nombre"
             formControlName="nombre2"
             [type]="'text'"
-            [control]="formularioConductor.get('nombre2')"
+            [control]="formularioContacto.get('nombre2')"
           ></app-input>
         </div>
 
@@ -91,7 +91,7 @@
             placeholder="Ingresa primer apellido"
             formControlName="apellido1"
             [type]="'text'"
-            [control]="formularioConductor.get('apellido1')"
+            [control]="formularioContacto.get('apellido1')"
             [errors]="{
               required: 'Este campo es requerido.',
               min: 'Debe ser un valor positivo.',
@@ -106,7 +106,7 @@
             placeholder="Ingresa segundo apellido"
             formControlName="apellido2"
             [type]="'text'"
-            [control]="formularioConductor.get('apellido2')"
+            [control]="formularioContacto.get('apellido2')"
             [errors]="{
               required: 'Este campo es requerido.',
               min: 'Debe ser un valor positivo.',
@@ -124,7 +124,7 @@
             [endpoint]="'general/ciudad/seleccionar/'"
             [campoBusqueda]="'nombre__icontains'"
             [parametrosEndpoint]="{
-              nombre__icontains: this.formularioConductor.get('ciudad__nombre').value,
+              nombre__icontains: this.formularioContacto.get('ciudad__nombre').value,
               limit: 10,
             }"
           ></app-select-search>
@@ -136,7 +136,7 @@
             placeholder="Dirección"
             formControlName="direccion"
             [type]="'text'"
-            [control]="formularioConductor.get('direccion')"
+            [control]="formularioContacto.get('direccion')"
             [errors]="{
               required: 'Este campo es requerido.',
             }"
@@ -149,7 +149,7 @@
             placeholder="Barrio"
             formControlName="barrio"
             [type]="'text'"
-            [control]="formularioConductor.get('barrio')"
+            [control]="formularioContacto.get('barrio')"
             [errors]="{
               maxLength: 'Máximo 200 caracteres.',
             }"
@@ -162,7 +162,7 @@
             placeholder="Teléfono"
             formControlName="telefono"
             [type]="'text'"
-            [control]="formularioConductor.get('telefono')"
+            [control]="formularioContacto.get('telefono')"
             [errors]="{
               required: 'Este campo es requerido.',
               maxLength: 'Máximo 50 caracteres.',
@@ -176,7 +176,7 @@
             placeholder="Celular"
             formControlName="celular"
             [type]="'text'"
-            [control]="formularioConductor.get('celular')"
+            [control]="formularioContacto.get('celular')"
             [errors]="{
               maxLength: 'Máximo 50 caracteres.',
             }"
@@ -189,7 +189,7 @@
             placeholder="Correo"
             formControlName="correo"
             [type]="'text'"
-            [control]="formularioConductor.get('correo')"
+            [control]="formularioContacto.get('correo')"
             [errors]="{
               required: 'Este campo es requerido.',
               email: 'Correo no valido',

@@ -71,17 +71,17 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
   public filteredIdentificacionSignal = computed(() =>
     this.arrIdentificacion().filter(item => item.tipo_persona === this.filtroIdentificacionSignal())
   );
-  public formularioConductor: FormGroup;
+  public formularioContacto: FormGroup;
   public identificacionIdApiDetalleSignal = signal(0);
 
   @Input() visualizarBtnAtras = true;
   @Input() navegarAlGuardar = true;
-  @Output() conductorCreado = new EventEmitter<Contacto>();
+  @Output() contactoCreado = new EventEmitter<Contacto>();
 
   ngOnInit() {
     this.consultarInformacion();
     this.inicializarFormulario();
-    this._iniciarSuscripcionesFormularioConductor();
+    this._iniciarSuscripcionesFormularioContacto();
   }
 
   ngOnDestroy(): void {
@@ -90,7 +90,7 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
   }
 
   inicializarFormulario() {
-    this.formularioConductor = this._formBuilder.group({
+    this.formularioContacto = this._formBuilder.group({
       id: [],
       tipo_persona: [2, Validators.compose([Validators.required])],
       regimen: [2, Validators.compose([Validators.required])],
@@ -121,14 +121,14 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.actualizarNombreCorto();
-    if (!this.formularioConductor.valid) {
-      this.formularioConductor.markAllAsTouched();
+    if (!this.formularioContacto.valid) {
+      this.formularioContacto.markAllAsTouched();
       return;
     }
     if (this.detalleID() === 0) {
-      this._nuevoConductor();
+      this._nuevoContacto();
     } else {
-      this._editarConductor();
+      this._editarContacto();
     }
   }
 
@@ -173,7 +173,7 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
           }))
         );
         if (this.detalleID() === 0) {
-          this.formularioConductor.patchValue({
+          this.formularioContacto.patchValue({
             identificacion: this.filteredIdentificacionSignal()[0].valor,
           });
         }
@@ -181,22 +181,22 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
     );
   }
 
-  private _nuevoConductor() {
+  private _nuevoContacto() {
     this._contactoRepository
-      .nuevo(this.formularioConductor.value)
+      .nuevo(this.formularioContacto.value)
       .pipe(takeUntil(this._destroy$))
       .subscribe(respuesta => {
         if (!this.navegarAlGuardar) {
-          this.conductorCreado.emit(respuesta);
+          this.contactoCreado.emit(respuesta);
           return;
         }
         this._router.navigate(['administracion/contacto/detalle/', respuesta.id]);
       });
   }
 
-  private _editarConductor() {
+  private _editarContacto() {
     this._contactoRepository
-      .editar(this.detalleID(), this.formularioConductor.value)
+      .editar(this.detalleID(), this.formularioContacto.value)
       .pipe(takeUntil(this._destroy$))
       .subscribe(respuesta => {
         this._router.navigate(['administracion/contacto/detalle/', respuesta.id]);
@@ -204,15 +204,15 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
   }
 
   getControl(nombre: string): FormControl {
-    return this.formularioConductor.get(nombre) as FormControl;
+    return this.formularioContacto.get(nombre) as FormControl;
   }
 
   actualizarNombreCorto() {
     let nombreCorto = '';
-    const nombre1 = this.formularioConductor.get('nombre1')?.value;
-    const nombre2 = this.formularioConductor.get('nombre2')?.value;
-    const apellido1 = this.formularioConductor.get('apellido1')?.value;
-    const apellido2 = this.formularioConductor.get('apellido2')?.value;
+    const nombre1 = this.formularioContacto.get('nombre1')?.value;
+    const nombre2 = this.formularioContacto.get('nombre2')?.value;
+    const apellido1 = this.formularioContacto.get('apellido1')?.value;
+    const apellido2 = this.formularioContacto.get('apellido2')?.value;
 
     nombreCorto = `${nombre1}`;
     if (nombre2 !== null) {
@@ -223,22 +223,22 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
       nombreCorto += ` ${apellido2}`;
     }
 
-    this.formularioConductor.get('nombre_corto')?.patchValue(nombreCorto, { emitEvent: false });
+    this.formularioContacto.get('nombre_corto')?.patchValue(nombreCorto, { emitEvent: false });
   }
 
   calcularDigitoVerificacion() {
     const digito = this._devuelveDigitoVerificacionService.digitoVerificacion(
-      this.formularioConductor.get('numero_identificacion')?.value
+      this.formularioContacto.get('numero_identificacion')?.value
     );
-    this.formularioConductor.patchValue({
+    this.formularioContacto.patchValue({
       digito_verificacion: digito,
     });
   }
 
-  private _iniciarSuscripcionesFormularioConductor() {
+  private _iniciarSuscripcionesFormularioContacto() {
     merge(
-      this.formularioConductor.get('numero_identificacion')!.valueChanges.pipe(debounceTime(300)),
-      this.formularioConductor.get('identificacion')!.valueChanges
+      this.formularioContacto.get('numero_identificacion')!.valueChanges.pipe(debounceTime(300)),
+      this.formularioContacto.get('identificacion')!.valueChanges
     )
       .pipe(takeUntil(this._destroy$))
       .subscribe(() => this._validarNumeroIdenficacionExistente());
@@ -254,15 +254,15 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
 
   private _procesarValidacionNumeroIdentificacion() {
     if (!this._seHanModificadoDatosDeIdentificacion()) {
-      this.formularioConductor.get('numero_identificacion')!.setErrors(null);
+      this.formularioContacto.get('numero_identificacion')!.setErrors(null);
       return;
     }
     this._consultarIdentificacionEnServicio();
   }
 
   private _consultarIdentificacionEnServicio() {
-    const identificacionId = Number(this.formularioConductor.get('identificacion')?.value);
-    const numeroIdentificacion = this.formularioConductor.get('numero_identificacion')?.value;
+    const identificacionId = Number(this.formularioContacto.get('identificacion')?.value);
+    const numeroIdentificacion = this.formularioContacto.get('numero_identificacion')?.value;
 
     if (!identificacionId || !numeroIdentificacion) {
       return;
@@ -283,11 +283,11 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
   private _seHanModificadoDatosDeIdentificacion() {
     const numeroIdentificacionCambio =
       Number(this.informacionContacto?.numero_identificacion) !==
-      Number(this.formularioConductor.get('numero_identificacion')?.value);
+      Number(this.formularioContacto.get('numero_identificacion')?.value);
 
     const identificacionIdCambio =
       this.informacionContacto?.identificacion_id !==
-      Number(this.formularioConductor.get('identificacion')?.value);
+      Number(this.formularioContacto.get('identificacion')?.value);
 
     return numeroIdentificacionCambio || identificacionIdCambio;
   }
@@ -296,8 +296,8 @@ export default class ContactoFormularioComponent implements OnInit, OnDestroy {
     const errores: { numeroIdentificacionExistente: boolean } | null = data.validacion
       ? { numeroIdentificacionExistente: true }
       : null;
-    this.formularioConductor.get('numero_identificacion')!.setErrors(errores);
-    this.formularioConductor.get('numero_identificacion')!.markAsTouched();
+    this.formularioContacto.get('numero_identificacion')!.setErrors(errores);
+    this.formularioContacto.get('numero_identificacion')!.markAsTouched();
     this._changeDetectorRef.detectChanges();
   }
 }
