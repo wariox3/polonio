@@ -30,6 +30,7 @@ export class TablaComponent implements OnChanges {
   @Input() mostrarCheckbox: boolean = true;
   @Input() textoVacio: string = 'No hay datos disponibles';
   @Input() rutas: { editar: string; detalle: string } = { editar: '', detalle: '' };
+  @Input() maxHeight: string = '';
 
   // Eventos de salida
   @Output() seleccionCambiada = new EventEmitter<any[]>();
