@@ -3,13 +3,13 @@
   [modalId]="'agregarGuia'"
   [title]="'Agregar guía'"
   [showCloseButton]="true"
-  [size]="'2xl'"
+  [size]="'sm'"
   [closeOnOutsideClick]="true"
   [closeOnEsc]="true"
 >
   <!-- Contenido del modal -->
   <form [formGroup]="formularioAgregarGuia" (ngSubmit)="guardar()">
-    <div class="flex flex-row gap-2 items-center">
+    <div class="flex flex-row gap-2 items-start">
       <app-label [required]="true">Guía</app-label>
       <app-input
         formControlName="guia_id"
