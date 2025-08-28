@@ -19,6 +19,7 @@ import { finalize, tap } from 'rxjs';
 @Component({
   selector: 'app-select-search',
   templateUrl: './select-search.component.html',
+  styleUrls: ['./select-search.component.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, NgSelectModule],
 })
