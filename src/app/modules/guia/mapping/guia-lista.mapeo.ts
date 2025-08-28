@@ -21,7 +21,7 @@ export const columnasGuiaLista: ColumnaTabla[] = [
   {
     clave: 'estado_entregado',
     nombre: 'E',
-    tooltip: 'Soporte',
+    tooltip: 'Entregado',
     formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
   },
   {

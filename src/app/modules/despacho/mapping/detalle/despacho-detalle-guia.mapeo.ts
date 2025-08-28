@@ -8,39 +8,21 @@ export const columnasDespachoGuia: ColumnaTabla[] = [
     ancho: '80px',
   },
   {
-    clave: 'fecha_registro',
-    nombre: 'Fecha',
-    formato: valor => formatearFechaISO(valor),
-  },
-  {
     clave: 'guia',
     nombre: 'Guía',
   },
   {
-    clave: 'guia__destinatario__nombre_corto',
-    nombre: 'Destinatario',
+    clave: 'guia__fecha',
+    nombre: 'Fecha',
+    formato: valor => formatearFechaISO(valor),
+  },
+  {
+    clave: 'guia__cliente__nombre_corto',
+    nombre: 'Cliente',
   },
   {
     clave: 'guia__ciudad_destino__nombre',
     nombre: 'Destino',
-  },
-  {
-    clave: 'flete',
-    nombre: 'Flete',
-    formato: valor => formatearMonedaCOP(valor),
-    alineacion: 'derecha',
-  },
-  {
-    clave: 'manejo',
-    nombre: 'Manejo',
-    formato: valor => formatearMonedaCOP(valor),
-    alineacion: 'derecha',
-  },
-  {
-    clave: 'declara',
-    nombre: 'Declarado',
-    formato: valor => formatearMonedaCOP(valor),
-    alineacion: 'derecha',
   },
   {
     clave: 'cobro_entrega',
@@ -49,20 +31,6 @@ export const columnasDespachoGuia: ColumnaTabla[] = [
     alineacion: 'derecha',
   },
   {
-    clave: 'recaudo',
-    nombre: 'Rec',
-    tooltip: 'Recaudo',
-    formato: valor => formatearMonedaCOP(valor),
-    alineacion: 'derecha',
-  },
-  {
-    clave: 'costo',
-    nombre: 'Costo',
-    formato: valor => formatearMonedaCOP(valor),
-    alineacion: 'derecha',
-  },
-
-  {
     clave: 'unidades',
     nombre: 'Und',
     tooltip: 'Unidades',
@@ -70,7 +38,7 @@ export const columnasDespachoGuia: ColumnaTabla[] = [
   {
     clave: 'peso',
     nombre: 'Pes',
-    tooltip: 'Peso Unidades',
+    tooltip: 'Peso',
   },
   {
     clave: 'volumen',
@@ -78,8 +46,9 @@ export const columnasDespachoGuia: ColumnaTabla[] = [
     tooltip: 'Volumen',
   },
   {
-    clave: 'peso_facturado',
-    nombre: 'Pes fac',
-    tooltip: 'Peso Facturado',
+    clave: 'estado_entregado',
+    nombre: 'E',
+    tooltip: 'Entregado',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
   },
 ];
