@@ -1,4 +1,12 @@
-import { Component, EventEmitter, inject, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,12 +14,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { InputComponent } from '@app/common/components/ui/form/input/input.component';
+import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { ModalStandardComponent } from '@app/common/components/ui/modals/modal-standard/modal-standard.component';
 import { ModalService } from '@app/common/services/modal.service';
-import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
-import { InputComponent } from '@app/common/components/ui/form/input/input.component';
 import { Subject, switchMap, takeUntil } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { DespachoDetalleRepository } from '../../repositories/despacho-detalle.repository';
 
 @Component({
@@ -35,6 +43,7 @@ export class DespachoModalAgregarGuiaComponent implements OnInit, OnDestroy {
 
   public formularioAgregarGuia: FormGroup;
   @Output() registroExitoso = new EventEmitter<boolean>(false);
+  @ViewChild(InputComponent) inputGuia!: InputComponent;
 
   ngOnInit() {
     this.inicializarFormulario();
@@ -47,7 +56,7 @@ export class DespachoModalAgregarGuiaComponent implements OnInit, OnDestroy {
 
   inicializarFormulario() {
     this.formularioAgregarGuia = this._formBuilder.group({
-      guia_id: [null, [Validators.required, Validators.min(1)]],
+      guia_id: [123, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -72,17 +81,26 @@ export class DespachoModalAgregarGuiaComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe(() => {
-        this.closeModal();
         this.registroExitoso.emit(true);
+        this.formularioAgregarGuia.reset();
       });
+    this._enfocarYSeleccionarInputGuia();
   }
 
   openModal() {
     this.formularioAgregarGuia.reset();
     this._modalService.open('agregarGuia');
+    this._enfocarYSeleccionarInputGuia();
   }
 
   closeModal() {
     this._modalService.close('agregarGuia');
+  }
+
+  private _enfocarYSeleccionarInputGuia() {
+    setTimeout(() => {
+      this.inputGuia.focus();
+      this.inputGuia.select();
+    });
   }
 }

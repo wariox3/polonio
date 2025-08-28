@@ -1,6 +1,6 @@
 // src/app/shared/ui/input/input.component.ts
 import { NgIf } from '@angular/common';
-import { Component, forwardRef, Input, Output, EventEmitter, signal } from '@angular/core';
+import { Component, forwardRef, Input, Output, EventEmitter, signal, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -21,6 +21,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
         [disabled]="disabled"
         [readonly]="readonly"
         class="input"
+        #inputEl
       />
       @if (shouldShowErrors()) {
         @for (error of getErrors(); track $index) {
@@ -46,6 +47,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() errors: { [key: string]: string } = {}; // Mapa de errores personalizados
   @Input() disabled: boolean = false;
   @Input() readonly: boolean = false; // Propiedad para hacer el input de solo lectura
+  @Input() autofocus: boolean = false; // Propiedad para hacer focus el input
 
   @Input() invalid: boolean | undefined = false;
   @Input() dirty: boolean | undefined = false;
@@ -53,6 +55,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() control: AbstractControl | null = null; // Nuevo input para recibir el control del formulario
 
   @Output() blurEvent = new EventEmitter<void>(); // Nuevo output para emitir evento de blur
+  @ViewChild('inputEl', { static: true }) inputEl!: ElementRef<HTMLInputElement>;
 
   value = signal(''); // Valor interno del input
   onChange: any = () => {}; // Función para notificar cambios
@@ -120,6 +123,14 @@ export class InputComponent implements ControlValueAccessor {
     }
 
     return [];
+  }
+
+  focus() {
+    this.inputEl.nativeElement.focus();
+  }
+
+  select() {
+    this.inputEl.nativeElement.select();
   }
 
   // Normaliza las claves de error (convierte minlength a minLength, etc.)
