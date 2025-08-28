@@ -7,15 +7,12 @@
   [closeOnOutsideClick]="true"
   [closeOnEsc]="true"
 >
-  <div class="mb-2">
+  <div class="flex justify-between mb-2">
     <app-paginador
       [totalItems]="estadoPaginacion().totalItems"
       [itemsPerPage]="estadoPaginacion().itemsPorPagina"
       (pageChange)="onPageChange($event)"
     ></app-paginador>
-  </div>
-
-  <div class="flex justify-end mb-2">
     <button
       class="btn btn-primary"
       (click)="agregarGuias()"
