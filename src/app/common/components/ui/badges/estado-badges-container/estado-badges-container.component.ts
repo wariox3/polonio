@@ -10,7 +10,7 @@ import { ConfiguracionBadge } from './estado-badges-container.interface';
   imports: [CommonModule, EstadoBadgeComponent],
   template: `
     <div class="flex flex-wrap gap-2">
-      <ng-container *ngFor="let config of configuracionFiltrada">
+      <ng-container *ngFor="let config of configuracionOrdenada">
         <app-estado-badge
           [color]="determinarColor(config, datos[config.clave])"
           [etiqueta]="config.etiqueta"
@@ -23,12 +23,33 @@ import { ConfiguracionBadge } from './estado-badges-container.interface';
 export class EstadoBadgesContainerComponent {
   @Input() datos: any = {};
   @Input() configuracion: ConfiguracionBadge[] = [];
+  @Input() ordenarPorEstado: boolean = false;
+  @Input() trueAlFinal: boolean = false;
 
   get configuracionFiltrada(): ConfiguracionBadge[] {
     return this.configuracion.filter(config => {
       if (config.mostrar === undefined) return true;
       if (typeof config.mostrar === 'function') return config.mostrar(this.datos);
       return config.mostrar;
+    });
+  }
+
+  get configuracionOrdenada(): ConfiguracionBadge[] {
+    if (!this.ordenarPorEstado) {
+      return this.configuracionFiltrada;
+    }
+
+    return [...this.configuracionFiltrada].sort((a, b) => {
+      const valorA = Boolean(this.datos[a.clave]);
+      const valorB = Boolean(this.datos[b.clave]);
+
+      if (this.trueAlFinal) {
+        // Si trueAlFinal es true, los valores true van al final
+        return valorA === valorB ? 0 : valorA ? 1 : -1;
+      } else {
+        // Por defecto, los valores true van primero
+        return valorA === valorB ? 0 : valorA ? -1 : 1;
+      }
     });
   }
 
