@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, OnDestroy, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,18 +13,17 @@ import { InputComponent } from '@app/common/components/ui/form/input/input.compo
 import { LabelComponent } from '@app/common/components/ui/form/label/label.component';
 import { SelectSearchComponent } from '@app/common/components/ui/form/select-search/select-search.component';
 import { RespuestaSeleccionar } from '@app/common/interfaces/respuesta-seleccionar.interfece';
-
-import { catchError, filter, Subject, switchMap, takeUntil } from 'rxjs';
-import { Despacho } from '../../interfaces/despacho.interface';
-import { DespachoRepository } from '../../repositories/despacho.repository';
+import { AlertaService } from '@app/common/services/alerta.service';
 import { FechaService } from '@app/common/services/fecha.service';
 import { cambiarVacioPorNulo } from '@app/common/validators/campo-no-obligatorio.validator';
-import { DespachoDetalleParametros } from '../../interfaces/despacho-detalle/despacho-detalle-parametros.interface';
-import { AlertaService } from '@app/common/services/alerta.service';
-import { Store } from '@ngrx/store';
-import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
 import { Usuario } from '@app/modules/auth/interfaces/usuario.interface';
+import { selectCurrentUser } from '@app/modules/auth/store/selectors/auth.selector';
 import { OperacionRepository } from '@app/modules/operacion/repositories/operacion.repository';
+import { Store } from '@ngrx/store';
+import { catchError, filter, Subject, switchMap, takeUntil } from 'rxjs';
+import { DespachoDetalleParametros } from '../../interfaces/despacho-detalle/despacho-detalle-parametros.interface';
+import { Despacho } from '../../interfaces/despacho.interface';
+import { DespachoRepository } from '../../repositories/despacho.repository';
 
 @Component({
   selector: 'app-despacho-formulario',
@@ -51,7 +50,6 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
   private _alertaService = inject(AlertaService);
   private _store = inject(Store);
   private _operacionRepository = inject(OperacionRepository);
-  private _changeDetectorRef = inject(ChangeDetectorRef);
 
   public formularioDespacho: FormGroup;
   public detalleID = signal(0);
