@@ -8,12 +8,13 @@ import {
   CampoDetalle,
   TablaDetallesComponent,
 } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
-import { obtenerCamposGuiaDetalle } from '../../mapping/guia-detalle.mapeo';
+import { configuracionEstados, obtenerCamposGuiaDetalle } from '../../mapping/guia-detalle.mapeo';
+import { EstadoBadgesContainerComponent } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.component';
 
 @Component({
   selector: 'app-guia-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule, TablaDetallesComponent],
+  imports: [CommonModule, RouterModule, TablaDetallesComponent, EstadoBadgesContainerComponent],
   templateUrl: './guia-detalle.component.html',
   styleUrl: './guia-detalle.component.scss',
 })
@@ -88,8 +89,8 @@ export default class GuiaDetalleComponent implements OnInit {
     destinatario__direccion: '',
     destinatario__telefono: '',
   });
-
-  camposDetalle = computed<CampoDetalle[]>(() => {
+  public configuracionEstados = configuracionEstados;
+  public camposDetalle = computed<CampoDetalle[]>(() => {
     return obtenerCamposGuiaDetalle();
   });
 

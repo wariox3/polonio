@@ -1,3 +1,4 @@
+import { ConfiguracionBadge } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.interface';
 import { CampoDetalle } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
 import { formatearMonedaCOP, formatearFechaISO } from '@app/common/utils/formatters';
 
@@ -129,3 +130,19 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
     { clave: 'comentario', etiqueta: 'Comentario', filaCompleta: true },
   ];
 }
+
+/**
+ * Configuración de los estados para la guía
+ */
+export const configuracionEstados: ConfiguracionBadge[] = [
+  { clave: 'estado_recogido', etiqueta: 'Recogido' },
+  { clave: 'estado_ingreso', etiqueta: 'Ingreso' },
+  { clave: 'estado_embarcado', etiqueta: 'Embarcado' },
+  { clave: 'estado_despachado', etiqueta: 'Despachado' },
+  { clave: 'estado_entregado', etiqueta: 'Entregado' },
+  { clave: 'estado_soporte', etiqueta: 'Soporte' },
+  { clave: 'estado_novedad', etiqueta: 'Novedad' },
+  { clave: 'estado_novedad_solucionada', etiqueta: 'Novedad Solucionada' },
+  { clave: 'estado_rndc', etiqueta: 'RNDC' },
+  // Puedes agregar o quitar estados fácilmente aquí
+];
