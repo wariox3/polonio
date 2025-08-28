@@ -8,13 +8,20 @@ import {
   CampoDetalle,
   TablaDetallesComponent,
 } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
-import { configuracionEstados, obtenerCamposGuiaDetalle } from '../../mapping/guia-detalle.mapeo';
 import { EstadoBadgesContainerComponent } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.component';
+import { GuiaTabDespachoComponent } from '../../components/guia-tab-despacho/guia-tab-despacho.component';
+import { configuracionEstados, obtenerCamposGuiaDetalle } from '../../mapping/detalle/guia-detalle.mapeo';
 
 @Component({
   selector: 'app-guia-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule, TablaDetallesComponent, EstadoBadgesContainerComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TablaDetallesComponent,
+    EstadoBadgesContainerComponent,
+    GuiaTabDespachoComponent,
+  ],
   templateUrl: './guia-detalle.component.html',
   styleUrl: './guia-detalle.component.scss',
 })
@@ -22,6 +29,7 @@ export default class GuiaDetalleComponent implements OnInit {
   private _guiaRepository = inject(GuiaRepository);
   private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
+  public activeTab: string = 'despacho';
   public guiaSignal = signal<Guia>({
     id: 0,
     fecha: '',

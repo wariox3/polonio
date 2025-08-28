@@ -24,13 +24,13 @@ import { CiudadOperacion } from '@app/modules/operacion/interfaces/ciudad-operac
 import { OperacionRepository } from '@app/modules/operacion/repositories/operacion.repository';
 import { Store } from '@ngrx/store';
 import { catchError, filter, Subject, switchMap, takeUntil } from 'rxjs';
-import { GuiaDetalleParametros } from '../../interfaces/guia-detalle-parametros.interface';
 import { Guia } from '../../interfaces/guia.interface';
 import { GuiaRepository } from '../../repositories/guia.repository';
 import { ModalService } from '@app/common/services/modal.service';
 import { ModalStandardComponent } from '@app/common/components/ui/modals/modal-standard/modal-standard.component';
 import ContactoFormularioComponent from '@app/modules/contacto/pages/contacto-formulario/contacto-formulario.component';
 import { Contacto } from '@app/modules/contacto/interfaces/contacto.interface';
+import { DetalleParametros } from '@app/common/interfaces/detalle-parametros.interface';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -146,8 +146,8 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
     this._activatedRoute.params
       .pipe(
         takeUntil(this.destroy$),
-        filter((param: GuiaDetalleParametros) => !!param.id),
-        switchMap((param: GuiaDetalleParametros) => {
+        filter((param: DetalleParametros) => !!param.id),
+        switchMap((param: DetalleParametros) => {
           const id = Number(param.id);
           this.detalleID.set(id);
           return this._guiaRepository.detalle(id);
