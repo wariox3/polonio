@@ -82,51 +82,6 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
       etiqueta: 'Requiere cita',
       formato: valor => (valor ? 'SI' : 'NO'),
     },
-    {
-      clave: 'estado_recogido',
-      etiqueta: 'Estado recogido',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_ingreso',
-      etiqueta: 'Estado ingreso',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_embarcado',
-      etiqueta: 'Estado embarcado',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_despachado',
-      etiqueta: 'Estado despachado',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_entregado',
-      etiqueta: 'Estado entregado',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_soporte',
-      etiqueta: 'Estado soporte',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_novedad',
-      etiqueta: 'Estado novedad',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_novedad_solucionada',
-      etiqueta: 'Novedad solucionada',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
-    {
-      clave: 'estado_rndc',
-      etiqueta: 'Estado RNDC',
-      formato: valor => (valor ? 'SI' : 'NO'),
-    },
     { clave: 'comentario', etiqueta: 'Comentario', filaCompleta: true },
   ];
 }
@@ -137,12 +92,10 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
 export const configuracionEstados: ConfiguracionBadge[] = [
   { clave: 'estado_recogido', etiqueta: 'Recogido' },
   { clave: 'estado_ingreso', etiqueta: 'Ingreso' },
-  { clave: 'estado_embarcado', etiqueta: 'Embarcado' },
   { clave: 'estado_despachado', etiqueta: 'Despachado' },
+  { clave: 'estado_rndc', etiqueta: 'RNDC' },
   { clave: 'estado_entregado', etiqueta: 'Entregado' },
   { clave: 'estado_soporte', etiqueta: 'Soporte' },
   { clave: 'estado_novedad', etiqueta: 'Novedad' },
   { clave: 'estado_novedad_solucionada', etiqueta: 'Novedad Solucionada' },
-  { clave: 'estado_rndc', etiqueta: 'RNDC' },
-  // Puedes agregar o quitar estados fácilmente aquí
 ];
