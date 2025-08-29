@@ -16,11 +16,11 @@
   </div>
   <div class="card-body">
     <div class="flex justify-between mb-4 gap-2">
-      <app-paginador
+      <ui-paginador
         [totalItems]="estadoPaginacion().totalItems"
         [itemsPerPage]="estadoPaginacion().itemsPorPagina"
         (pageChange)="onPageChange($event)"
-      ></app-paginador>
+      ></ui-paginador>
       <div class="flex">
         <a class="btn btn-primary rounded-r-none" routerLink="/administracion/operacion/nuevo">
           Nuevo
@@ -34,7 +34,7 @@
         </button>
       </div>
     </div>
-    <app-tabla
+    <ui-tabla
       [columnas]="columnas"
       [datos]="operaciones()"
       [rutas]="{
@@ -43,6 +43,6 @@
       }"
       (seleccionCambiada)="onSeleccionOperacion($event)"
       [maxHeight]="'800px'"
-    ></app-tabla>
+    ></ui-tabla>
   </div>
 </div>
