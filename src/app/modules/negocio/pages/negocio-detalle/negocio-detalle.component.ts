@@ -8,12 +8,16 @@ import {
   CampoDetalle,
   TablaDetallesComponent,
 } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
-import { obtenerCamposNegocioDetalle } from '../../mapping/negocio-detalle.mapeo';
+import {
+  configuracionEstados,
+  obtenerCamposNegocioDetalle,
+} from '../../mapping/negocio-detalle.mapeo';
+import { EstadoBadgesContainerComponent } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.component';
 
 @Component({
   selector: 'app-negocio-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule, TablaDetallesComponent],
+  imports: [CommonModule, RouterModule, TablaDetallesComponent, EstadoBadgesContainerComponent],
   templateUrl: './negocio-detalle.component.html',
   styleUrl: './negocio-detalle.component.scss',
 })
@@ -21,7 +25,7 @@ export default class NegocioDetalleComponent implements OnInit, OnDestroy {
   private _negocioRepository = inject(NegocioRepository);
   private _activatedRoute = inject(ActivatedRoute);
   private destroy$ = new Subject<void>();
-
+  public configuracionEstados = configuracionEstados;
   public negocioSignal = signal<Negocio>({
     id: 0,
     fecha: '',

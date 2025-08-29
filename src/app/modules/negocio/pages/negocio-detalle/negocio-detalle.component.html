@@ -1,7 +1,12 @@
-<div class="flex mb-4">
+<div class="flex mb-4 items-center justify-between gap-4">
   <a class="btn btn-secondary" routerLink="/movimiento/negocio/lista"> Atrás </a>
+  <div>
+    <app-estado-badges-container
+      [datos]="negocioSignal()"
+      [configuracion]="configuracionEstados"
+    ></app-estado-badges-container>
+  </div>
 </div>
-
 <div class="card">
   <div class="card-header">
     <h3 class="card-title">Detalle negocio - {{ negocioSignal().id }}</h3>

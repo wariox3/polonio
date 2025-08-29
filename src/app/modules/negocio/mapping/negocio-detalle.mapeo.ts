@@ -1,3 +1,4 @@
+import { ConfiguracionBadge } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.interface';
 import { CampoDetalle } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
 import { formatearMonedaCOP, formatearFechaISO } from '@app/common/utils/formatters';
 
@@ -58,3 +59,10 @@ export function obtenerCamposNegocioDetalle(): CampoDetalle[] {
     },
   ];
 }
+
+/**
+ * Configuración de los estados para la guía
+ */
+export const configuracionEstados: ConfiguracionBadge[] = [
+  { clave: 'estado_aprobado', etiqueta: 'Aprobado' },
+];

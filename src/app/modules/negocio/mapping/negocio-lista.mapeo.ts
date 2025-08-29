@@ -61,4 +61,10 @@ export const columnasNegocioLista: ColumnaTabla[] = [
     formato: valor => formatearMonedaCOP(valor),
     alineacion: 'derecha',
   },
+  {
+    clave: 'estado_aprobado',
+    nombre: 'A',
+    tooltip: 'Aprobado',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
+  },
 ];
