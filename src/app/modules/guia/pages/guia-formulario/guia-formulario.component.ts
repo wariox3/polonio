@@ -330,8 +330,6 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   }
 
   abrirFormularioNuevo(data: boolean) {
-    console.log(data);
-
     if (data) {
       this.modalAbierto.set(true);
       this._modalService.open('modalNuevo');

@@ -9,7 +9,7 @@ import { formatearMonedaCOP, formatearFechaISO } from '@app/common/utils/formatt
  */
 export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
   return [
-    { clave: 'fecha', etiqueta: 'Fecha' },
+    { clave: 'fecha', etiqueta: 'Fecha', formato: valor => formatearFechaISO(valor) },
     { clave: 'documento', etiqueta: 'Documento' },
     { clave: 'remitente_nombre', etiqueta: 'Remitente' },
     { clave: 'destinatario__nombre_corto', etiqueta: 'Destinatario' },
