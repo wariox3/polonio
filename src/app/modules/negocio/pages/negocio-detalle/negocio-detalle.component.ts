@@ -47,7 +47,7 @@ export default class NegocioDetalleComponent implements OnInit, OnDestroy {
     servicio: 0,
     operacion: 0,
     producto: 0,
-    empaque: 0
+    empaque: 0,
   });
 
   camposDetalle = computed<CampoDetalle[]>(() => {
