@@ -10,7 +10,10 @@ import {
 } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
 import { EstadoBadgesContainerComponent } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.component';
 import { GuiaTabDespachoComponent } from '../../components/guia-tab-despacho/guia-tab-despacho.component';
-import { configuracionEstados, obtenerCamposGuiaDetalle } from '../../mapping/detalle/guia-detalle.mapeo';
+import {
+  configuracionEstados,
+  obtenerCamposGuiaDetalle,
+} from '../../mapping/detalle/guia-detalle.mapeo';
 
 @Component({
   selector: 'app-guia-detalle',
