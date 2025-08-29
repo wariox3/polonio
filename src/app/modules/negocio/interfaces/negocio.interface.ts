@@ -16,4 +16,12 @@ export interface Negocio {
   ciudad_destino: number;
   ciudad_destino__nombre?: string;
   publicar: boolean;
+  servicio: number;
+  servicio__nombre?: string;
+  operacion: number;
+  operacion__nombre?: string;
+  producto: number;
+  producto__nombre?: string;
+  empaque: number;
+  empaque__nombre?: string;
 }
