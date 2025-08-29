@@ -17,8 +17,8 @@
       </div>
 
       <div class="flex flex-col gap-1">
-        <app-label> Email </app-label>
-        <app-input
+        <ui-label> Email </ui-label>
+        <ui-input
           placeholder="Ingresa tu correo"
           formControlName="username"
           [control]="formularioLogin.get('username')"
@@ -26,12 +26,12 @@
             required: 'El correo es requerido.',
             email: 'Ingresa un correo válido.',
           }"
-        ></app-input>
+        ></ui-input>
       </div>
 
       <div class="flex flex-col gap-1">
-        <app-label> Contraseña </app-label>
-        <app-input
+        <ui-label> Contraseña </ui-label>
+        <ui-input
           placeholder="*************"
           formControlName="password"
           type="password"
@@ -39,7 +39,7 @@
           [errors]="{
             required: 'La contraseña es requerida.',
           }"
-        ></app-input>
+        ></ui-input>
         <a class="text-2sm link shrink-0" routerLink="/auth/reset-password">
           ¿Olvidaste tu contraseña?
         </a>
