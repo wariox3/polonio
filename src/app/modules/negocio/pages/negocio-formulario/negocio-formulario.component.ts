@@ -18,6 +18,7 @@ import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Negocio } from '../../interfaces/negocio.interface';
 import { NegocioRepository } from '../../repositories/negocio.repository';
 import { NegocioDetalleParametros } from '../../interfaces/negocio-detalle-parametros.interface';
+import { SwitchComponent } from "@app/common/components/ui/form/switch/switch.component";
 
 @Component({
   selector: 'app-negocio-formulario',
@@ -30,7 +31,8 @@ import { NegocioDetalleParametros } from '../../interfaces/negocio-detalle-param
     InputComponent,
     RouterModule,
     SelectSearchComponent,
-  ],
+    SwitchComponent
+],
   templateUrl: './negocio-formulario.component.html',
   styleUrl: './negocio-formulario.component.scss',
 })
@@ -73,6 +75,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
       ciudad_origen__nombre: [null],
       ciudad_destino: [null, [Validators.required]],
       ciudad_destino__nombre: [null],
+      publicar: [null],
     });
   }
 
@@ -140,6 +143,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
       ciudad_origen__nombre: data.ciudad_origen__nombre,
       ciudad_destino: data.ciudad_destino,
       ciudad_destino__nombre: data.ciudad_destino__nombre,
+      publicar: data.publicar,
     });
   }
 

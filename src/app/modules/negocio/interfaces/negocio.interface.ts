@@ -15,4 +15,5 @@ export interface Negocio {
   ciudad_origen__nombre?: string;
   ciudad_destino: number;
   ciudad_destino__nombre?: string;
+  publicar: boolean;
 }

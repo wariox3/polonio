@@ -53,6 +53,13 @@ export function obtenerCamposNegocioDetalle(): CampoDetalle[] {
       alineacion: 'derecha',
     },
     {
+      clave: 'publicar',
+      etiqueta: 'Publicar',
+      formato: valor => (valor ? 'Sí' : 'No'),
+    },
+    { clave: '', etiqueta: '' },
+    { clave: '', etiqueta: '' },
+    {
       clave: 'comentario',
       etiqueta: 'Comentario',
       filaCompleta: true,
