@@ -1,7 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
-import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
-import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
 import { QueryParams } from '@app/core/interfaces/api.interface';
 import { catchError, forkJoin, of } from 'rxjs';
@@ -10,11 +8,12 @@ import { OPERACION_LISTA_FILTERS } from '../../mapping/operacion-filtros.mapeo';
 import { columnasOperacionLista } from '../../mapping/operacion-lista.mapeo';
 import { OperacionRepository } from '../../repositories/operacion.repository';
 import { RouterModule } from '@angular/router';
+import { TablaComponent, PaginadorComponent } from '@tamerlantian/ui-components';
 
 @Component({
   selector: 'app-operacion-lista',
   standalone: true,
-  imports: [FiltroComponent, PaginadorComponent, TablaComponent, RouterModule],
+  imports: [FiltroComponent, RouterModule, TablaComponent, PaginadorComponent],
   templateUrl: './operacion-lista.component.html',
 })
 export default class OperacionListaComponent implements OnInit {
