@@ -29,6 +29,7 @@ export default class NegocioDetalleComponent implements OnInit, OnDestroy {
   public negocioSignal = signal<Negocio>({
     id: 0,
     fecha: '',
+    nombre: '',
     unidades: 0,
     peso: 0,
     volumen: 0,

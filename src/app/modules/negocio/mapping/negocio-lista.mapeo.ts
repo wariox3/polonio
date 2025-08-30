@@ -12,6 +12,10 @@ export const columnasNegocioLista: ColumnaTabla[] = [
     formato: valor => formatearFechaISO(valor),
   },
   {
+    clave: 'nombre',
+    nombre: 'Nombre',
+  },
+  {
     clave: 'contacto__nombre_corto',
     nombre: 'Contacto',
   },

@@ -12,7 +12,6 @@
     </div>
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Fecha -->
         <div>
           <app-label [required]="true">Fecha</app-label>
           <app-input
@@ -25,8 +24,6 @@
             }"
           ></app-input>
         </div>
-
-        <!-- Contacto -->
         <div>
           <app-label [required]="true">Contacto</app-label>
           <app-select-search
@@ -44,8 +41,20 @@
             }"
           ></app-select-search>
         </div>
-
-        <!-- Ciudad Origen -->
+        <div>
+          <app-label [required]="true">Nombre</app-label>
+          <app-input
+            placeholder="Ingresa el nombre del negocio"
+            formControlName="nombre"
+            [type]="'text'"
+            [control]="formularioNegocio.get('nombre')"
+            [errors]="{
+              required: 'El nombre es requerido.',
+              maxLength: 'Máximo 100 caracteres.',
+            }"
+          ></app-input>
+        </div>
+        <div></div>
         <div>
           <app-label [required]="true">Origen</app-label>
           <app-select-search
@@ -61,8 +70,6 @@
             }"
           ></app-select-search>
         </div>
-
-        <!-- Ciudad Destino -->
         <div>
           <app-label [required]="true">Destino</app-label>
           <app-select-search
@@ -78,8 +85,6 @@
             }"
           ></app-select-search>
         </div>
-
-        <!-- Unidades -->
         <div>
           <app-label [required]="true">Unidades</app-label>
           <app-input
@@ -93,8 +98,6 @@
             }"
           ></app-input>
         </div>
-
-        <!-- Peso -->
         <div>
           <app-label [required]="true">Peso (kg)</app-label>
           <app-input
@@ -109,8 +112,6 @@
             }"
           ></app-input>
         </div>
-
-        <!-- Volumen -->
         <div>
           <app-label [required]="true">Volumen</app-label>
           <app-input
@@ -125,8 +126,6 @@
             }"
           ></app-input>
         </div>
-
-        <!-- Declara -->
         <div>
           <app-label [required]="true">Valor declarado</app-label>
           <app-input
@@ -142,8 +141,6 @@
             }"
           ></app-input>
         </div>
-
-        <!-- Pago -->
         <div>
           <app-label [required]="true">Pago</app-label>
           <app-input
@@ -159,8 +156,6 @@
             }"
           ></app-input>
         </div>
-
-        <!-- Flete -->
         <div>
           <app-label [required]="true">Flete</app-label>
           <app-input
@@ -176,8 +171,6 @@
             }"
           ></app-input>
         </div>
-
-        <!-- Manejo -->
         <div>
           <app-label [required]="true">Manejo</app-label>
           <app-input
@@ -261,8 +254,6 @@
         <div>
           <app-switch [control]="getControl('publicar')" titulo="Publicar"></app-switch>
         </div>
-
-        <!-- Comentario - Ocupa toda la fila -->
         <div class="md:col-span-2">
           <app-label>Comentario</app-label>
           <app-input
@@ -314,12 +305,11 @@
             [control]="formularioNegocio.get('destinatario_telefono')"
             [errors]="{
               maxLength: 'Máximo 50 caracteres.',
-              pattern: 'Solo se permiten letras y espacios.',
+              pattern: 'Solo se permiten números.',
             }"
           ></app-input>
         </div>
 
-        <!-- Ciudad Destino -->
         <div>
           <app-label>Correo</app-label>
           <app-input

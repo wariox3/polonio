@@ -1,5 +1,6 @@
 export interface Negocio {
   id: number;
+  nombre: string;
   fecha: string;
   unidades: number;
   peso: number;

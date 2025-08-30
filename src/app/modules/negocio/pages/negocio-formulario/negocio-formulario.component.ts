@@ -59,6 +59,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
   inicializarFormulario() {
     this.formularioNegocio = this._formBuilder.group({
       id: [],
+      nombre: [null, [Validators.required, Validators.maxLength(100)]],
       fecha: [this._fechaService.obtenerFechaHoy(), [Validators.required]],
       unidades: [0, [Validators.required, Validators.min(1)]],
       peso: [0, [Validators.required, Validators.min(0.1)]],
@@ -145,6 +146,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
 
   private poblarFormulario(data: Negocio) {
     this.formularioNegocio.patchValue({
+      nombre: data.nombre,
       fecha: data.fecha,
       unidades: data.unidades,
       peso: data.peso,
