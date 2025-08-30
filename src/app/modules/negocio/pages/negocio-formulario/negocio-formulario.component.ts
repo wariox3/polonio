@@ -83,6 +83,16 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
       producto__nombre: [null],
       empaque: [null, [Validators.required]],
       empaque__nombre: [null],
+      destinatario_nombre: [null, [Validators.maxLength(150), cambiarVacioPorNulo.validar]],
+      destinatario_direccion: [null, [Validators.maxLength(150), cambiarVacioPorNulo.validar]],
+      destinatario_telefono: [
+        null,
+        [Validators.maxLength(50), Validators.pattern('^[0-9]*$'), cambiarVacioPorNulo.validar],
+      ],
+      destinatario_correo: [
+        null,
+        [Validators.email, Validators.maxLength(255), cambiarVacioPorNulo.validar],
+      ],
     });
   }
 
@@ -159,6 +169,10 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
       producto__nombre: data.producto__nombre,
       empaque: data.empaque,
       empaque__nombre: data.empaque__nombre,
+      destinatario_nombre: data.destinatario_nombre,
+      destinatario_direccion: data.destinatario_direccion,
+      destinatario_telefono: data.destinatario_telefono,
+      destinatario_correo: data.destinatario_correo,
     });
   }
 

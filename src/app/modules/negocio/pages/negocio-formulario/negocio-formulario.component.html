@@ -4,7 +4,7 @@
     <button type="submit" class="btn btn-primary">Guardar</button>
   </div>
 
-  <div class="card">
+  <div class="card mb-5">
     <div class="card-header">
       <h3 class="card-title">
         {{ detalleID() > 0 ? 'Editar negocio' : 'Registro de negocio' }}
@@ -271,6 +271,62 @@
             [control]="formularioNegocio.get('comentario')"
             [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
             placeholder="Comentarios adicionales..."
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Destinatario</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label>Nombre</app-label>
+          <app-input
+            formControlName="destinatario_nombre"
+            [type]="'text'"
+            [control]="formularioNegocio.get('destinatario_nombre')"
+            [errors]="{
+              maxLength: 'Máximo 150 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Dirección</app-label>
+          <app-input
+            formControlName="destinatario_direccion"
+            [type]="'text'"
+            [control]="formularioNegocio.get('destinatario_direccion')"
+            [errors]="{
+              maxLength: 'Máximo 150 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Teléfono</app-label>
+          <app-input
+            formControlName="destinatario_telefono"
+            [type]="'number'"
+            [control]="formularioNegocio.get('destinatario_telefono')"
+            [errors]="{
+              maxLength: 'Máximo 50 caracteres.',
+              pattern: 'Solo se permiten letras y espacios.',
+            }"
+          ></app-input>
+        </div>
+
+        <!-- Ciudad Destino -->
+        <div>
+          <app-label>Correo</app-label>
+          <app-input
+            formControlName="destinatario_correo"
+            [type]="'text'"
+            [control]="formularioNegocio.get('destinatario_correo')"
+            [errors]="{ email: 'Correo inválido.', maxLength: 'Máximo 255 caracteres.' }"
           ></app-input>
         </div>
       </div>

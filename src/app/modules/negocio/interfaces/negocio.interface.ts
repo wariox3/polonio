@@ -24,4 +24,8 @@ export interface Negocio {
   producto__nombre?: string;
   empaque: number;
   empaque__nombre?: string;
+  destinatario_nombre: string;
+  destinatario_direccion: string;
+  destinatario_telefono: string;
+  destinatario_correo: string;
 }

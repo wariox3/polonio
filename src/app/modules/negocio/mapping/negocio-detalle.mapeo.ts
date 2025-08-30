@@ -61,6 +61,13 @@ export function obtenerCamposNegocioDetalle(): CampoDetalle[] {
     { clave: '', etiqueta: '' },
     { clave: 'producto__nombre', etiqueta: 'Producto' },
     { clave: 'empaque__nombre', etiqueta: 'Empaque' },
+    { clave: '', etiqueta: '' },
+    { clave: 'destinatario_nombre', etiqueta: 'Destinatario' },
+    { clave: 'destinatario_direccion', etiqueta: 'Dirección' },
+    { clave: '', etiqueta: '' },
+    { clave: 'destinatario_telefono', etiqueta: 'Teléfono' },
+    { clave: 'destinatario_correo', etiqueta: 'Correo' },
+    { clave: '', etiqueta: '' },
     {
       clave: 'comentario',
       etiqueta: 'Comentario',
