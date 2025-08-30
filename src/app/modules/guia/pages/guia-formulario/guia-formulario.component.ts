@@ -139,6 +139,8 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       empaque: [17, Validators.required],
       empaque__nombre: ['VARIOS'],
       liquidacion: ['k'],
+      negocio: [null],
+      negocio__nombre: [null],
     });
   }
 
@@ -279,6 +281,8 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       empaque__nombre: data.empaque__nombre,
       zona: data.zona,
       zona__nombre: data.zona__nombre,
+      negocio: data.negocio,
+      negocio__nombre: data.negocio__nombre,
     });
   }
 

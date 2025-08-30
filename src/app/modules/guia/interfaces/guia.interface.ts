@@ -64,4 +64,6 @@ export interface Guia {
   destinatario_direccion: string;
   destinatario_telefono: string;
   destinatario_correo: string;
+  negocio: number;
+  negocio__nombre: string;
 }

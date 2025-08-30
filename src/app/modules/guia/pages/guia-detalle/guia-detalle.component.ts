@@ -99,6 +99,8 @@ export default class GuiaDetalleComponent implements OnInit {
     destinatario__correo: '',
     destinatario__direccion: '',
     destinatario__telefono: '',
+    negocio: 0,
+    negocio__nombre: '',
   });
   public configuracionEstados = configuracionEstados;
   public camposDetalle = computed<CampoDetalle[]>(() => {
