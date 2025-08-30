@@ -1,6 +1,15 @@
 // src/app/shared/ui/input/input.component.ts
 import { NgIf } from '@angular/common';
-import { Component, forwardRef, Input, Output, EventEmitter, signal, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  Output,
+  EventEmitter,
+  signal,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
