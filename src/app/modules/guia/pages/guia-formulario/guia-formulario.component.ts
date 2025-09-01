@@ -380,7 +380,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
     });
   }
 
-  formatearSelectNegocio = (item: any): string => {
+  formatearSelectNegocio = (item: Negocio): string => {
     if (!item) return '';
     return `${item.id} - ${item.fecha} - ${item.nombre}`;
   };
