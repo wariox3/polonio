@@ -34,8 +34,8 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
     { clave: 'producto__nombre', etiqueta: 'Producto' },
     { clave: 'operacion_cargo__nombre', etiqueta: 'Operación cargo' },
     {
-      clave: 'flete',
-      etiqueta: 'Flete',
+      clave: 'recaudo',
+      etiqueta: 'Recaudo',
       formato: valor => formatearMonedaCOP(valor),
       alineacion: 'derecha',
     },
@@ -43,8 +43,8 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
 
     { clave: 'servicio__nombre', etiqueta: 'Servicio' },
     {
-      clave: 'declara',
-      etiqueta: 'Declarado',
+      clave: 'cobro_entrega',
+      etiqueta: 'Cobro entrega',
       formato: valor => formatearMonedaCOP(valor),
       alineacion: 'derecha',
     },
@@ -55,10 +55,8 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
       formato: valor => formatearFechaISO(valor),
     },
     {
-      clave: 'manejo',
-      etiqueta: 'Manejo',
-      formato: valor => formatearMonedaCOP(valor),
-      alineacion: 'derecha',
+      clave: '',
+      etiqueta: '',
     },
     { clave: 'zona__nombre', etiqueta: 'Zona' },
 
@@ -68,10 +66,8 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
       formato: valor => formatearFechaISO(valor),
     },
     {
-      clave: 'recaudo',
-      etiqueta: 'Recaudo',
-      formato: valor => formatearMonedaCOP(valor),
-      alineacion: 'derecha',
+      clave: '',
+      etiqueta: '',
     },
     {
       clave: 'contenido_verificado',
@@ -83,10 +79,8 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
       etiqueta: '',
     },
     {
-      clave: 'cobro_entrega',
-      etiqueta: 'Cobro entrega',
-      formato: valor => formatearMonedaCOP(valor),
-      alineacion: 'derecha',
+      clave: '',
+      etiqueta: ' ',
     },
 
     {

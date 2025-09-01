@@ -88,7 +88,21 @@
             }"
           ></app-select-search>
         </div>
-
+        <!-- Pago -->
+        <div>
+          <app-label [required]="true">Pago</app-label>
+          <app-input
+            formControlName="pago"
+            [type]="'number'"
+            [control]="formularioDespacho.get('pago')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              min: 'El valor debe ser mayor o igual a 0.',
+              maxLength: 'Máximo 20 caracteres.',
+            }"
+            placeholder="0.00"
+          ></app-input>
+        </div>
         <!-- Ciudad Origen -->
         <div>
           <app-label [required]="true">Ciudad origen</app-label>
@@ -135,39 +149,6 @@
             }"
           ></app-select-search>
         </div>
-
-        <!-- Pago -->
-        <div>
-          <app-label [required]="true">Pago</app-label>
-          <app-input
-            formControlName="pago"
-            [type]="'number'"
-            [control]="formularioDespacho.get('pago')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-              min: 'El valor debe ser mayor o igual a 0.',
-              maxLength: 'Máximo 20 caracteres.',
-            }"
-            placeholder="0.00"
-          ></app-input>
-        </div>
-
-        <!-- Flete -->
-        <div>
-          <app-label [required]="true">Flete</app-label>
-          <app-input
-            formControlName="flete"
-            [type]="'number'"
-            [control]="formularioDespacho.get('flete')"
-            [errors]="{
-              required: 'Este campo es requerido.',
-              min: 'El valor debe ser mayor o igual a 0.',
-              maxLength: 'Máximo 20 caracteres.',
-            }"
-            placeholder="0.00"
-          ></app-input>
-        </div>
-
         <!-- Flete -->
         <div>
           <app-label>Precinto</app-label>
