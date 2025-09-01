@@ -54,7 +54,22 @@
             }"
           ></app-input>
         </div>
-        <div></div>
+        <div>
+          <app-label [required]="true">Servicio</app-label>
+          <app-select-search
+            [control]="getControl('servicio')"
+            [label]="'nombre'"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/servicio/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('servicio__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
         <div>
           <app-label [required]="true">Origen</app-label>
           <app-select-search
@@ -86,22 +101,6 @@
           ></app-select-search>
         </div>
         <div>
-          <app-label [required]="true">Servicio</app-label>
-          <app-select-search
-            [control]="getControl('servicio')"
-            [label]="'nombre'"
-            [errors]="{
-              required: 'Este campo es requerido.',
-            }"
-            [endpoint]="'transporte/servicio/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioNegocio.get('servicio__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-        <div>
           <app-label [required]="true">Operación</app-label>
           <app-select-search
             [control]="getControl('operacion')"
@@ -117,6 +116,7 @@
             }"
           ></app-select-search>
         </div>
+        <div></div>
         <div>
           <app-label [required]="true">Producto</app-label>
           <app-select-search
@@ -239,6 +239,7 @@
             }"
           ></app-input>
         </div>
+        <div></div>
         <div>
           <app-label [required]="true">Peso (kg)</app-label>
           <app-input
@@ -283,6 +284,21 @@
           ></app-input>
         </div>
         <div>
+          <app-label [required]="true">Manejo</app-label>
+          <app-input
+            placeholder="Ingresa el valor del manejo"
+            formControlName="manejo"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('manejo')"
+            [errors]="{
+              required: 'El manejo es requerido.',
+              min: 'Debe ser mayor o igual a 0.',
+              maxLength: 'Debe ser menor a 14 digitos',
+            }"
+          ></app-input>
+        </div>
+        <div>
           <app-label [required]="true">Pago</app-label>
           <app-input
             placeholder="Ingresa el valor del pago"
@@ -312,21 +328,7 @@
             }"
           ></app-input>
         </div>
-        <div>
-          <app-label [required]="true">Manejo</app-label>
-          <app-input
-            placeholder="Ingresa el valor del manejo"
-            formControlName="manejo"
-            [type]="'number'"
-            step="0.01"
-            [control]="formularioNegocio.get('manejo')"
-            [errors]="{
-              required: 'El manejo es requerido.',
-              min: 'Debe ser mayor o igual a 0.',
-              maxLength: 'Debe ser menor a 14 digitos',
-            }"
-          ></app-input>
-        </div>
+
         <div></div>
       </div>
     </div>

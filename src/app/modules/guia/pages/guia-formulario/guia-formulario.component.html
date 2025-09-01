@@ -1,3 +1,6 @@
+<pre>
+  {{ formularioGuia.value | json }}
+</pre>
 <form [formGroup]="formularioGuia" (ngSubmit)="onSubmit()">
   <div class="flex gap-2 mb-4">
     <a class="btn btn-secondary" routerLink="/movimiento/guia/lista"> Atrás </a>
@@ -23,20 +26,6 @@
           ></app-select-search>
         </div>
         <div>
-          <app-label [required]="true">Negocio</app-label>
-          <app-select-search
-            [control]="getControl('negocio')"
-            [errors]="{ required: 'Este campo es requerido.' }"
-            [endpoint]="'transporte/negocio/seleccionar/'"
-            [campoBusqueda]="'nombre__icontains'"
-            [parametrosEndpoint]="{
-              nombre__icontains: this.formularioGuia.get('negocio__nombre').value,
-              limit: 10,
-            }"
-          ></app-select-search>
-        </div>
-
-        <div>
           <app-label [required]="true">Cliente</app-label>
           <app-select-search
             [control]="getControl('cliente')"
@@ -51,6 +40,22 @@
               limit: 10,
             }"
           ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Negocio</app-label>
+          <app-select-search
+            [control]="getControl('negocio')"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'transporte/negocio/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('negocio__nombre').value,
+              contacto_id: this.formularioGuia.get('cliente').value,
+              limit: 10,
+            }"
+            (selectionChange)="actualizarNegocio($event)"
+          >
+          </app-select-search>
         </div>
         <div>
           <app-label [required]="true">Remitente</app-label>
