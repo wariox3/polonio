@@ -125,7 +125,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       contacto__nombre: [null],
       cliente: [null, Validators.required],
       cliente__nombre_corto: [null],
-      destinatario: [null, Validators.required],
+      destinatario: [null],
       destinatario_nombre_busqueda: [null],
       operacion_ingreso: [1, Validators.required],
       operacion_cargo: [1, Validators.required],
@@ -326,6 +326,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       destinatario_direccion: data.destinatario_direccion,
       destinatario_telefono: data.destinatario_telefono,
       destinatario_correo: data.destinatario_correo,
+      peso_facturado: data.peso,
     });
   }
 
