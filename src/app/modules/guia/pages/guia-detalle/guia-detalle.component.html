@@ -15,7 +15,14 @@
     <section class="mb-4">
       <app-tabla-detalles
         [datos]="guiaSignal()"
-        [campos]="camposDetalle()"
+        [campos]="camposDetalleGuia()"
+        [columnas]="6"
+      ></app-tabla-detalles>
+    </section>
+    <section class="mb-4">
+      <app-tabla-detalles
+        [datos]="guiaSignal()"
+        [campos]="camposDetalleDestinatario()"
         [columnas]="4"
       ></app-tabla-detalles>
     </section>

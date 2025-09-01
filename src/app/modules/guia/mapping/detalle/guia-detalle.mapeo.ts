@@ -11,61 +11,67 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
   return [
     { clave: 'fecha', etiqueta: 'Fecha', formato: valor => formatearFechaISO(valor) },
     { clave: 'documento', etiqueta: 'Documento' },
-    { clave: 'remitente_nombre', etiqueta: 'Remitente' },
-    { clave: 'destinatario__nombre_corto', etiqueta: 'Destinatario' },
-    { clave: 'destinatario__direccion', etiqueta: 'Dirección' },
-    { clave: 'destinatario__telefono', etiqueta: 'Teléfono' },
-    { clave: 'destinatario__correo', etiqueta: 'Correo' },
-    { clave: 'unidades', etiqueta: 'Unidades' },
-    { clave: 'peso', etiqueta: 'Peso', formato: valor => `${valor} kg` },
+    { clave: 'unidades', etiqueta: 'Unidades', alineacion: 'derecha' },
+    { clave: 'cliente__nombre_corto', etiqueta: 'Cliente' },
+    { clave: 'ciudad_origen__nombre', etiqueta: 'Origen' },
+    { clave: 'peso', etiqueta: 'Peso', formato: valor => `${valor} kg`, alineacion: 'derecha' },
+    { clave: 'contacto__nombre_corto', etiqueta: 'Contacto' },
+    { clave: 'ciudad_destino__nombre', etiqueta: 'Destino' },
     {
       clave: 'volumen',
       etiqueta: 'Volumen (alto*largo*ancho*400)',
-      formato: valor => `${valor} m³`,
+      formato: valor => `${valor} Kg`,
+      alineacion: 'derecha',
     },
-    { clave: 'peso_facturado', etiqueta: 'Peso facturado', formato: valor => `${valor} kg` },
+    { clave: 'remitente_nombre', etiqueta: 'Remitente' },
+    { clave: 'operacion_ingreso__nombre', etiqueta: 'Operación ingreso' },
     {
-      clave: 'declara',
-      etiqueta: 'Valor declarado',
-      formato: valor => formatearMonedaCOP(valor),
+      clave: 'peso_facturado',
+      etiqueta: 'Peso facturado',
+      formato: valor => `${valor} kg`,
+      alineacion: 'derecha',
     },
+    { clave: 'producto__nombre', etiqueta: 'Producto' },
+    { clave: 'operacion_cargo__nombre', etiqueta: 'Operación cargo' },
     {
       clave: 'flete',
       etiqueta: 'Flete',
       formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
     },
-    {
-      clave: 'manejo',
-      etiqueta: 'Manejo',
-      formato: valor => formatearMonedaCOP(valor),
-    },
-    {
-      clave: 'recaudo',
-      etiqueta: 'Recaudo',
-      formato: valor => formatearMonedaCOP(valor),
-    },
-    {
-      clave: 'cobro_entrega',
-      etiqueta: 'Cobro contra entrega',
-      formato: valor => formatearMonedaCOP(valor),
-    },
-    { clave: 'ciudad_origen__nombre', etiqueta: 'Origen' },
-    { clave: 'ciudad_destino__nombre', etiqueta: 'Destino' },
-    { clave: 'servicio__nombre', etiqueta: 'Servicio' },
-    { clave: 'producto__nombre', etiqueta: 'Producto' },
     { clave: 'empaque__nombre', etiqueta: 'Empaque' },
+
+    { clave: 'servicio__nombre', etiqueta: 'Servicio' },
+    {
+      clave: 'declara',
+      etiqueta: 'Declarado',
+      formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
+    },
     { clave: 'ruta__nombre', etiqueta: 'Ruta' },
-    { clave: 'zona__nombre', etiqueta: 'Zona' },
-    { clave: 'liquidacion', etiqueta: 'Liquidación' },
     {
       clave: 'fecha_ingreso',
       etiqueta: 'Fecha ingreso',
       formato: valor => formatearFechaISO(valor),
     },
     {
+      clave: 'manejo',
+      etiqueta: 'Manejo',
+      formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
+    },
+    { clave: 'zona__nombre', etiqueta: 'Zona' },
+
+    {
       clave: 'fecha_entrega',
       etiqueta: 'Fecha entrega',
       formato: valor => formatearFechaISO(valor),
+    },
+    {
+      clave: 'recaudo',
+      etiqueta: 'Recaudo',
+      formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
     },
     {
       clave: 'contenido_verificado',
@@ -73,16 +79,52 @@ export function obtenerCamposGuiaDetalle(): CampoDetalle[] {
       formato: valor => (valor ? 'SI' : 'NO'),
     },
     {
+      clave: '',
+      etiqueta: '',
+    },
+    {
+      clave: 'cobro_entrega',
+      etiqueta: 'Cobro entrega',
+      formato: valor => formatearMonedaCOP(valor),
+      alineacion: 'derecha',
+    },
+
+    {
       clave: 'mercancia_peligrosa',
       etiqueta: 'Mercancía peligrosa',
       formato: valor => (valor ? 'SI' : 'NO'),
+    },
+    {
+      clave: '',
+      etiqueta: '',
+    },
+    {
+      clave: '',
+      etiqueta: '',
     },
     {
       clave: 'requiere_cita',
       etiqueta: 'Requiere cita',
       formato: valor => (valor ? 'SI' : 'NO'),
     },
+    {
+      clave: '',
+      etiqueta: '',
+    },
+    {
+      clave: '',
+      etiqueta: '',
+    },
     { clave: 'comentario', etiqueta: 'Comentario', filaCompleta: true },
+  ];
+}
+
+export function obtenerCamposGuiaDetalleDestinatario(): CampoDetalle[] {
+  return [
+    { clave: 'destinatario_nombre', etiqueta: 'Destinatario' },
+    { clave: 'destinatario_direccion', etiqueta: 'Dirección' },
+    { clave: 'destinatario_telefono', etiqueta: 'Teléfono' },
+    { clave: 'destinatario_correo', etiqueta: 'Correo' },
   ];
 }
 

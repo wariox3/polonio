@@ -27,6 +27,13 @@ export class GuiaRepository {
     return this._generalRepository.getById<Guia>('transporte/guia/', id);
   }
 
+  detalleExtendido(id: number) {
+    return this._generalRepository.get<RespuestaApi<Guia>>('transporte/guia/', {
+      id,
+      serializador: 'detalle',
+    });
+  }
+
   eliminar(id: number) {
     return this._generalRepository.delete<Guia>('transporte/guia/', id);
   }
