@@ -29,4 +29,5 @@ export interface Negocio {
   destinatario_direccion: string;
   destinatario_telefono: string;
   destinatario_correo: string;
+  estado_aprobado: boolean;
 }

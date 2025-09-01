@@ -31,6 +31,10 @@ export class NegocioRepository {
     return this._generalRepository.delete<Negocio>('transporte/negocio/', id);
   }
 
+  aprobar(id: number) {
+    return this._generalRepository.post<Negocio>('transporte/negocio/aprobar/', { id });
+  }
+
   descargarExcel(data: QueryParams) {
     this._generalRepository.descargarArchivos('transporte/negocio/', {
       excel: 1,
