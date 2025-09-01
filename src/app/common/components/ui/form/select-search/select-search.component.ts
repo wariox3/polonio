@@ -40,6 +40,7 @@ export class SelectSearchComponent implements OnChanges, OnInit {
   @Input({ required: true }) control!: FormControl;
   @Input() errors: { [key: string]: string } = {};
   @Input() mostrarNuevo: boolean = false;
+  @Input() formatoCustomLabel: (item: any) => string = (item: any) => item[this.label];
 
   @Output() selectionChange = new EventEmitter<any>();
   @Output() valorBusqueda = new EventEmitter<string>();
@@ -127,6 +128,11 @@ export class SelectSearchComponent implements OnChanges, OnInit {
 
   private _procesarRespuesta(respuesta: any) {
     let datos = respuesta.results ?? respuesta;
+
+    datos = datos.map(item => ({
+      ...item,
+      [this.label]: this.formatoCustomLabel(item),
+    }));
 
     if (this.mostrarNuevo) {
       datos = [...datos, { id: 'nuevo', [this.label]: 'Nuevo' }];

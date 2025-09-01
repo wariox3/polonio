@@ -311,23 +311,25 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
   }
 
   actualizarNegocio(data: NegocioSeleccionar) {
-    this.formularioGuia.patchValue({
-      negocio: data.id,
-      negocio__nombre: data.nombre,
-      unidades: data.unidades,
-      peso: data.peso,
-      volumen: data.volumen,
-      declara: data.declara,
-      flete: data.flete,
-      manejo: data.manejo,
-      ciudad_destino: data.ciudad_destino_id,
-      ciudad_destino__nombre: data.ciudad_destino__nombre,
-      destinatario_nombre: data.destinatario_nombre,
-      destinatario_direccion: data.destinatario_direccion,
-      destinatario_telefono: data.destinatario_telefono,
-      destinatario_correo: data.destinatario_correo,
-      peso_facturado: data.peso,
-    });
+    if (data) {
+      this.formularioGuia.patchValue({
+        negocio: data.id,
+        negocio__nombre: data.nombre,
+        unidades: data.unidades,
+        peso: data.peso,
+        volumen: data.volumen,
+        declara: data.declara,
+        flete: data.flete,
+        manejo: data.manejo,
+        ciudad_destino: data.ciudad_destino_id,
+        ciudad_destino__nombre: data.ciudad_destino__nombre,
+        destinatario_nombre: data.destinatario_nombre,
+        destinatario_direccion: data.destinatario_direccion,
+        destinatario_telefono: data.destinatario_telefono,
+        destinatario_correo: data.destinatario_correo,
+        peso_facturado: data.peso,
+      });
+    }
   }
 
   private _actualizarCiudadOrigen(data: CiudadOperacion) {
