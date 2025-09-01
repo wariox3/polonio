@@ -31,6 +31,7 @@ export class TablaComponent implements OnChanges {
   @Input() textoVacio: string = 'No hay datos disponibles';
   @Input() rutas: { editar: string; detalle: string } = { editar: '', detalle: '' };
   @Input() maxHeight: string = '';
+  @Input() ocultarEditarAlAprobado: boolean = true;
 
   // Eventos de salida
   @Output() seleccionCambiada = new EventEmitter<any[]>();

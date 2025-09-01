@@ -21,6 +21,9 @@ import { NegocioRepository } from '../../repositories/negocio.repository';
 export default class NegocioListaComponent implements OnInit {
   private _negocioRepository = inject(NegocioRepository);
   private filtrosActivos = signal<QueryParams>({});
+  private readonly parametrosBase = {
+    serializador: 'lista',
+  };
   public negociosSeleccionados = signal<Negocio[]>([]);
   public camposFiltros = NEGOCIO_LISTA_FILTERS;
   public negocios = signal<Negocio[]>([]);
