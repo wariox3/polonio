@@ -2,7 +2,7 @@ import { Despacho } from './../../interfaces/despacho.interface';
 import { Component, computed, inject, OnInit, OnDestroy, signal } from '@angular/core';
 import { DespachoRepository } from '../../repositories/despacho.repository';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import {
   CampoDetalle,
@@ -10,17 +10,28 @@ import {
 } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
 import { obtenerCamposDespachoDetalle } from '../../mapping/detalle/despacho-detalle.mapeo';
 import { DespachoTabGuiaComponent } from '../../components/despacho-tab-guia/despacho-tab-guia.component';
+import { DetalleParametros } from '@app/common/interfaces/detalle-parametros.interface';
+import { AlertaService } from '@app/common/services/alerta.service';
+import { EstadoBadgesContainerComponent } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.component';
+import { configuracionEstados } from '@app/modules/despacho/mapping/detalle/despacho-detalle.mapeo';
 
 @Component({
   selector: 'app-despacho-detalle',
   standalone: true,
-  imports: [CommonModule, RouterModule, TablaDetallesComponent, DespachoTabGuiaComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    TablaDetallesComponent,
+    DespachoTabGuiaComponent,
+    EstadoBadgesContainerComponent,
+  ],
   templateUrl: './despacho-detalle.component.html',
   styleUrl: './despacho-detalle.component.scss',
 })
 export default class DespachoDetalleComponent implements OnInit, OnDestroy {
   private _despachoRepository = inject(DespachoRepository);
   private _activatedRoute = inject(ActivatedRoute);
+  private _alertaService = inject(AlertaService);
   private destroy$ = new Subject<void>();
 
   public activeTab: string = 'guia';
@@ -46,8 +57,9 @@ export default class DespachoDetalleComponent implements OnInit, OnDestroy {
     despacho_tipo: 0,
     servicio: 0,
     precinto: '',
+    estado_aprobado: false,
   });
-
+  public configuracionEstados = configuracionEstados;
   camposDetalle = computed<CampoDetalle[]>(() => {
     return obtenerCamposDespachoDetalle();
   });
@@ -69,6 +81,32 @@ export default class DespachoDetalleComponent implements OnInit, OnDestroy {
           return this._despachoRepository.detalle(param.id);
         }),
         tap(detalle => this.despachoSignal.set(detalle))
+      )
+      .subscribe();
+  }
+
+  confirmarAprobacion() {
+    this._alertaService
+      .confirmar('¿Está seguro de que desea aprobar el registro?', 'Esta acción es irreversible.')
+      .then(respuestaConfirmacion => {
+        if (respuestaConfirmacion.isConfirmed) {
+          this._aprobar();
+        }
+      });
+  }
+
+  private _aprobar() {
+    this._activatedRoute.params
+      .pipe(
+        takeUntil(this.destroy$),
+        map((param: DetalleParametros) => Number(param.id)),
+        switchMap(id => this._despachoRepository.aprobar(id)),
+        tap((respuesta: { estado_aprobado: boolean }) => {
+          this.despachoSignal.update(prev => ({
+            ...prev,
+            ...respuesta,
+          }));
+        })
       )
       .subscribe();
   }

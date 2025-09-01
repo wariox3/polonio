@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, input, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
@@ -12,6 +12,7 @@ import { columnasDespachoGuia } from '../../mapping/detalle/despacho-detalle-gui
 import { DespachoDetalleRepository } from '../../repositories/despacho-detalle.repository';
 import { DespachoModalAgregarGuiaComponent } from '../despacho-modal-agregar-guia/despacho-modal-agregar-guia.component';
 import { QueryParams } from '@app/core/interfaces/api.interface';
+import { Despacho } from '../../interfaces/despacho.interface';
 
 @Component({
   selector: 'app-despacho-tab-guia',
@@ -39,6 +40,7 @@ export class DespachoTabGuiaComponent implements OnInit, OnDestroy {
     itemsPorPagina: 30,
     totalItems: 0,
   });
+  @Input() despacho: Despacho;
 
   ngOnInit() {
     this.consultarInformacion();

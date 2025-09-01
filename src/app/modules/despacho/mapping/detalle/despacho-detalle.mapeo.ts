@@ -1,3 +1,4 @@
+import { ConfiguracionBadge } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.interface';
 import { CampoDetalle } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
 import { formatearMonedaCOP } from '@app/common/utils/formatters';
 
@@ -40,8 +41,7 @@ export function obtenerCamposDespachoDetalle(): CampoDetalle[] {
 
     { clave: 'precinto', etiqueta: 'Precinto' },
     { clave: '', etiqueta: '' },
-        { clave: 'ruta__nombre', etiqueta: 'Ruta' },
-
+    { clave: 'ruta__nombre', etiqueta: 'Ruta' },
     { clave: '', etiqueta: '' },
     { clave: '', etiqueta: '' },
     {
@@ -51,3 +51,9 @@ export function obtenerCamposDespachoDetalle(): CampoDetalle[] {
     },
   ];
 }
+
+export const configuracionEstados: ConfiguracionBadge[] = [
+  { clave: 'estado_aprobado', etiqueta: 'Aprobado' },
+  { clave: 'estado_rndc', etiqueta: 'RNDC' },
+  { clave: 'estado_entregado', etiqueta: 'Entregado' },
+];

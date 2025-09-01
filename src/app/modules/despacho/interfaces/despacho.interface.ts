@@ -22,4 +22,5 @@ export interface Despacho {
   servicio: number;
   servicio__nombre?: string;
   precinto: string;
+  estado_aprobado: boolean;
 }
