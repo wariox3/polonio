@@ -99,6 +99,7 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
       ruta__nombre: [null],
       operacion: [null, [Validators.required]],
       operacion__nombre: [null],
+      precinto: [null, [Validators.maxLength(30)]],
       flete: [0, [Validators.required, Validators.min(0), Validators.maxLength(20)]],
     });
   }
@@ -172,6 +173,7 @@ export default class DespachoFormularioComponent implements OnInit, OnDestroy {
       flete: data.flete,
       servicio: data.servicio,
       servicio__nombre: data.servicio__nombre,
+      precinto: data.precinto,
     });
   }
 

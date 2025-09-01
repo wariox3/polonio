@@ -168,6 +168,20 @@
           ></app-input>
         </div>
 
+        <!-- Flete -->
+        <div>
+          <app-label>Precinto</app-label>
+          <app-input
+            formControlName="precinto"
+            [type]="'text'"
+            [control]="formularioDespacho.get('precinto')"
+            [errors]="{
+              maxLength: 'Máximo 30 caracteres.',
+            }"
+          ></app-input>
+        </div>
+        <div></div>
+
         <!-- Comentario -->
         <div class="md:col-span-2">
           <app-label>Comentario</app-label>

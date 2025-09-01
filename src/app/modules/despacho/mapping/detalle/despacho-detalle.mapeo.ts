@@ -30,7 +30,7 @@ export function obtenerCamposDespachoDetalle(): CampoDetalle[] {
     { clave: 'ciudad_destino__nombre', etiqueta: 'Ciudad destino' },
     { clave: '', etiqueta: '' },
     { clave: 'operacion__nombre', etiqueta: 'Operación' },
-    { clave: '', etiqueta: '' },
+    { clave: 'precinto', etiqueta: 'Precinto' },
     { clave: '', etiqueta: '' },
     {
       clave: 'comentario',
