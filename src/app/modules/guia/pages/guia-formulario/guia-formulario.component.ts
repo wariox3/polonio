@@ -143,6 +143,8 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       liquidacion: ['k'],
       negocio: [null],
       negocio__nombre: [null],
+      estado_recogido: [true],
+      estado_ingreso: [true],
     });
   }
 
