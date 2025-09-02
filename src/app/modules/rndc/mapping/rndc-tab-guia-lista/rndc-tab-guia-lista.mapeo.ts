@@ -1,0 +1,40 @@
+import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
+import { formatearFechaISO } from '@app/common/utils/formatters';
+
+export const columnasGuiaLista: ColumnaTabla[] = [
+  { clave: 'id', nombre: 'Id' },
+  { clave: 'operacion_ingreso__nombre', nombre: 'OI', tooltip: 'Operación ingreso' },
+  { clave: 'operacion_cargo__nombre', nombre: 'OC', tooltip: 'Operación cargo' },
+  { clave: 'servicio__nombre', nombre: 'Servicio' },
+  { clave: 'fecha', nombre: 'Fecha', formato: valor => formatearFechaISO(valor) },
+  { clave: 'contacto__nombre_corto', nombre: 'Cliente' },
+  { clave: 'ciudad_origen__nombre', nombre: 'Origen' },
+  { clave: 'ciudad_destino__nombre', nombre: 'Destino' },
+  { clave: 'unidades', nombre: 'Unidades' },
+  { clave: 'peso', nombre: 'Peso' },
+  { clave: 'volumen', nombre: 'Volumen' },
+  {
+    clave: 'estado_despachado',
+    nombre: 'D',
+    tooltip: 'Despachado',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
+  },
+  {
+    clave: 'estado_entregado',
+    nombre: 'E',
+    tooltip: 'Entregado',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
+  },
+  {
+    clave: 'estado_soporte',
+    nombre: 'S',
+    tooltip: 'Soporte',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
+  },
+  {
+    clave: 'estado_novedad',
+    nombre: 'N',
+    tooltip: 'Novedad',
+    formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
+  },
+];

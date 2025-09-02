@@ -85,6 +85,20 @@ export class SidebarComponent implements OnInit {
         },
       ],
     },
+    {
+      nombre: 'Utilidad',
+      link: '/utilidad',
+      iconoClase: 'ki-filled ki-abstract-26',
+      activo: false,
+      tipoAcordion: true,
+      abierto: false,
+      children: [
+        {
+          nombre: 'Rndc',
+          link: '/utilidad/rndc/lista',
+        },
+      ],
+    },
   ];
 
   ngOnInit(): void {

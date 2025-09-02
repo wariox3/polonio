@@ -1,0 +1,22 @@
+<div class="mb-4">
+  <app-filtro
+    (filtersApply)="onFiltersChange($event)"
+    [availableFields]="camposFiltros"
+  ></app-filtro>
+</div>
+<div class="flex justify-between mb-4 gap-2">
+  <app-paginador
+    [totalItems]="estadoPaginacion().totalItems"
+    [itemsPerPage]="estadoPaginacion().itemsPorPagina"
+    (pageChange)="onPageChange($event)"
+  ></app-paginador>
+  <button type="button" class="btn btn-primary" (click)="enviarRndc()">Enviar</button>
+</div>
+
+<app-tabla
+  [columnas]="columnas"
+  [datos]="despachos()"
+  [maxHeight]="'800px'"
+  [mostrarAcciones]="false"
+  (seleccionCambiada)="onSeleccionDespachos($event)"
+></app-tabla>
