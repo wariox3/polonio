@@ -1,7 +1,5 @@
 import { Component, EventEmitter, inject, OnDestroy, Output, signal } from '@angular/core';
-import { ModalStandardComponent } from '@app/common/components/ui/modals/modal-standard/modal-standard.component';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
-import { ModalService } from '@app/common/services/modal.service';
 import { Guia } from '@app/modules/guia/interfaces/guia.interface';
 import { columnasDespachoModalGuiaPendiente } from '@app/modules/despacho/mapping/detalle/despacho-detalle-guia-pendiente.mapeo';
 import { QueryParams } from '@app/core/interfaces/api.interface';
@@ -11,11 +9,12 @@ import { catchError, forkJoin, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { DespachoDetalleRepository } from '../../repositories/despacho-detalle.repository';
 import { ActivatedRoute } from '@angular/router';
 import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
+import { ModalComponent, ModalService } from '@tamerlantian/ui-components';
 
 @Component({
   selector: 'app-despacho-modal-lista-guias-pendiente',
   standalone: true,
-  imports: [ModalStandardComponent, TablaComponent, PaginadorComponent],
+  imports: [ModalComponent, TablaComponent, PaginadorComponent],
   templateUrl: './despacho-modal-lista-guias-pendiente.component.html',
 })
 export class DespachoModalListaGuiasPendienteComponent implements OnDestroy {

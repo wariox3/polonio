@@ -32,6 +32,12 @@ export class SidebarComponent implements OnInit {
       activo: false,
     },
     {
+      nombre: 'Viaje',
+      link: '/viaje',
+      iconoClase: 'ki-filled ki-delivery',
+      activo: false,
+    },
+    {
       nombre: 'Movimiento',
       link: '/movimiento',
       iconoClase: 'ki-filled ki-abstract-26',

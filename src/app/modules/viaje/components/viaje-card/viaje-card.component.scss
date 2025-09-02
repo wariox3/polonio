@@ -1,0 +1,117 @@
+.travel-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .travel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+
+    .travel-route-container {
+      flex: 1;
+    }
+
+    .travel-route {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .travel-date {
+      color: #6c757d;
+      font-size: 0.85rem;
+    }
+
+    .edit-btn {
+      flex-shrink: 0;
+    }
+  }
+
+  .travel-details {
+    margin-bottom: 1rem;
+
+    .detail-row {
+      display: flex;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+
+      .label {
+        color: #6c757d;
+        width: 70px;
+        flex-shrink: 0;
+      }
+
+      .value {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .proposal-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    font-size: 0.85rem;
+
+    &.accepted {
+      background-color: rgba(#198754, 0.1);
+    }
+
+    .proposal-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .company-name {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+
+    .proposal-price {
+      font-weight: 600;
+      color: #198754;
+    }
+
+    .proposal-date {
+      color: #6c757d;
+      font-size: 0.8rem;
+    }
+
+    .accept-btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  // Removed all proposal-specific styles since we're using Tailwind CSS now
+
+  .travel-comment {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #6c757d;
+    display: flex;
+    align-items: flex-start;
+  }
+}

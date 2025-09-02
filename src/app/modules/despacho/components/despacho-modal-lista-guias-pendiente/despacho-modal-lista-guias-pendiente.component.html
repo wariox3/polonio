@@ -1,5 +1,5 @@
 <a class="btn btn-primary rounded-r-none" (click)="openModal()"> Pendiente </a>
-<app-modal-standard
+<ui-modal
   [modalId]="'agregarGuiaPendiente'"
   [title]="'Guías pendientes'"
   [showCloseButton]="true"
@@ -28,4 +28,4 @@
     (seleccionCambiada)="onSeleccionGuias($event)"
     [maxHeight]="'800px'"
   ></app-tabla>
-</app-modal-standard>
+</ui-modal>

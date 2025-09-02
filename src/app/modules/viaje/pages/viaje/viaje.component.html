@@ -1,0 +1,18 @@
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Viajes</h3>
+    <button class="btn btn-primary" routerLink="/transporte/viaje/nuevo">Nuevo</button>
+  </div>
+  <div class="card-body">
+    <div class="grid grid-cols-2 gap-4">
+      @for (viaje of viajes(); track viaje.datos.id) {
+        <div>
+          <app-viaje-card
+            [viaje]="viaje"
+            (nuevaPropuesta)="agregarPropuesta($event.viajeId, $event.precio)"
+          ></app-viaje-card>
+        </div>
+      }
+    </div>
+  </div>
+</div>

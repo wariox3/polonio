@@ -31,6 +31,17 @@ export default [
     ],
   },
   {
+    path: 'viaje',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../modules/viaje/viaje.routes'),
+      },
+    ],
+  },
+  {
     path: 'movimiento',
     canActivate: [authGuard, contenedorGuard],
     loadComponent: () => import('./admin-layout/admin-layout.component'),
