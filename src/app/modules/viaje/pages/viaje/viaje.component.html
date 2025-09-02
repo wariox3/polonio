@@ -4,7 +4,7 @@
     <button class="btn btn-primary" routerLink="/transporte/viaje/nuevo">Nuevo</button>
   </div>
   <div class="card-body">
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-2 xl:grid-cols-3 gap-4">
       @for (viaje of viajes(); track viaje.datos.id) {
         <div>
           <app-viaje-card
