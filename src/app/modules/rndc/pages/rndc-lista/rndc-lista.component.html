@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Rndc</h3>
+  </div>
+  <div class="card-body">
+    <div class="border-b border-gray-200 mb-4">
+      <nav class="flex -mb-px pl-8">
+        <button
+          class="mr-8 py-4 px-1 border-b-2 font-medium text-sm"
+          [class]="
+            activeTab === 'guia'
+              ? 'border-blue-500 text-blue-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          "
+          (click)="activeTab = 'guia'"
+        >
+          Guia
+        </button>
+        <button
+          class="mr-8 py-4 px-1 border-b-2 font-medium text-sm"
+          [class]="
+            activeTab === 'despacho'
+              ? 'border-blue-500 text-blue-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          "
+          (click)="activeTab = 'despacho'"
+        >
+          Despacho
+        </button>
+      </nav>
+    </div>
+    @if (activeTab === 'guia') {
+      <div class="overflow-x-auto">
+        <app-rndc-tab-guia></app-rndc-tab-guia>
+      </div>
+    }
+    @if (activeTab === 'despacho') {
+      <div class="overflow-x-auto">
+        <app-rndc-tab-despacho></app-rndc-tab-despacho>
+      </div>
+    }
+  </div>
+</div>

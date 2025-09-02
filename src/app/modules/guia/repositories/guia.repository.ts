@@ -38,6 +38,10 @@ export class GuiaRepository {
     return this._generalRepository.delete<Guia>('transporte/guia/', id);
   }
 
+  enviarRndc(id: number) {
+    return this._generalRepository.post('transporte/guia/enviar-rndc/', { id });
+  }
+
   descargarExcel(data: QueryParams) {
     this._generalRepository.descargarArchivos('transporte/guia/', {
       excel: 1,

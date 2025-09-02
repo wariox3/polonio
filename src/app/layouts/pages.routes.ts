@@ -83,4 +83,15 @@ export default [
       },
     ],
   },
+  {
+    path: 'utilidad',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: 'rndc',
+        loadChildren: () => import('../modules/rndc/rndc.routes'),
+      },
+    ],
+  },
 ] as Routes;
