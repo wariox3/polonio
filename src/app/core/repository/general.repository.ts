@@ -103,6 +103,31 @@ export class GeneralRepository {
       });
   }
 
+  public descargarArchivosPost(endpoint: string, queryParams: QueryParams = {}): void {
+    const params = this.buildHttpParams(queryParams);
+    this.alertaService.mensajaEspera('espera');
+    this.subdominioService
+      .getSubdominioUrl()
+      .pipe(
+        switchMap(subdominioUrl => {
+          const url = `${subdominioUrl}/${endpoint}`;
+          return this.httpBase.postArchivo(url, params);
+        }),
+        catchError(() => {
+          this.alertaService.cerrar();
+          this.alertaService.mostrarError(`Error 15`, 'El documento no tiene un formato');
+          return of(null);
+        })
+      )
+      .subscribe(response => {
+        if (!response) return;
+
+        const nombreArchivo = this.obtenerNombreArchivo(response.headers);
+        this.descargarBlob(response.body, nombreArchivo);
+        setTimeout(() => this.alertaService.cerrar(), 1000);
+      });
+  }
+
   /**
    * Consultar un recurso mediante POST con el subdominio actual
    * @param endpoint Ruta del endpoint

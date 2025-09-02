@@ -75,4 +75,17 @@ export class HttpBaseRepository {
       responseType: 'blob',
     });
   }
+
+  public postArchivo(
+    endpoint: string,
+    data: any,
+    params?: HttpParams
+  ): Observable<HttpResponse<Blob>> {
+    const url = this.buildUrl(endpoint);
+    return this.httpClient.post(url, data, {
+      params,
+      observe: 'response',
+      responseType: 'blob',
+    });
+  }
 }

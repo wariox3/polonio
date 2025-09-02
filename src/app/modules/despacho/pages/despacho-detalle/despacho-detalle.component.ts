@@ -95,6 +95,14 @@ export default class DespachoDetalleComponent implements OnInit, OnDestroy {
       });
   }
 
+  exportarImprimir() {
+    this._despachoRepository.imprimir(this.despachoSignal().id);
+  }
+
+  exportarManifiesto() {
+    this._despachoRepository.imprimirManifiesto(this.despachoSignal().id);
+  }
+
   private _aprobar() {
     this._activatedRoute.params
       .pipe(
