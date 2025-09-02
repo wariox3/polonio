@@ -18,7 +18,7 @@ import { filter, Subject, switchMap, takeUntil } from 'rxjs';
 import { Negocio } from '../../interfaces/negocio.interface';
 import { NegocioRepository } from '../../repositories/negocio.repository';
 import { NegocioDetalleParametros } from '../../interfaces/negocio-detalle-parametros.interface';
-import { SwitchComponent } from "@app/common/components/ui/form/switch/switch.component";
+import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 
 @Component({
   selector: 'app-negocio-formulario',
@@ -31,10 +31,9 @@ import { SwitchComponent } from "@app/common/components/ui/form/switch/switch.co
     InputComponent,
     RouterModule,
     SelectSearchComponent,
-    SwitchComponent
-],
+    SwitchComponent,
+  ],
   templateUrl: './negocio-formulario.component.html',
-  styleUrl: './negocio-formulario.component.scss',
 })
 export default class NegocioFormularioComponent implements OnInit, OnDestroy {
   private _formBuilder = inject(FormBuilder);
@@ -60,6 +59,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
   inicializarFormulario() {
     this.formularioNegocio = this._formBuilder.group({
       id: [],
+      nombre: [null, [Validators.required, Validators.maxLength(100)]],
       fecha: [this._fechaService.obtenerFechaHoy(), [Validators.required]],
       unidades: [0, [Validators.required, Validators.min(1)]],
       peso: [0, [Validators.required, Validators.min(0.1)]],
@@ -75,7 +75,25 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
       ciudad_origen__nombre: [null],
       ciudad_destino: [null, [Validators.required]],
       ciudad_destino__nombre: [null],
-      publicar: [null],
+      publicar: [false],
+      servicio: [null, [Validators.required]],
+      servicio__nombre: [null],
+      operacion: [null, [Validators.required]],
+      operacion__nombre: [null],
+      producto: [null, [Validators.required]],
+      producto__nombre: [null],
+      empaque: [null, [Validators.required]],
+      empaque__nombre: [null],
+      destinatario_nombre: [null, [Validators.maxLength(150), cambiarVacioPorNulo.validar]],
+      destinatario_direccion: [null, [Validators.maxLength(150), cambiarVacioPorNulo.validar]],
+      destinatario_telefono: [
+        null,
+        [Validators.maxLength(50), Validators.pattern('^[0-9]*$'), cambiarVacioPorNulo.validar],
+      ],
+      destinatario_correo: [
+        null,
+        [Validators.email, Validators.maxLength(255), cambiarVacioPorNulo.validar],
+      ],
     });
   }
 
@@ -128,6 +146,7 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
 
   private poblarFormulario(data: Negocio) {
     this.formularioNegocio.patchValue({
+      nombre: data.nombre,
       fecha: data.fecha,
       unidades: data.unidades,
       peso: data.peso,
@@ -144,6 +163,18 @@ export default class NegocioFormularioComponent implements OnInit, OnDestroy {
       ciudad_destino: data.ciudad_destino,
       ciudad_destino__nombre: data.ciudad_destino__nombre,
       publicar: data.publicar,
+      servicio: data.servicio,
+      servicio__nombre: data.servicio__nombre,
+      operacion: data.operacion,
+      operacion__nombre: data.operacion__nombre,
+      producto: data.producto,
+      producto__nombre: data.producto__nombre,
+      empaque: data.empaque,
+      empaque__nombre: data.empaque__nombre,
+      destinatario_nombre: data.destinatario_nombre,
+      destinatario_direccion: data.destinatario_direccion,
+      destinatario_telefono: data.destinatario_telefono,
+      destinatario_correo: data.destinatario_correo,
     });
   }
 

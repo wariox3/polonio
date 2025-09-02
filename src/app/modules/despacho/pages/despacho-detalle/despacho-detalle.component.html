@@ -1,5 +1,21 @@
-<div class="flex mb-4">
-  <a class="btn btn-secondary" routerLink="/movimiento/despacho/lista"> Atrás </a>
+<div class="flex mb-4 items-center justify-between gap-4">
+  <div class="flex gap-2 mb-4">
+    <a class="btn btn-secondary" routerLink="/movimiento/despacho/lista"> Atrás </a>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      (click)="confirmarAprobacion()"
+      [disabled]="despachoSignal().estado_aprobado"
+    >
+      Aprobar
+    </button>
+  </div>
+  <div>
+    <app-estado-badges-container
+      [datos]="despachoSignal()"
+      [configuracion]="configuracionEstados"
+    ></app-estado-badges-container>
+  </div>
 </div>
 
 <div class="card">
@@ -30,7 +46,7 @@
       </nav>
     </div>
     <div *ngIf="activeTab === 'guia'" class="overflow-x-auto">
-      <app-despacho-tab-guia></app-despacho-tab-guia>
+      <app-despacho-tab-guia [despacho]="despachoSignal()"></app-despacho-tab-guia>
     </div>
   </div>
 </div>

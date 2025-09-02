@@ -31,6 +31,8 @@ import { ModalStandardComponent } from '@app/common/components/ui/modals/modal-s
 import ContactoFormularioComponent from '@app/modules/contacto/pages/contacto-formulario/contacto-formulario.component';
 import { Contacto } from '@app/modules/contacto/interfaces/contacto.interface';
 import { DetalleParametros } from '@app/common/interfaces/detalle-parametros.interface';
+import { Negocio } from '@app/modules/negocio/interfaces/negocio.interface';
+import { NegocioSeleccionar } from '@app/modules/negocio/interfaces/negocio-seleccionar.interface';
 
 @Component({
   selector: 'app-guia-formulario',
@@ -123,7 +125,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       contacto__nombre: [null],
       cliente: [null, Validators.required],
       cliente__nombre_corto: [null],
-      destinatario: [null, Validators.required],
+      destinatario: [null],
       destinatario_nombre_busqueda: [null],
       operacion_ingreso: [1, Validators.required],
       operacion_cargo: [1, Validators.required],
@@ -139,6 +141,10 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       empaque: [17, Validators.required],
       empaque__nombre: ['VARIOS'],
       liquidacion: ['k'],
+      negocio: [null],
+      negocio__nombre: [null],
+      estado_recogido: [true],
+      estado_ingreso: [true],
     });
   }
 
@@ -230,10 +236,10 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       documento: data.documento,
       numero_rndc: data.numero_rndc,
       remitente_nombre: data.remitente_nombre,
-      destinatario_nombre: data.destinatario__nombre_corto,
-      destinatario_direccion: data.destinatario__direccion,
-      destinatario_telefono: data.destinatario__telefono,
-      destinatario_correo: data.destinatario__correo,
+      destinatario_nombre: data.destinatario_nombre,
+      destinatario_direccion: data.destinatario_direccion,
+      destinatario_telefono: data.destinatario_telefono,
+      destinatario_correo: data.destinatario_correo,
       unidades: data.unidades,
       peso: data.peso,
       volumen: data.volumen,
@@ -259,7 +265,7 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       contacto: data.contacto,
       contacto__nombre: data.contacto,
       cliente: data.cliente,
-      cliente__nombre_corto: data.contacto__nombre_corto,
+      cliente__nombre_corto: data.cliente__nombre_corto,
       destinatario: data.destinatario,
       destinatario_nombre_busqueda: data.destinatario__nombre_corto,
       operacion_ingreso: data.operacion_ingreso,
@@ -279,6 +285,8 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       empaque__nombre: data.empaque__nombre,
       zona: data.zona,
       zona__nombre: data.zona__nombre,
+      negocio: data.negocio,
+      negocio__nombre: data.negocio__nombre,
     });
   }
 
@@ -304,6 +312,28 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       .then(() => this._router.navigate(['/movimiento/guia/lista']));
   }
 
+  actualizarNegocio(data: NegocioSeleccionar) {
+    if (data) {
+      this.formularioGuia.patchValue({
+        negocio: data.id,
+        negocio__nombre: data.nombre,
+        unidades: data.unidades,
+        peso: data.peso,
+        volumen: data.volumen,
+        declara: data.declara,
+        flete: data.flete,
+        manejo: data.manejo,
+        ciudad_destino: data.ciudad_destino_id,
+        ciudad_destino__nombre: data.ciudad_destino__nombre,
+        destinatario_nombre: data.destinatario_nombre,
+        destinatario_direccion: data.destinatario_direccion,
+        destinatario_telefono: data.destinatario_telefono,
+        destinatario_correo: data.destinatario_correo,
+        peso_facturado: data.peso,
+      });
+    }
+  }
+
   private _actualizarCiudadOrigen(data: CiudadOperacion) {
     this.formularioGuia.patchValue({
       ciudad_origen: data.id,
@@ -312,26 +342,24 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
 
   public actualizarDestinatario(data: Conductor) {
     this.formularioGuia.patchValue({
-      destinatario_nombre: data?.nombre_corto ?? null,
-      destinatario_direccion: data?.direccion ?? null,
-      destinatario_telefono: data?.telefono ?? null,
-      destinatario_correo: data?.correo ?? null,
-      ciudad_destino: data?.ciudad ?? null,
-      ciudad_destino__nombre: data?.ciudad__nombre ?? null,
+      destinatario_nombre: data?.nombre_corto,
+      destinatario_direccion: data?.direccion,
+      destinatario_telefono: data?.telefono,
+      destinatario_correo: data?.correo,
+      ciudad_destino: data?.ciudad,
+      ciudad_destino__nombre: data?.ciudad__nombre,
     });
   }
 
   public actualizarRemitente(data: Conductor) {
     this.formularioGuia.patchValue({
-      remitente_nombre: data?.nombre_corto ?? null,
+      remitente_nombre: data?.nombre_corto,
       contacto: data?.id,
-      contacto__nombre: data?.nombre_corto ?? null,
+      contacto__nombre: data?.nombre_corto,
     });
   }
 
   abrirFormularioNuevo(data: boolean) {
-    console.log(data);
-
     if (data) {
       this.modalAbierto.set(true);
       this._modalService.open('modalNuevo');
@@ -346,11 +374,16 @@ export default class GuiaFormularioComponent implements OnInit, OnDestroy {
       destinatario: conductor.id,
       destinatario_nombre: conductor.nombre_corto,
       destinatario_nombre_busqueda: conductor.nombre_corto,
-      destinatario_direccion: conductor?.direccion ?? null,
-      destinatario_telefono: conductor?.telefono ?? null,
-      destinatario_correo: conductor?.correo ?? null,
-      ciudad_destino: conductor?.ciudad_id ?? null,
-      ciudad_destino__nombre: conductor?.ciudad_nombre ?? null,
+      destinatario_direccion: conductor?.direccion,
+      destinatario_telefono: conductor?.telefono,
+      destinatario_correo: conductor?.correo,
+      ciudad_destino: conductor?.ciudad_id,
+      ciudad_destino__nombre: conductor?.ciudad_nombre,
     });
   }
+
+  formatearSelectNegocio = (item: Negocio): string => {
+    if (!item) return '';
+    return `${item.id} - ${item.fecha} - ${item.nombre}`;
+  };
 }

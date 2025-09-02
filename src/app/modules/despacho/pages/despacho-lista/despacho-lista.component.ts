@@ -20,8 +20,10 @@ import { DESPACHO_LISTA_FILTERS } from '../../mapping/despacho-filtros.mapeo';
 })
 export default class DespachoListaComponent implements OnInit {
   private _despachoRepository = inject(DespachoRepository);
-  private filtrosActivos = signal<QueryParams>({});
-
+  private readonly parametrosBase = {
+    serializador: 'lista',
+  };
+  private filtrosActivos = signal<QueryParams>(this.parametrosBase);
   public despachosSeleccionados = signal<Despacho[]>([]);
   public camposFiltros = DESPACHO_LISTA_FILTERS;
   public despachos = signal<Despacho[]>([]);
@@ -58,7 +60,10 @@ export default class DespachoListaComponent implements OnInit {
   }
 
   onFiltersChange(filtros: QueryParams): void {
-    this.filtrosActivos.set(filtros);
+    this.filtrosActivos.set({
+      ...filtros,
+      ...this.parametrosBase,
+    });
     this.estadoPaginacion.update(estado => ({
       ...estado,
       paginaActual: 1,

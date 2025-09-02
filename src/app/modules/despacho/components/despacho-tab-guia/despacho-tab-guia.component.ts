@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
 import { EstadoPaginacion } from '@app/common/interfaces/paginacion.interface';
+import { QueryParams } from '@app/core/interfaces/api.interface';
 import { DespachoModalListaGuiasPendienteComponent } from '@app/modules/despacho/components/despacho-modal-lista-guias-pendiente/despacho-modal-lista-guias-pendiente.component';
 import { catchError, forkJoin, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { DespachoDetalleParametros } from '../../interfaces/despacho-detalle/despacho-detalle-parametros.interface';
 import { DespachoDetalle } from '../../interfaces/despacho-detalle/despacho-detalle.interface';
+import { Despacho } from '../../interfaces/despacho.interface';
 import { columnasDespachoGuia } from '../../mapping/detalle/despacho-detalle-guia.mapeo';
 import { DespachoDetalleRepository } from '../../repositories/despacho-detalle.repository';
 import { DespachoModalAgregarGuiaComponent } from '../despacho-modal-agregar-guia/despacho-modal-agregar-guia.component';
-import { QueryParams } from '@app/core/interfaces/api.interface';
 
 @Component({
   selector: 'app-despacho-tab-guia',
@@ -39,6 +40,7 @@ export class DespachoTabGuiaComponent implements OnInit, OnDestroy {
     itemsPorPagina: 30,
     totalItems: 0,
   });
+  @Input() despacho: Despacho;
 
   ngOnInit() {
     this.consultarInformacion();

@@ -1,3 +1,4 @@
+import { ConfiguracionBadge } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.interface';
 import { CampoDetalle } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
 import { formatearMonedaCOP } from '@app/common/utils/formatters';
 
@@ -10,26 +11,37 @@ export function obtenerCamposDespachoDetalle(): CampoDetalle[] {
     { clave: 'servicio__nombre', etiqueta: 'Servicio' },
     { clave: 'despacho_tipo__nombre', etiqueta: 'Tipo' },
     {
+      clave: 'unidades',
+      etiqueta: 'Unidades',
+      alineacion: 'derecha',
+    },
+    { clave: 'conductor__nombre_corto', etiqueta: 'Conductor' },
+    { clave: 'vehiculo__placa', etiqueta: 'Vehículo' },
+    { clave: 'peso', etiqueta: 'Peso', formato: valor => `${valor} kg`, alineacion: 'derecha' },
+    {
+      clave: 'contacto__nombre_corto',
+      etiqueta: 'Contacto',
+    },
+    { clave: 'remolque__placa', etiqueta: 'Remolque' },
+    {
+      clave: 'volumen',
+      etiqueta: 'Volumen',
+      formato: valor => `${valor} Kg`,
+      alineacion: 'derecha',
+    },
+    { clave: 'ciudad_origen__nombre', etiqueta: 'Ciudad origen' },
+    { clave: 'operacion__nombre', etiqueta: 'Operación' },
+    {
       clave: 'pago',
       etiqueta: 'Pago',
       formato: valor => formatearMonedaCOP(valor),
       alineacion: 'derecha',
     },
-    { clave: 'conductor__nombre_corto', etiqueta: 'Conductor' },
-    { clave: 'vehiculo__placa', etiqueta: 'Vehículo' },
-    {
-      clave: 'flete',
-      etiqueta: 'Flete',
-      formato: valor => formatearMonedaCOP(valor),
-      alineacion: 'derecha',
-    },
-    { clave: 'ruta__nombre', etiqueta: 'Ruta' },
-    { clave: 'remolque__placa', etiqueta: 'Remolque' },
-    { clave: '', etiqueta: '' },
-    { clave: 'ciudad_origen__nombre', etiqueta: 'Ciudad origen' },
     { clave: 'ciudad_destino__nombre', etiqueta: 'Ciudad destino' },
+
+    { clave: 'precinto', etiqueta: 'Precinto' },
     { clave: '', etiqueta: '' },
-    { clave: 'operacion__nombre', etiqueta: 'Operación' },
+    { clave: 'ruta__nombre', etiqueta: 'Ruta' },
     { clave: '', etiqueta: '' },
     { clave: '', etiqueta: '' },
     {
@@ -39,3 +51,9 @@ export function obtenerCamposDespachoDetalle(): CampoDetalle[] {
     },
   ];
 }
+
+export const configuracionEstados: ConfiguracionBadge[] = [
+  { clave: 'estado_aprobado', etiqueta: 'Aprobado' },
+  { clave: 'estado_rndc', etiqueta: 'RNDC' },
+  { clave: 'estado_entregado', etiqueta: 'Entregado' },
+];

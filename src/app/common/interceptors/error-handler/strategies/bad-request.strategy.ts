@@ -9,8 +9,7 @@ import {
 export class BadRequestStrategy implements ErrorHandlerStrategy {
   handle(errorResponse: HttpErrorResponse): ErrorInformacion {
     const { error } = errorResponse;
-    let mensaje =
-      error?.mensaje || 'Solicitud inválida. Verifica los datos y reintenta.';
+    let mensaje = error?.mensaje || 'Solicitud inválida. Verifica los datos y reintenta.';
     mensaje += this._generarListadoErrores(error);
 
     return { statusCode: 400, codigo: error.codigo, mensaje };
@@ -24,17 +23,13 @@ export class BadRequestStrategy implements ErrorHandlerStrategy {
    */
   private _generarListadoErrores(error: ErrorResponse): string {
     if (error.hasOwnProperty('validacion')) {
-      const validacionesProcesadas = this._formatearErroresPorCampo(
-        error.validacion
-      );
+      const validacionesProcesadas = this._formatearErroresPorCampo(error.validacion);
 
       return validacionesProcesadas;
     }
 
     if (error.hasOwnProperty('validaciones')) {
-      const validacionesProcesadas = this._formatearErroresPorCampo(
-        error.validaciones
-      );
+      const validacionesProcesadas = this._formatearErroresPorCampo(error.validaciones);
 
       return validacionesProcesadas;
     }
@@ -48,18 +43,14 @@ export class BadRequestStrategy implements ErrorHandlerStrategy {
    * @param validaciones - Objeto de errores que contiene provienen del error.
    * @returns {string} Un string en formato HTML con los errores procesados.
    */
-  private _formatearErroresPorCampo(
-    validaciones: ErrorValidacionesCampo | null
-  ) {
+  private _formatearErroresPorCampo(validaciones: ErrorValidacionesCampo | null) {
     if (!Object.keys(validaciones || {})) {
       return '';
     }
 
     const errorList = Object.entries(validaciones || {})
       .map(([campo, mensaje]: any[]) => {
-        const mensajeProcesado = mensaje
-          ?.map((m: string) => `<li>${m}</li>`)
-          .join('');
+        const mensajeProcesado = mensaje?.map((m: string) => `<li>${m}</li>`).join('');
         return `<div> ${campo}: <ul>${mensajeProcesado}</ul> </div> `;
       })
       .join('');

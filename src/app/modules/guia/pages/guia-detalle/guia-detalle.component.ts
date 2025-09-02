@@ -1,19 +1,20 @@
-import { Guia } from './../../interfaces/guia.interface';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { GuiaRepository } from '../../repositories/guia.repository';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { EstadoBadgesContainerComponent } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.component';
 import {
   CampoDetalle,
   TablaDetallesComponent,
 } from '@app/common/components/ui/tablas/tabla-detalles/tabla-detalles.component';
-import { EstadoBadgesContainerComponent } from '@app/common/components/ui/badges/estado-badges-container/estado-badges-container.component';
+import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { GuiaTabDespachoComponent } from '../../components/guia-tab-despacho/guia-tab-despacho.component';
 import {
   configuracionEstados,
   obtenerCamposGuiaDetalle,
+  obtenerCamposGuiaDetalleDestinatario,
 } from '../../mapping/detalle/guia-detalle.mapeo';
+import { GuiaRepository } from '../../repositories/guia.repository';
+import { Guia } from './../../interfaces/guia.interface';
 
 @Component({
   selector: 'app-guia-detalle',
@@ -37,18 +38,29 @@ export default class GuiaDetalleComponent implements OnInit {
     id: 0,
     fecha: '',
     destinatario: 0,
+    destinatario__nombre_corto: '',
+    destinatario__correo: '',
+    destinatario__direccion: '',
+    destinatario__telefono: '',
     ciudad_destino: 0,
     ciudad_destino__nombre: '',
     ciudad_origen: 0,
     ciudad_origen__nombre: '',
     cliente: 0,
+    cliente__nombre_corto: '',
     contacto: 0,
     contacto__nombre_corto: '',
     empaque: 0,
+    empaque__nombre: '',
     servicio: 0,
+    servicio__nombre: '',
     producto: 0,
+    producto__nombre: '',
     ruta: 0,
+    ruta__nombre: '',
     zona: 0,
+    zona__nombre: '',
+    liquidacion: 0,
     operacion_cargo: 0,
     operacion_cargo__nombre: '',
     operacion_ingreso: 0,
@@ -65,10 +77,10 @@ export default class GuiaDetalleComponent implements OnInit {
     contenido_verificado: false,
     mercancia_peligrosa: false,
     requiere_cita: false,
-    comentario: undefined,
-    documento: undefined,
-    fecha_ingreso: undefined,
-    despacho: undefined,
+    comentario: '',
+    documento: '',
+    fecha_ingreso: '',
+    despacho: 0,
     estado_recogido: false,
     estado_ingreso: false,
     estado_embarcado: false,
@@ -78,7 +90,6 @@ export default class GuiaDetalleComponent implements OnInit {
     estado_novedad: false,
     estado_novedad_solucionada: false,
     estado_rndc: false,
-    liquidacion: 0,
     fecha_recogida: '',
     fecha_despacho: '',
     fecha_entrega: '',
@@ -89,20 +100,15 @@ export default class GuiaDetalleComponent implements OnInit {
     destinatario_direccion: '',
     destinatario_telefono: '',
     destinatario_correo: '',
-    servicio__nombre: '',
-    empaque__nombre: '',
-    producto__nombre: '',
-    ruta__nombre: '',
-    zona__nombre: '',
-    cliente__nombre_corto: '',
-    destinatario__nombre_corto: '',
-    destinatario__correo: '',
-    destinatario__direccion: '',
-    destinatario__telefono: '',
+    negocio: 0,
+    negocio__nombre: '',
   });
   public configuracionEstados = configuracionEstados;
-  public camposDetalle = computed<CampoDetalle[]>(() => {
+  public camposDetalleGuia = computed<CampoDetalle[]>(() => {
     return obtenerCamposGuiaDetalle();
+  });
+  public camposDetalleDestinatario = computed<CampoDetalle[]>(() => {
+    return obtenerCamposGuiaDetalleDestinatario();
   });
 
   ngOnInit(): void {
@@ -113,9 +119,9 @@ export default class GuiaDetalleComponent implements OnInit {
       .pipe(
         takeUntil(this.destroy$),
         switchMap((param: { id: number }) => {
-          return this._guiaRepository.detalle(param.id);
+          return this._guiaRepository.detalleExtendido(param.id);
         }),
-        tap(detalle => this.guiaSignal.set(detalle))
+        tap(detalle => this.guiaSignal.set(detalle.results[0]))
       )
       .subscribe();
   }

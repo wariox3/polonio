@@ -22,7 +22,6 @@
             }"
           ></app-select-search>
         </div>
-        <div></div>
         <div>
           <app-label [required]="true">Cliente</app-label>
           <app-select-search
@@ -38,6 +37,23 @@
               limit: 10,
             }"
           ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Negocio</app-label>
+          <app-select-search
+            [control]="getControl('negocio')"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'transporte/negocio/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioGuia.get('negocio__nombre').value,
+              contacto_id: this.formularioGuia.get('cliente').value,
+              limit: 10,
+            }"
+            (selectionChange)="actualizarNegocio($event)"
+            [formatoCustomLabel]="formatearSelectNegocio"
+          >
+          </app-select-search>
         </div>
         <div>
           <app-label [required]="true">Remitente</app-label>
@@ -120,11 +136,10 @@
     <div class="card-body">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <app-label [required]="true">Destinatario</app-label>
+          <app-label>Destinatario</app-label>
           <app-select-search
             [control]="getControl('destinatario')"
             [label]="'nombre_corto'"
-            [errors]="{ required: 'Este campo es requerido.' }"
             [endpoint]="'general/contacto/seleccionar/'"
             [campoBusqueda]="'nombre_corto__icontains'"
             (selectionChange)="actualizarDestinatario($event)"

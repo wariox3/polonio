@@ -31,6 +31,10 @@ export class DespachoRepository {
     return this._generalRepository.delete<Despacho>('transporte/despacho/', id);
   }
 
+  aprobar(id: number) {
+    return this._generalRepository.post<Despacho>('transporte/despacho/aprobar/', { id });
+  }
+
   descargarExcel(data: QueryParams) {
     this._generalRepository.descargarArchivos('transporte/despacho/', {
       excel: 1,

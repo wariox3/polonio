@@ -5,19 +5,21 @@
     (pageChange)="onPageChange($event)"
   ></app-paginador>
   <div class="flex">
-    <app-despacho-modal-lista-guias-pendiente
-      (registroExitoso)="consultarInformacion()"
-    ></app-despacho-modal-lista-guias-pendiente>
-    <app-despacho-modal-agregar-guia
-      (registroExitoso)="consultarInformacion()"
-    ></app-despacho-modal-agregar-guia>
-    <button
-      class="btn btn-danger rounded-l-none"
-      (click)="eliminar()"
-      [disabled]="despachosSeleccionados().length === 0"
-    >
-      Eliminar
-    </button>
+    @if (!despacho.estado_aprobado) {
+      <app-despacho-modal-lista-guias-pendiente
+        (registroExitoso)="consultarInformacion()"
+      ></app-despacho-modal-lista-guias-pendiente>
+      <app-despacho-modal-agregar-guia
+        (registroExitoso)="consultarInformacion()"
+      ></app-despacho-modal-agregar-guia>
+      <button
+        class="btn btn-danger rounded-l-none"
+        (click)="eliminar()"
+        [disabled]="despachosSeleccionados().length === 0"
+      >
+        Eliminar
+      </button>
+    }
   </div>
 </div>
 <app-tabla
@@ -25,4 +27,5 @@
   [datos]="guias()"
   [mostrarAcciones]="false"
   (seleccionCambiada)="onSeleccionDespachos($event)"
+  [mostrarCheckbox]="!despacho.estado_aprobado"
 ></app-tabla>

@@ -1,5 +1,5 @@
 import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
-import { formatearMonedaCOP } from '@app/common/utils/formatters';
+import { formatearFechaISO, formatearMonedaCOP } from '@app/common/utils/formatters';
 
 export const columnasDespachoLista: ColumnaTabla[] = [
   {
@@ -7,7 +7,6 @@ export const columnasDespachoLista: ColumnaTabla[] = [
     nombre: 'Id',
     ancho: '80px',
   },
-  //servicio
   {
     clave: 'servicio__nombre',
     nombre: 'Servicio',
@@ -15,6 +14,7 @@ export const columnasDespachoLista: ColumnaTabla[] = [
   {
     clave: 'fecha',
     nombre: 'Fecha',
+    formato: valor => formatearFechaISO(valor),
   },
   {
     clave: 'operacion__nombre',
