@@ -38,7 +38,12 @@ export default class ViajeComponent implements OnInit {
 
   getVisitas() {
     this._viajeRepository
-      .getViajes({ serializador: 'lista', solicitud_cliente: 'True', estado_aceptado: 'False' })
+      .getViajes({
+        serializador: 'lista',
+        solicitud_cliente: 'True',
+        estado_aceptado: 'False',
+        estado_cancelado: 'False',
+      })
       .subscribe(response => {
         this.viajes.set(response.viajes);
       });
