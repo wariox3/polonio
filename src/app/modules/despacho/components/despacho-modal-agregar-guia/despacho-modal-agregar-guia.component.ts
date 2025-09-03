@@ -56,7 +56,7 @@ export class DespachoModalAgregarGuiaComponent implements OnInit, OnDestroy {
 
   inicializarFormulario() {
     this.formularioAgregarGuia = this._formBuilder.group({
-      guia_id: [123, [Validators.required, Validators.min(1)]],
+      guia_id: [null, [Validators.required, Validators.min(1)]],
     });
   }
 
