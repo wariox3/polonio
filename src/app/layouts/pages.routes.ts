@@ -94,4 +94,21 @@ export default [
       },
     ],
   },
+  {
+    path: 'informe',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: 'pendiente_despacho',
+        loadComponent: () =>
+          import('@app/modules/guia/pages/guia-pendiente-despacho/guia-pendiente-despacho.component'),
+      },
+      {
+        path: 'pendiente_entrega',
+        loadComponent: () =>
+          import('../modules/guia/pages/guia-pendiente-entrega/guia-pendiente-entrega.component'),
+      },
+    ],
+  },
 ] as Routes;

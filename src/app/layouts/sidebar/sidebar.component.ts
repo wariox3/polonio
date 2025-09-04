@@ -99,6 +99,24 @@ export class SidebarComponent implements OnInit {
         },
       ],
     },
+    {
+      nombre: 'Informe',
+      link: '/informe',
+      iconoClase: 'ki-filled ki-tablet-text-down',
+      activo: false,
+      tipoAcordion: true,
+      abierto: false,
+      children: [
+        {
+          nombre: 'Pendiente despacho',
+          link: '/informe/pendiente_despacho',
+        },
+        {
+          nombre: 'Pendiente entrega',
+          link: '/informe/pendiente_entrega',
+        },
+      ],
+    },
   ];
 
   ngOnInit(): void {
