@@ -1,5 +1,5 @@
 // src/app/shared/ui/input/input.component.ts
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import {
   Component,
   forwardRef,
@@ -15,7 +15,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgClass],
   template: `
     <div>
       <label *ngIf="label" class="block text-sm font-medium text-gray-700">
@@ -29,6 +29,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
         (blur)="onBlur()"
         [disabled]="disabled"
         [readonly]="readonly"
+        [ngClass]="inputClass"
         class="input"
         #inputEl
       />
@@ -57,7 +58,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() disabled: boolean = false;
   @Input() readonly: boolean = false; // Propiedad para hacer el input de solo lectura
   @Input() autofocus: boolean = false; // Propiedad para hacer focus el input
-
+  @Input() inputClass: string | string[] | Set<string> | { [klass: string]: any } = '';
   @Input() invalid: boolean | undefined = false;
   @Input() dirty: boolean | undefined = false;
   @Input() touched: boolean | undefined = false;
