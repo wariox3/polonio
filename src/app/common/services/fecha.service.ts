@@ -72,4 +72,14 @@ export class FechaService {
   obtenerAnioActual(): number {
     return new Date().getFullYear();
   }
+
+  /**
+   * Obtiene la hora actual en formato HH:mm
+   * @returns Hora actual como string en formato de 24 horas (HH:mm)
+   */
+  obtenerHoraActual(): string {
+    const ahora = new Date();
+    const hora = ahora.toTimeString().slice(0, 5); // HH:mm
+    return hora;
+  }
 }
