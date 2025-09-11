@@ -1,12 +1,10 @@
-import { Component, HostBinding, OnInit, inject } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { RouterLink } from '@angular/router';
-import { RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Component, HostBinding, OnInit, inject } from '@angular/core';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { obtenerContenedorImagen, obtenerContenedorNombre } from '@app/modules/contenedor/store/selectors/contenedor.selectors';
+import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { SIDEBAR_MENU, SidebarMenuItem } from './sidebar-menu.config';
-import { Store } from '@ngrx/store';
-import { obtenerContenedorImagen } from '@app/modules/contenedor/store/selectors/contenedor.selectors';
 
 @Component({
   selector: 'app-sidebar',
@@ -30,6 +28,7 @@ export class SidebarComponent implements OnInit {
 
   public sidebarMenu: SidebarMenuItem[] = SIDEBAR_MENU;
   public contenedorImagen = this._store.selectSignal(obtenerContenedorImagen);
+  public contenedorNombre = this._store.selectSignal(obtenerContenedorNombre);
 
   ngOnInit(): void {
     // Obtener la URL actual al inicializar el componente
