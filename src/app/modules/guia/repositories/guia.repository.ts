@@ -44,7 +44,7 @@ export class GuiaRepository {
   }
 
   entrega(data: GuiaProcesoEntrega) {
-    return this._generalRepository.post('transporte/guia/entregar', data);
+    return this._generalRepository.post('transporte/guia/entregar/', data);
   }
 
   descargarExcel(data: QueryParams) {

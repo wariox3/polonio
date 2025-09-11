@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild, viewChild } from '@angular/core';
 import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
 import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
@@ -33,6 +33,8 @@ export default class GuiaEntregarComponent implements OnInit {
     itemsPorPagina: 30,
     totalItems: 0,
   });
+  @ViewChild(GuiaEntregarFormularioComponent)
+  guiaEntregarFormularioComponent: GuiaEntregarFormularioComponent;
 
   ngOnInit(): void {
     this.consultarInformacion();
@@ -107,7 +109,36 @@ export default class GuiaEntregarComponent implements OnInit {
   }
 
   entregar() {
-    throw new Error('Method not implemented.');
+    const formulario = this.guiaEntregarFormularioComponent.formularioGuiaEntregar.value;
+
+    const seleccion$ = this.guiasSeleccionadas().map(guia =>
+      this._guiaRepository
+        .entrega({
+          ...formulario,
+          id: guia.id,
+        })
+        .pipe(
+          catchError(err => {
+            console.error(`Error al eliminar guia ${guia.id}:`, err);
+            return of(null); // devolvemos algo para que forkJoin no falle
+          })
+        )
+    );
+
+    forkJoin(seleccion$).subscribe({
+      next: () => {
+        // Después de eliminar, volver a la primera página y recargar
+        this.estadoPaginacion.update(estado => ({
+          ...estado,
+          paginaActual: 1,
+        }));
+        this.consultarInformacion();
+        this.guiasSeleccionadas.set([]);
+      },
+      error: err => {
+        console.error('Error al eliminar guia:', err);
+      },
+    });
   }
 
   private actualizarPaginacion(count: number) {

@@ -3,11 +3,11 @@
     <div class="flex flex-row">
       <div class="rounded-r-none mb-5">
         <app-input
-          formControlName="guia"
+          formControlName="id"
           [type]="'number'"
           [placeholder]="'Ingrese código de guía'"
           [errors]="{ required: 'Este campo es requerido.' }"
-          [control]="formularioGuiaEntregar.get('guia')"
+          [control]="formularioGuiaEntregar.get('id')"
           [inputClass]="'rounded-r-none'"
         ></app-input>
       </div>
@@ -17,12 +17,14 @@
       <app-input
         formControlName="fecha"
         [type]="'date'"
+        [errors]="{ required: 'Este campo es requerido.' }"
         [control]="formularioGuiaEntregar.get('fecha')"
       ></app-input>
       <app-input
         formControlName="hora"
         [type]="'time'"
         [control]="formularioGuiaEntregar.get('hora')"
+        [errors]="{ required: 'Este campo es requerido.' }"
       ></app-input>
       <app-switch [control]="getControl('soporte')" titulo="Soporte"></app-switch>
     </div>

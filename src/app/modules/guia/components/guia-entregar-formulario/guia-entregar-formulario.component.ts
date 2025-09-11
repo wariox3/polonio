@@ -41,9 +41,9 @@ export class GuiaEntregarFormularioComponent implements OnInit, OnDestroy {
 
     this.formularioGuiaEntregar = this._formBuilder.group({
       soporte: [false],
-      fecha: [this._fechaService.convertirAFormatoISO(fecha)], // YYYY-MM-DD
-      hora: [hora],
-      guia: [null, [Validators.required]],
+      fecha: [this._fechaService.convertirAFormatoISO(fecha), [Validators.required]], // YYYY-MM-DD
+      hora: [hora, [Validators.required]],
+      id: [null, [Validators.required]],
     });
   }
 
