@@ -1,5 +1,5 @@
 import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
-import { formatearFechaISO } from '@app/common/utils/formatters';
+import { formatearFechaISO, formatearHora } from '@app/common/utils/formatters';
 
 export const columnasGuiaLista: ColumnaTabla[] = [
   { clave: 'id', nombre: 'Id' },
@@ -44,14 +44,6 @@ export const columnasGuiaProcesoEntrega: ColumnaTabla[] = [
   { clave: 'operacion_ingreso__nombre', nombre: 'OI', tooltip: 'Operación ingreso' },
   { clave: 'operacion_cargo__nombre', nombre: 'OC', tooltip: 'Operación cargo' },
   { clave: 'fecha', nombre: 'Fecha', formato: valor => formatearFechaISO(valor) },
-  { clave: 'documento_cliente', nombre: 'DOC_CLIENTE' },
-  { clave: 'despacho_codigo', nombre: 'DES' },
-  {
-    clave: 'despacho_fecha',
-    nombre: 'F_DESP',
-    tooltip: 'Fecha despacho',
-    formato: valor => formatearFechaISO(valor),
-  },
   { clave: 'contacto__nombre_corto', nombre: 'Cliente' },
   { clave: 'ciudad_destino__nombre', nombre: 'Destino' },
   { clave: 'unidades', nombre: 'Unidades' },
@@ -64,10 +56,10 @@ export const columnasGuiaProcesoEntrega: ColumnaTabla[] = [
     formato: valor => formatearFechaISO(valor),
   },
   {
-    clave: 'hora',
+    clave: 'fecha',
     nombre: 'Hora',
     tooltip: 'Hora despacho',
-    formato: valor => formatearFechaISO(valor),
+    formato: valor => formatearHora(valor),
   },
   {
     clave: 'estado_novedad',
@@ -77,7 +69,7 @@ export const columnasGuiaProcesoEntrega: ColumnaTabla[] = [
   },
   {
     clave: 'estado_novedad_solucion',
-    nombre: 'N_S',
+    nombre: 'NS',
     tooltip: 'Estado novedad solucionado',
     formato: (valor: boolean) => (valor ? 'SI' : 'NO'),
   },
