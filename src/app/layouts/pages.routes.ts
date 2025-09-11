@@ -102,12 +102,23 @@ export default [
       {
         path: 'pendiente_despacho',
         loadComponent: () =>
-          import('@app/modules/guia/pages/guia-pendiente-despacho/guia-pendiente-despacho.component'),
+          import('../modules/guia/pages/guia-pendiente-despacho/guia-pendiente-despacho.component'),
       },
       {
         path: 'pendiente_entrega',
         loadComponent: () =>
           import('../modules/guia/pages/guia-pendiente-entrega/guia-pendiente-entrega.component'),
+      },
+    ],
+  },
+  {
+    path: 'proceso',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: 'entrega_guia',
+        loadComponent: () => import('../modules/guia/pages/guia-entregar/guia-entregar.component'),
       },
     ],
   },

@@ -351,10 +351,21 @@ export class FiltroComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     const config = field.relationConfig;
-    this.loadingRelationOptions[fieldName] = true;
 
-    // Preparar parámetros de consulta
+    // ✅ Caso 1: usar opciones fijas
+    if (config.staticOptions) {
+      this.relationOptions[fieldName] = config.staticOptions.map(opt => ({
+        value: opt.valueField,
+        display: opt.displayField,
+      }));
+      this.changeDetectorRef.detectChanges();
+      return;
+    }
+
+    // ✅ Caso 2: seguir con API
+    this.loadingRelationOptions[fieldName] = true;
     const queryParams = { ...(config.queryParams || {}) };
+
     if (searchTerm) {
       // Usar el campo de búsqueda configurado o por defecto 'search'
       const searchField = config.searchField || 'search';

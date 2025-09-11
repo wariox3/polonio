@@ -1,0 +1,30 @@
+<form [formGroup]="formularioGuiaEntregar" (ngSubmit)="onSubmit()">
+  <div class="flex flex-row gap-2 mt-2">
+    <div class="flex flex-row">
+      <div class="rounded-r-none mb-5">
+        <app-input
+          formControlName="guia"
+          [type]="'number'"
+          [placeholder]="'Ingrese código de guía'"
+          [errors]="{ required: 'Este campo es requerido.' }"
+          [control]="formularioGuiaEntregar.get('guia')"
+          [inputClass]="'rounded-r-none'"
+        ></app-input>
+      </div>
+      <button class="btn btn-primary rounded-l-none" type="submit">Entregar</button>
+    </div>
+    <div class="flex flex-row gap-2 items-baseline">
+      <app-input
+        formControlName="fecha"
+        [type]="'date'"
+        [control]="formularioGuiaEntregar.get('fecha')"
+      ></app-input>
+      <app-input
+        formControlName="hora"
+        [type]="'time'"
+        [control]="formularioGuiaEntregar.get('hora')"
+      ></app-input>
+      <app-switch [control]="getControl('soporte')" titulo="Soporte"></app-switch>
+    </div>
+  </div>
+</form>

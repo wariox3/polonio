@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { GeneralRepository } from '@app/core';
 import { RespuestaApi, QueryParams } from '@app/core/interfaces/api.interface';
 import { Guia } from '../interfaces/guia.interface';
+import { GuiaProcesoEntrega } from '../interfaces/guia-proceso-entrega';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,10 @@ export class GuiaRepository {
 
   enviarRndc(id: number) {
     return this._generalRepository.post('transporte/guia/enviar-rndc/', { id });
+  }
+
+  entrega(data: GuiaProcesoEntrega) {
+    return this._generalRepository.post('transporte/guia/entregar', data);
   }
 
   descargarExcel(data: QueryParams) {

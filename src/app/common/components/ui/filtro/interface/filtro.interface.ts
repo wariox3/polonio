@@ -22,6 +22,7 @@ export interface RelationConfig {
   queryParams?: { [key: string]: any }; // Optional query parameters for the API call
   multiple?: boolean; // Whether multiple selections are allowed
   preload?: boolean; // Whether to preload options on component init
+  staticOptions?: RelationOption[]; // 👈 añadimos esta nueva propiedad
 }
 
 export interface Operator {
@@ -29,4 +30,9 @@ export interface Operator {
   name: string;
   types: FilterField['type'][];
   default: boolean;
+}
+
+export interface RelationOption {
+  valueField: any;
+  displayField: string;
 }

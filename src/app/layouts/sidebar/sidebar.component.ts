@@ -4,6 +4,9 @@ import { RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
+import { SIDEBAR_MENU, SidebarMenuItem } from './sidebar-menu.config';
+import { Store } from '@ngrx/store';
+import { obtenerContenedorImagen } from '@app/modules/contenedor/store/selectors/contenedor.selectors';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,103 +24,12 @@ export class SidebarComponent implements OnInit {
   @HostBinding('attr.data-drawer-enable') drawerEnable = 'true|lg:false';
   @HostBinding('attr.id') id = 'sidebar';
 
+  private _store = inject(Store);
   private router = inject(Router);
   private currentUrl = '';
 
-  public sidebarMenu: any[] = [
-    {
-      nombre: 'Inicio',
-      link: '/dashboard',
-      iconoClase: 'ki-filled ki-home',
-      activo: false,
-    },
-    {
-      nombre: 'Viaje',
-      link: '/viaje',
-      iconoClase: 'ki-filled ki-delivery',
-      activo: false,
-    },
-    {
-      nombre: 'Movimiento',
-      link: '/movimiento',
-      iconoClase: 'ki-filled ki-abstract-26',
-      activo: false,
-      tipoAcordion: true,
-      abierto: false,
-      children: [
-        {
-          nombre: 'Negocio',
-          link: '/movimiento/negocio/lista',
-        },
-        {
-          nombre: 'Guía',
-          link: '/movimiento/guia/lista',
-        },
-        {
-          nombre: 'Despacho',
-          link: '/movimiento/despacho/lista',
-        },
-      ],
-    },
-    {
-      nombre: 'Administrador',
-      link: '/administracion',
-      iconoClase: 'ki-filled ki-setting-2',
-      activo: false,
-      tipoAcordion: true,
-      abierto: false,
-      children: [
-        {
-          nombre: 'Vehículo',
-          link: '/administracion/vehiculo/lista',
-        },
-        {
-          nombre: 'Conductor',
-          link: '/administracion/conductor/lista',
-        },
-        {
-          nombre: 'Operación',
-          link: '/administracion/operacion/lista',
-        },
-        {
-          nombre: 'Ruta',
-          link: '/administracion/ruta/lista',
-        },
-      ],
-    },
-    {
-      nombre: 'Utilidad',
-      link: '/utilidad',
-      iconoClase: 'ki-filled ki-abstract-26',
-      activo: false,
-      tipoAcordion: true,
-      abierto: false,
-      children: [
-        {
-          nombre: 'Rndc',
-          link: '/utilidad/rndc/lista',
-        },
-      ],
-    },
-    {
-      nombre: 'Informe',
-      link: '/informe',
-      iconoClase: 'ki-filled ki-tablet-text-down',
-      activo: false,
-      tipoAcordion: true,
-      abierto: false,
-      children: [
-        {
-          nombre: 'Pendiente despacho',
-          link: '/informe/pendiente_despacho',
-        },
-        {
-          nombre: 'Pendiente entrega',
-          link: '/informe/pendiente_entrega',
-        },
-      ],
-    },
-  ];
+  public sidebarMenu: SidebarMenuItem[] = SIDEBAR_MENU;
+  public contenedorImagen = this._store.selectSignal(obtenerContenedorImagen);
 
   ngOnInit(): void {
     // Obtener la URL actual al inicializar el componente

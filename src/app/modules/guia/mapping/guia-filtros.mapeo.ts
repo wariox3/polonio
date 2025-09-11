@@ -37,4 +37,20 @@ export const GUIA_LISTA_FILTERS: FilterField[] = [
       queryParams: {},
     },
   },
+  {
+    name: 'orden',
+    displayName: 'Orden',
+    type: 'relation',
+    relationConfig: {
+      preload: true, // para que cargue al inicio
+      endpoint: '', // <- no se usará
+      valueField: 'valueField',
+      displayField: 'displayField',
+      // añadimos aquí directamente los datos fijos:
+      staticOptions: [
+        { valueField: 'GUIA', displayField: 'GUIA' },
+        { valueField: 'DESTINO', displayField: 'DESTINO' },
+      ],
+    },
+  },
 ];
