@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostBinding, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { obtenerContenedorImagen, obtenerContenedorNombre } from '@app/modules/contenedor/store/selectors/contenedor.selectors';
+import {
+  obtenerContenedorImagen,
+  obtenerContenedorNombre,
+} from '@app/modules/contenedor/store/selectors/contenedor.selectors';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { SIDEBAR_MENU, SidebarMenuItem } from './sidebar-menu.config';

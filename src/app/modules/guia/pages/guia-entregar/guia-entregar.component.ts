@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ViewChild, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FiltroComponent } from '@app/common/components/ui/filtro/filtro.component';
 import { PaginadorComponent } from '@app/common/components/ui/paginador/paginador.component';
 import { TablaComponent } from '@app/common/components/ui/tablas/tabla/tabla.component';
@@ -10,11 +10,18 @@ import { Guia } from '../../interfaces/guia.interface';
 import { GUIA_LISTA_FILTERS } from '../../mapping/guia-filtros.mapeo';
 import { columnasGuiaProcesoEntrega } from '../../mapping/guia-lista.mapeo';
 import { GuiaRepository } from '../../repositories/guia.repository';
+import { GuiaEntregaMasivoComponent } from '../../components/guia-entrega-masivo/guia-entrega-masivo.component';
 
 @Component({
   selector: 'app-guia-entregar',
   standalone: true,
-  imports: [FiltroComponent, PaginadorComponent, TablaComponent, GuiaEntregarFormularioComponent],
+  imports: [
+    FiltroComponent,
+    PaginadorComponent,
+    TablaComponent,
+    GuiaEntregarFormularioComponent,
+    GuiaEntregaMasivoComponent,
+  ],
   templateUrl: './guia-entregar.component.html',
 })
 export default class GuiaEntregarComponent implements OnInit {
@@ -74,38 +81,8 @@ export default class GuiaEntregarComponent implements OnInit {
     this.consultarInformacion();
   }
 
-  exportarExcel() {
-    this._guiaRepository.descargarExcel(this.filtrosActivos());
-  }
-
   onSeleccionGuias(guias: Guia[]) {
     this.guiasSeleccionadas.set(guias);
-  }
-
-  eliminar() {
-    const eliminaciones$ = this.guiasSeleccionadas().map(guia =>
-      this._guiaRepository.eliminar(guia.id).pipe(
-        catchError(err => {
-          console.error(`Error al eliminar guia ${guia.id}:`, err);
-          return of(null); // devolvemos algo para que forkJoin no falle
-        })
-      )
-    );
-
-    forkJoin(eliminaciones$).subscribe({
-      next: () => {
-        // Después de eliminar, volver a la primera página y recargar
-        this.estadoPaginacion.update(estado => ({
-          ...estado,
-          paginaActual: 1,
-        }));
-        this.consultarInformacion();
-        this.guiasSeleccionadas.set([]);
-      },
-      error: err => {
-        console.error('Error al eliminar guia:', err);
-      },
-    });
   }
 
   entregar() {

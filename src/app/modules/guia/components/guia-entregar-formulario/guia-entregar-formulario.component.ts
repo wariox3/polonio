@@ -1,4 +1,13 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -11,7 +20,7 @@ import { InputComponent } from '@app/common/components/ui/form/input/input.compo
 import { SwitchComponent } from '@app/common/components/ui/form/switch/switch.component';
 import { FechaService } from '@app/common/services/fecha.service';
 import { GuiaRepository } from '../../repositories/guia.repository';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-guia-entregar-formulario',
@@ -25,6 +34,9 @@ export class GuiaEntregarFormularioComponent implements OnInit, OnDestroy {
   private _guiaRepository = inject(GuiaRepository);
   private _destroy$ = new Subject<void>();
   public formularioGuiaEntregar: FormGroup;
+  @Input() ocultarInput = false;
+  @Output() entregaExitosa = new EventEmitter<any>();
+  @ViewChild(InputComponent) inputGuia!: InputComponent;
 
   ngOnInit(): void {
     this.inicializarFormulario();
@@ -52,19 +64,29 @@ export class GuiaEntregarFormularioComponent implements OnInit, OnDestroy {
       this.formularioGuiaEntregar.markAllAsTouched();
       return;
     }
-    this._agregarGuia();
+    this._entregarGuia();
   }
 
   getControl(nombre: string): FormControl {
     return this.formularioGuiaEntregar.get(nombre) as FormControl;
   }
 
-  private _agregarGuia() {
+  private _entregarGuia() {
     this._guiaRepository
       .entrega(this.formularioGuiaEntregar.value)
-      .pipe(takeUntil(this._destroy$))
+      .pipe(
+        takeUntil(this._destroy$),
+        finalize(() => this._enfocarYSeleccionarInputGuia())
+      )
       .subscribe(respuesta => {
-        console.log(respuesta);
+        this.entregaExitosa.emit(respuesta);
       });
+  }
+
+  private _enfocarYSeleccionarInputGuia() {
+    setTimeout(() => {
+      this.inputGuia.focus();
+      this.inputGuia.select();
+    });
   }
 }

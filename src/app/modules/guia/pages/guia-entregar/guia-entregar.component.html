@@ -22,31 +22,14 @@
         (pageChange)="onPageChange($event)"
       ></app-paginador>
       <div class="flex">
-        <div
-          class="dropdown"
-          data-dropdown="true"
-          data-dropdown-trigger="click"
-          data-dropdown-dismiss="true"
-        >
-          <button class="dropdown-toggle btn btn-secondary flex items-center rounded-r-none">
-            Exportar
-          </button>
-          <div class="dropdown-content w-full max-w-56 py-2">
-            <div class="menu menu-default flex flex-col w-full">
-              <div class="menu-item">
-                <button class="menu-link" (click)="exportarExcel()">
-                  <span class="menu-icon">
-                    <i class="ki-filled ki-document"></i>
-                  </span>
-                  <span class="menu-title">Excel</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button class="btn btn-secondary rounded-none" (click)="entregar()">Entregar</button>
-        <button class="btn btn-danger rounded-l-none" (click)="eliminar()">Eliminar</button>
+        <button class="btn btn-secondary rounded-r-none" (click)="entregar()">Entregar</button>
+        <app-guia-entrega-masivo
+          (procesoCompleto)="consultarInformacion()"
+        ></app-guia-entrega-masivo>
       </div>
+    </div>
+    <div class="flex justify-between mb-4 gap-2">
+      <app-guia-entregar-formulario [ocultarInput]="true"></app-guia-entregar-formulario>
     </div>
 
     <app-tabla
@@ -56,6 +39,5 @@
       [maxHeight]="'800px'"
       (seleccionCambiada)="onSeleccionGuias($event)"
     ></app-tabla>
-    <app-guia-entregar-formulario></app-guia-entregar-formulario>
   </div>
 </div>

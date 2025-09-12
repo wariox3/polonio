@@ -28,7 +28,7 @@ export class ModalStandardComponent implements OnInit, OnDestroy {
   @Input() modalId!: string;
   @Input() title = '';
   @Input() showCloseButton = true;
-  @Input() size: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '7xl' | '8xl' | 'full' = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '7xl' | '8xl' | 'full' = 'md';
   @Input() closeOnOutsideClick = true;
   @Input() closeOnEsc = true;
 
@@ -64,6 +64,7 @@ export class ModalStandardComponent implements OnInit, OnDestroy {
       lg: 'sm:max-w-lg',
       xl: 'sm:max-w-xl',
       '2xl': 'sm:max-w-2xl',
+      '3xl': 'sm:max-w-3xl',
       '7xl': 'sm:max-w-7xl',
       '8xl': 'sm:max-w-[90rem]',
       full: 'sm:max-w-full',
