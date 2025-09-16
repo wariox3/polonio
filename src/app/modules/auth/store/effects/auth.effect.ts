@@ -101,11 +101,7 @@ export class AuthEffects {
             cookieOptions.path,
             cookieOptions.domain
           );
-          this.cookieService.delete(
-            LOCALSTORAGE_KEYS.CONTENEDOR,
-            cookieOptions.path,
-            cookieOptions.domain
-          );
+          this.cookieService.delete(LOCALSTORAGE_KEYS.CONTENEDOR, cookieOptions.path);
 
           this.router.navigate(['/auth/login']);
         })
