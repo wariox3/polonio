@@ -11,7 +11,7 @@
         <!-- Columnas de datos -->
         <th
           *ngFor="let columna of columnas"
-          class="px-6 py-1 text-left text-xs font-semibold text-black"
+          class="px-6 py-4 text-left text-xs font-semibold text-black"
           [style.width]="columna.ancho || 'auto'"
         >
           <div class="flex items-center space-x-1">
@@ -22,12 +22,12 @@
         </th>
 
         <!-- Columnas de acciones -->
-        <th *ngIf="mostrarAcciones" class="px-6 py-3 text-center" colspan="2">
+        <th *ngIf="mostrarAcciones" class="px-6 py-4 text-center" colspan="2">
           <span class="text-xs font-semibold text-black">Acciones</span>
         </th>
 
         <!-- Checkbox principal con estado indeterminado -->
-        <th *ngIf="mostrarCheckbox" class="px-6 py-3 text-center">
+        <th *ngIf="mostrarCheckbox" class="px-6 py-4 text-center">
           <input
             #checkboxGlobal
             type="checkbox"
@@ -46,7 +46,7 @@
       <tr *ngIf="!datos || datos.length === 0" class="hover:bg-gray-50">
         <td
           [attr.colspan]="(mostrarCheckbox ? 1 : 0) + columnas.length + (mostrarAcciones ? 2 : 0)"
-          class="px-6 py-10 text-center"
+          class="px-6 py-4 text-center"
         >
           <div class="flex flex-col items-center justify-center text-gray-500">
             <svg
@@ -76,7 +76,7 @@
         <!-- Celdas de datos -->
         @for (columna of columnas; track $index) {
           <td
-            class="px-6 whitespace-nowrap text-sm text-gray-800"
+            class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"
             [ngClass]="getClaseAlineacion(columna)"
           >
             {{ formatearValor(columna, item[columna.clave]) }}
@@ -84,7 +84,7 @@
         }
 
         <!-- Acciones -->
-        <td *ngIf="mostrarAcciones" class="px-4 whitespace-nowrap text-center w-[60px]">
+        <td *ngIf="mostrarAcciones" class="px-6 py-4 whitespace-nowrap text-center">
           @if (!(ocultarEditarAlAprobado && item.estado_aprobado)) {
             <a
               class="inline-flex items-center justify-center p-2 rounded-full hover:text-blue-800 hover:bg-blue-100 transition-colors duration-150"
