@@ -5,26 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-// Configuración de fuente Geist para toda la aplicación
-:root {
-  --font-family-base: "Geist", "Geist Fallback", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
-@layer base {
-  html, body {
-    font-family: var(--font-family-base) !important;
-  }
-  
-  *, *::before, *::after {
-    font-family: inherit;
-  }
-  
-  // Forzar la fuente en elementos específicos que podrían tener estilos que la sobrescriban
-  h1, h2, h3, h4, h5, h6, p, span, div, button, input, select, textarea, a, label, li {
-    font-family: var(--font-family-base) !important;
-  }
-}
-
 /* Demos */
 @import "./metronic/css/demos/demo1.css";
 
