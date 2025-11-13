@@ -20,6 +20,17 @@ export default [
     ],
   },
   {
+    path: 'verificacion',
+    canActivate: [authGuard],
+    loadComponent: () => import('./verificacion-layout/verificacion-layout.component'),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../modules/verificacion/verificacion.routes'),
+      },
+    ],
+  },
+  {
     path: 'dashboard',
     canActivate: [authGuard, contenedorGuard],
     loadComponent: () => import('./admin-layout/admin-layout.component'),

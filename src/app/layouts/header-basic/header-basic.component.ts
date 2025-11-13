@@ -42,6 +42,12 @@ export class HeaderBasicComponent implements OnInit {
       newWindow: true,
       link: this.URL_REDDOC_CUENTA,
     },
+    {
+      titulo: 'Verificación',
+      icono: 'ki-filled ki-security-user',
+      newWindow: false,
+      link: '/verificacion',
+    },
   ];
 
   ngOnInit(): void {
