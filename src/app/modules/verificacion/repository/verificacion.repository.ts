@@ -22,6 +22,12 @@ export class VerificacionRepository {
     );
   }
 
+  verificar(verificacionId: number) {
+    return this._httpBaseRepository.post<any>(`/vertical/verificacion/verificar/`, {
+      id: verificacionId,
+    });
+  }
+
   proceso(verificacionId: number) {
     return this._httpBaseRepository.post<any>(`/vertical/verificacion/proceso/`, {
       id: verificacionId,
@@ -43,39 +49,4 @@ export class VerificacionRepository {
       id: verificacionDetalleId,
     });
   }
-
-  // const params = this._filterTransformService.toQueryString({
-  //   ...queryParams,
-  //   serializador: 'lista',
-  //   contenedor__reddoc: 'True',
-  // });
-
-  // return this._httpBaseRepository
-  //   .get<RespuestaApi<ContenedorLista>>('/contenedor/usuariocontenedor/?' + params)
-  //   .pipe(
-  //     map(respuesta => {
-  //       this.totalItems.set(respuesta.count);
-
-  //       return {
-  //         ...respuesta,
-  //         results: this._contenedorService.agregarPropiedades(respuesta.results),
-  //       };
-  //     })
-  //   );
-
-  // nuevo(data: Vehiculo) {
-  //   return this._generalRepository.create<Vehiculo>('transporte/vehiculo/', data);
-  // }
-
-  // editar(id: number, data: Vehiculo) {
-  //   return this._generalRepository.update<Vehiculo>('transporte/vehiculo/', id, data);
-  // }
-
-  // detalle(id: number) {
-  //   return this._generalRepository.getById<Vehiculo>('transporte/vehiculo/', id);
-  // }
-
-  // eliminar(id: number) {
-  //   return this._generalRepository.delete<Vehiculo>('transporte/vehiculo/', id);
-  // }
 }

@@ -47,8 +47,6 @@ export default class VerificacionDetalle implements OnInit {
     return obtenerCamposVerificacionDetalle();
   });
 
-  verificar() {}
-
   ngOnInit(): void {
     this.consultarInformacion();
   }
@@ -98,6 +96,15 @@ export default class VerificacionDetalle implements OnInit {
     this._verificacionService.verificarDetalle(id).subscribe({
       next: () => {
         this.consultarDetalles().subscribe();
+      },
+    });
+  }
+
+  verificar() {
+    const verificacionId = this.verificacionSignal().id;
+    this._verificacionService.verificar(verificacionId).subscribe({
+      next: () => {
+        this.consultarEncabezado(verificacionId).subscribe();
       },
     });
   }
