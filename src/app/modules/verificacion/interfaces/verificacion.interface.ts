@@ -4,8 +4,8 @@ export interface Verificacion {
   verificador: string;
   vehiculo_placa: string;
   usuario_id: string;
-  fecha_verificacion: Date;
-  fecha_verificacion_vence: Date;
+  fecha_verificacion: string;
+  fecha_verificacion_vence: string;
   verificado: boolean;
   estado_procesado: boolean;
 }

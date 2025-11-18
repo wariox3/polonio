@@ -28,6 +28,22 @@ export class VerificacionRepository {
     });
   }
 
+  getDetalle(verificacionId: number) {
+    return this._httpBaseRepository.get<any>(`/vertical/verificacion/${verificacionId}/`);
+  }
+
+  detallesPorVerificacion(verificacionId: number) {
+    return this._httpBaseRepository.get<any>(
+      `/vertical/verificacion_detalle/?verificacion_id=${verificacionId}`
+    );
+  }
+
+  verificarDetalle(verificacionDetalleId: number) {
+    return this._httpBaseRepository.post<any>(`/vertical/verificacion_detalle/verificar/`, {
+      id: verificacionDetalleId,
+    });
+  }
+
   // const params = this._filterTransformService.toQueryString({
   //   ...queryParams,
   //   serializador: 'lista',
