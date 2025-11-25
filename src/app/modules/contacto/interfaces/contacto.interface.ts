@@ -1,0 +1,29 @@
+export interface Contacto {
+  id: number;
+  identificacion: number;
+  identificacion_id: number;
+  identificacion__nombre: string;
+  digito_verificacion: number;
+  ciudad: number;
+  ciudad_id: number;
+  ciudad_nombre: string;
+  ciudad__nombre: string;
+  ciudad__estado__nombre: string;
+  numero_identificacion: string;
+  nombre_corto: string;
+  nombre1: string;
+  nombre2: string;
+  apellido1: string;
+  apellido2: string;
+  direccion: string;
+  barrio: string;
+  telefono: string;
+  celular: string;
+  correo: string;
+  tipo_persona: number;
+  regimen: number;
+  tipo_persona_id: number;
+  regimen_id: number;
+  conductor: boolean;
+  cliente: boolean;
+}

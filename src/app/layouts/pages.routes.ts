@@ -20,6 +20,17 @@ export default [
     ],
   },
   {
+    path: 'verificacion',
+    canActivate: [authGuard],
+    loadComponent: () => import('./verificacion-layout/verificacion-layout.component'),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../modules/verificacion/verificacion.routes'),
+      },
+    ],
+  },
+  {
     path: 'dashboard',
     canActivate: [authGuard, contenedorGuard],
     loadComponent: () => import('./admin-layout/admin-layout.component'),
@@ -31,6 +42,17 @@ export default [
     ],
   },
   {
+    path: 'viaje',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('../modules/viaje/viaje.routes'),
+      },
+    ],
+  },
+  {
     path: 'movimiento',
     canActivate: [authGuard, contenedorGuard],
     loadComponent: () => import('./admin-layout/admin-layout.component'),
@@ -38,6 +60,14 @@ export default [
       {
         path: 'guia',
         loadChildren: () => import('../modules/guia/guia.routes'),
+      },
+      {
+        path: 'negocio',
+        loadChildren: () => import('../modules/negocio/negocio.routes'),
+      },
+      {
+        path: 'despacho',
+        loadChildren: () => import('../modules/despacho/despacho.routes'),
       },
     ],
   },
@@ -53,6 +83,53 @@ export default [
       {
         path: 'conductor',
         loadChildren: () => import('../modules/conductor/conductor.routes'),
+      },
+      {
+        path: 'operacion',
+        loadChildren: () => import('../modules/operacion/operacion.routes'),
+      },
+      {
+        path: 'ruta',
+        loadChildren: () => import('../modules/ruta/ruta.routes'),
+      },
+    ],
+  },
+  {
+    path: 'utilidad',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: 'rndc',
+        loadChildren: () => import('../modules/rndc/rndc.routes'),
+      },
+    ],
+  },
+  {
+    path: 'informe',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: 'pendiente_despacho',
+        loadComponent: () =>
+          import('../modules/guia/pages/guia-pendiente-despacho/guia-pendiente-despacho.component'),
+      },
+      {
+        path: 'pendiente_entrega',
+        loadComponent: () =>
+          import('../modules/guia/pages/guia-pendiente-entrega/guia-pendiente-entrega.component'),
+      },
+    ],
+  },
+  {
+    path: 'proceso',
+    canActivate: [authGuard, contenedorGuard],
+    loadComponent: () => import('./admin-layout/admin-layout.component'),
+    children: [
+      {
+        path: 'entrega_guia',
+        loadComponent: () => import('../modules/guia/pages/guia-entregar/guia-entregar.component'),
       },
     ],
   },

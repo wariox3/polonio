@@ -1,0 +1,336 @@
+<form [formGroup]="formularioNegocio" (ngSubmit)="onSubmit()">
+  <div class="flex gap-2 mb-4">
+    <a class="btn btn-secondary" routerLink="/movimiento/negocio/lista"> Atrás </a>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+
+  <div class="card mb-5">
+    <div class="card-header">
+      <h3 class="card-title">
+        {{ detalleID() > 0 ? 'Editar negocio' : 'Nuevo negocio' }}
+      </h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true">Fecha</app-label>
+          <app-input
+            placeholder="Selecciona la fecha"
+            formControlName="fecha"
+            [type]="'date'"
+            [control]="formularioNegocio.get('fecha')"
+            [errors]="{
+              required: 'La fecha es requerida.',
+            }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Contacto</app-label>
+          <app-select-search
+            [control]="getControl('contacto')"
+            [label]="'nombre_corto'"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre_corto__icontains'"
+            [parametrosEndpoint]="{
+              nombre_corto__icontains: this.formularioNegocio.get('contacto__nombre_corto').value,
+              limit: 10,
+              cliente: 'True',
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Nombre</app-label>
+          <app-input
+            placeholder="Ingresa el nombre del negocio"
+            formControlName="nombre"
+            [type]="'text'"
+            [control]="formularioNegocio.get('nombre')"
+            [errors]="{
+              required: 'El nombre es requerido.',
+              maxLength: 'Máximo 100 caracteres.',
+            }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Servicio</app-label>
+          <app-select-search
+            [control]="getControl('servicio')"
+            [label]="'nombre'"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/servicio/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('servicio__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Origen</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_origen')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('ciudad_origen__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Destino</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_destino')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('ciudad_destino__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Operación</app-label>
+          <app-select-search
+            [control]="getControl('operacion')"
+            [label]="'nombre'"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/operacion/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('operacion__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div></div>
+        <div>
+          <app-label [required]="true">Producto</app-label>
+          <app-select-search
+            [control]="getControl('producto')"
+            [label]="'nombre'"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/producto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('producto__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-label [required]="true">Empaque</app-label>
+          <app-select-search
+            [control]="getControl('empaque')"
+            [label]="'nombre'"
+            [errors]="{
+              required: 'Este campo es requerido.',
+            }"
+            [endpoint]="'transporte/empaque/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioNegocio.get('empaque__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <div>
+          <app-switch [control]="getControl('publicar')" titulo="Publicar"></app-switch>
+        </div>
+        <div class="md:col-span-2">
+          <app-label>Comentario</app-label>
+          <app-input
+            formControlName="comentario"
+            [type]="'textarea'"
+            [control]="formularioNegocio.get('comentario')"
+            [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
+            placeholder="Comentarios adicionales..."
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-5">
+    <div class="card-header">
+      <h3 class="card-title">Destinatario</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label>Nombre</app-label>
+          <app-input
+            formControlName="destinatario_nombre"
+            [type]="'text'"
+            [control]="formularioNegocio.get('destinatario_nombre')"
+            [errors]="{
+              maxLength: 'Máximo 150 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Dirección</app-label>
+          <app-input
+            formControlName="destinatario_direccion"
+            [type]="'text'"
+            [control]="formularioNegocio.get('destinatario_direccion')"
+            [errors]="{
+              maxLength: 'Máximo 150 caracteres.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Teléfono</app-label>
+          <app-input
+            formControlName="destinatario_telefono"
+            [type]="'number'"
+            [control]="formularioNegocio.get('destinatario_telefono')"
+            [errors]="{
+              maxLength: 'Máximo 50 caracteres.',
+              pattern: 'Solo se permiten números.',
+            }"
+          ></app-input>
+        </div>
+
+        <div>
+          <app-label>Correo</app-label>
+          <app-input
+            formControlName="destinatario_correo"
+            [type]="'text'"
+            [control]="formularioNegocio.get('destinatario_correo')"
+            [errors]="{ email: 'Correo inválido.', maxLength: 'Máximo 255 caracteres.' }"
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-5">
+    <div class="card-header">
+      <h3 class="card-title">Liquidación</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true">Unidades</app-label>
+          <app-input
+            placeholder="Ingresa el número de unidades"
+            formControlName="unidades"
+            [type]="'number'"
+            [control]="formularioNegocio.get('unidades')"
+            [errors]="{
+              required: 'Las unidades son requeridas.',
+              min: 'Debe ser mayor a 0.',
+            }"
+          ></app-input>
+        </div>
+        <div></div>
+        <div>
+          <app-label [required]="true">Peso (kg)</app-label>
+          <app-input
+            placeholder="Ingresa el peso en kilogramos"
+            formControlName="peso"
+            [type]="'number'"
+            step="0.1"
+            [control]="formularioNegocio.get('peso')"
+            [errors]="{
+              required: 'El peso es requerido.',
+              min: 'Debe ser mayor a 0.',
+            }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Volumen</app-label>
+          <app-input
+            placeholder="Ingresa el volumen en metros cúbicos"
+            formControlName="volumen"
+            [type]="'number'"
+            step="0.1"
+            [control]="formularioNegocio.get('volumen')"
+            [errors]="{
+              required: 'El volumen es requerido.',
+              min: 'Debe ser mayor a 0.',
+            }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Valor declarado</app-label>
+          <app-input
+            placeholder="Ingresa el valor declarado"
+            formControlName="declara"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('declara')"
+            [errors]="{
+              required: 'El valor declarado es requerido.',
+              min: 'Debe ser mayor o igual a 0.',
+              maxLength: 'Debe ser menor a 14 digitos',
+            }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Manejo</app-label>
+          <app-input
+            placeholder="Ingresa el valor del manejo"
+            formControlName="manejo"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('manejo')"
+            [errors]="{
+              required: 'El manejo es requerido.',
+              min: 'Debe ser mayor o igual a 0.',
+              maxLength: 'Debe ser menor a 14 digitos',
+            }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Pago</app-label>
+          <app-input
+            placeholder="Ingresa el valor del pago"
+            formControlName="pago"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('pago')"
+            [errors]="{
+              required: 'El pago es requerido.',
+              min: 'Debe ser mayor o igual a 1.',
+              maxLength: 'Debe ser menor a 14 digitos',
+            }"
+          ></app-input>
+        </div>
+        <div>
+          <app-label [required]="true">Flete</app-label>
+          <app-input
+            placeholder="Ingresa el valor del flete"
+            formControlName="flete"
+            [type]="'number'"
+            step="0.01"
+            [control]="formularioNegocio.get('flete')"
+            [errors]="{
+              required: 'El flete es requerido.',
+              min: 'Debe ser mayor o igual a 1.',
+              maxLength: 'Debe ser menor a 14 digitos',
+            }"
+          ></app-input>
+        </div>
+
+        <div></div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -7,7 +7,8 @@ import {
   OnChanges,
   Output,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  OnInit,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GeneralRepository } from '@app/core';
@@ -18,13 +19,15 @@ import { finalize, tap } from 'rxjs';
 @Component({
   selector: 'app-select-search',
   templateUrl: './select-search.component.html',
+  styleUrls: ['./select-search.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgSelectModule], // ✅ Aquí se importa
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, NgSelectModule],
 })
-export class SelectSearchComponent implements OnChanges {
+export class SelectSearchComponent implements OnChanges, OnInit {
   private _generalRepository = inject(GeneralRepository);
   public loading = signal<boolean>(false);
   public options = signal<any[]>([]);
+  private readonly NEW_ID = 'nuevo';
   @Input() selectedOptions: any[] = [];
   @Input() label: string = 'nombre';
   @Input() value: string = 'id';
@@ -36,20 +39,34 @@ export class SelectSearchComponent implements OnChanges {
   @Input() parametrosEndpoint: QueryParams;
   @Input({ required: true }) control!: FormControl;
   @Input() errors: { [key: string]: string } = {};
+  @Input() mostrarNuevo: boolean = false;
+  @Input() formatoCustomLabel: (item: any) => string = (item: any) => item[this.label];
 
-  @Output() selectionChange = new EventEmitter<any[]>();
+  @Output() selectionChange = new EventEmitter<any>();
   @Output() valorBusqueda = new EventEmitter<string>();
+  @Output() nuevoSeleccionado = new EventEmitter<boolean>();
 
   constructor() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['parametrosEndpoint'].firstChange) {
+  ngOnInit(): void {
+    if (this.parametrosEndpoint) {
       this._consultarData(this.parametrosEndpoint);
     }
   }
 
-  emitirSeleccion() {
-    this.selectionChange.emit(this.selectedOptions);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['parametrosEndpoint'] && !changes['parametrosEndpoint'].firstChange) {
+      this._consultarData(this.parametrosEndpoint);
+    }
+  }
+
+  emitirSeleccion(data: any) {
+    if (data?.[this.value] === 'nuevo') {
+      this.nuevoSeleccionado.emit(true);
+      this.control.setValue(null);
+    } else {
+      this.selectionChange.emit(data);
+    }
   }
 
   get error(): string | null {
@@ -90,11 +107,7 @@ export class SelectSearchComponent implements OnChanges {
         finalize(() => this.loading.set(false))
       )
       .subscribe((respuesta: any) => {
-        if (respuesta.results) {
-          this.options.set(respuesta.results);
-        } else {
-          this.options.set(respuesta);
-        }
+        this._procesarRespuesta(respuesta);
       });
   }
 
@@ -109,11 +122,29 @@ export class SelectSearchComponent implements OnChanges {
         finalize(() => this.loading.set(false))
       )
       .subscribe((respuesta: any) => {
-        if (respuesta.results) {
-          this.options.set(respuesta.results);
-        } else {
-          this.options.set(respuesta);
-        }
+        this._procesarRespuesta(respuesta);
       });
   }
+
+  private _procesarRespuesta(respuesta: any) {
+    let datos = respuesta.results ?? respuesta;
+
+    datos = datos.map(item => ({
+      ...item,
+      [this.label]: this.formatoCustomLabel(item),
+    }));
+
+    if (this.mostrarNuevo) {
+      datos = [...datos, { id: 'nuevo', [this.label]: 'Nuevo' }];
+    }
+
+    this.options.set(datos);
+  }
+
+  public searchFn = (term: string, item: any) => {
+    // siempre mostrar la opción "nuevo"
+    if (item?.[this.value] === this.NEW_ID) return true;
+    const label = (item?.[this.label] ?? '').toString().toLowerCase();
+    return label.indexOf((term || '').toLowerCase()) > -1;
+  };
 }

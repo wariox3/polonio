@@ -41,10 +41,10 @@ export interface Guia {
   contenido_verificado: boolean;
   mercancia_peligrosa: boolean;
   requiere_cita: boolean;
-  comentario: any;
-  documento: any;
-  fecha_ingreso: any;
-  despacho: any;
+  comentario: string;
+  documento: string;
+  fecha_ingreso: string | null;
+  despacho: number | null;
   estado_recogido: boolean;
   estado_ingreso: boolean;
   estado_embarcado: boolean;
@@ -64,4 +64,6 @@ export interface Guia {
   destinatario_direccion: string;
   destinatario_telefono: string;
   destinatario_correo: string;
+  negocio: number;
+  negocio__nombre: string;
 }

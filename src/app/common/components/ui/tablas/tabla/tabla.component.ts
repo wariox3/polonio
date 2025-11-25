@@ -1,29 +1,37 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TooltipDirective } from '@app/common/directives/tooltip';
+import { ColumnaTabla } from '@app/common/interfaces/columnas.interface';
 
 @Component({
   selector: 'app-tabla',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, TooltipDirective],
   templateUrl: './tabla.component.html',
   styleUrls: ['./tabla.component.scss'],
 })
-export class TablaComponent {
+export class TablaComponent implements OnChanges {
   // Propiedades de entrada
-  @Input() columnas: {
-    clave: string;
-    nombre: string;
-    ancho?: string;
-    formato?: (valor: any) => string;
-  }[] = [];
+  @Input() columnas: ColumnaTabla[] = [];
   @Input() datos: any[] = [];
   @Input() claveCheckbox: string = 'id';
   @Input() mostrarAcciones: boolean = true;
   @Input() mostrarCheckbox: boolean = true;
   @Input() textoVacio: string = 'No hay datos disponibles';
   @Input() rutas: { editar: string; detalle: string } = { editar: '', detalle: '' };
+  @Input() maxHeight: string = '';
+  @Input() ocultarEditarAlAprobado: boolean = true;
 
   // Eventos de salida
   @Output() seleccionCambiada = new EventEmitter<any[]>();
@@ -32,7 +40,25 @@ export class TablaComponent {
   seleccionTodos: boolean = false;
   registrosSeleccionados: any[] = [];
 
-  // Alternar selección de todos los registros - CORRECCIÓN PRINCIPAL
+  @ViewChild('checkboxGlobal', { static: false })
+  checkboxGlobal: ElementRef<HTMLInputElement>;
+
+  // Implementación del ciclo de vida OnChanges
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['datos'] && !changes['datos'].firstChange) {
+      // Reiniciar registrosSeleccionados si los datos cambian
+      this.registrosSeleccionados = [];
+      this.seleccionCambiada.emit(this.registrosSeleccionados);
+
+      if (this.checkboxGlobal) {
+        this.checkboxGlobal.nativeElement.checked = false;
+      }
+
+      this.seleccionTodos = false;
+    }
+  }
+
+  // Alternar selección de todos los registros
   alternarSeleccionTodos(): void {
     const nuevoEstado = !this.seleccionTodos;
     this.seleccionTodos = nuevoEstado;
@@ -49,7 +75,7 @@ export class TablaComponent {
     this.notificarSeleccion();
   }
 
-  // Alternar selección individual - CORRECCIÓN ADICIONAL
+  // Alternar selección individual
   alternarSeleccion(registro: any, event: Event): void {
     event.stopPropagation();
 
@@ -86,6 +112,18 @@ export class TablaComponent {
       this.registrosSeleccionados.length > 0 &&
       this.registrosSeleccionados.length < this.datos.length
     );
+  }
+
+  getClaseAlineacion(columna: ColumnaTabla): string {
+    switch (columna.alineacion) {
+      case 'derecha':
+        return 'text-end';
+      case 'centro':
+        return 'text-center';
+      case 'izquierda':
+      default:
+        return 'text-start'; // valor por defecto
+    }
   }
 
   private notificarSeleccion(): void {

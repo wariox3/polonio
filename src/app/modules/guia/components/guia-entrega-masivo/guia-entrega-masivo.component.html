@@ -1,0 +1,16 @@
+<button class="btn btn-secondary rounded-l-none" (click)="openModal()">Entregar masivo</button>
+<app-modal-standard
+  [modalId]="'entregarMaasivo'"
+  [title]="'Entregar masivo'"
+  [showCloseButton]="true"
+  [size]="'3xl'"
+  [closeOnOutsideClick]="true"
+  [closeOnEsc]="true"
+>
+  <!-- Contenido del modal -->
+  <div>
+    <app-guia-entregar-formulario (entregaExitosa)="procesoEntregaMavisoCompleto()">
+      ></app-guia-entregar-formulario
+    >
+  </div>
+</app-modal-standard>

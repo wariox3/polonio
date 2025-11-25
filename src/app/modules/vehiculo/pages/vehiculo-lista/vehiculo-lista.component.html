@@ -1,0 +1,49 @@
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Filtros</h3>
+  </div>
+  <div class="card-body">
+    <app-filtro
+      (filtersApply)="onFiltersChange($event)"
+      [availableFields]="camposFiltros"
+    ></app-filtro>
+  </div>
+</div>
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Vehículos</h3>
+  </div>
+  <div class="card-body">
+    <div class="flex justify-between mb-4 gap-2">
+      <app-paginador
+        [totalItems]="estadoPaginacion().totalItems"
+        [itemsPerPage]="estadoPaginacion().itemsPorPagina"
+        (pageChange)="onPageChange($event)"
+      ></app-paginador>
+      <div class="flex">
+        <a class="btn btn-primary rounded-r-none" routerLink="/administracion/vehiculo/nuevo">
+          Nuevo
+        </a>
+        <button
+          class="btn btn-danger rounded-l-none"
+          (click)="eliminar()"
+          [disabled]="vehiculosSeleccionados().length === 0"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+
+    <app-tabla
+      [columnas]="columnas"
+      [datos]="vehiculos()"
+      [rutas]="{
+        editar: '/administracion/vehiculo/editar',
+        detalle: '/administracion/vehiculo/detalle',
+      }"
+      (seleccionCambiada)="onSeleccionVehiculos($event)"
+      [maxHeight]="'800px'"
+    ></app-tabla>
+  </div>
+</div>

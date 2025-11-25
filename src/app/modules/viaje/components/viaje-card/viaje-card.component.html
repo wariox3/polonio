@@ -1,0 +1,108 @@
+<div class="travel-card">
+  <!-- Main travel info -->
+  <div class="travel-header">
+    <div class="travel-route-container">
+      <div class="travel-route">
+        <span class="origin">{{ viaje.datos.ciudad_origen__nombre }}</span>
+        <i class="ki-duotone ki-arrow-right text-primary mx-2">
+          <span class="path1"></span>
+          <span class="path2"></span>
+        </i>
+        <span class="destination">{{ viaje.datos.ciudad_destino__nombre }}</span>
+      </div>
+      <div class="travel-date">{{ viaje.datos.fecha | date: 'dd/MM/yyyy' }}</div>
+    </div>
+  </div>
+
+  <div class="travel-details">
+    <div class="detail-row">
+      <span class="label">Cliente:</span>
+      <span class="value">{{ viaje.datos.cliente }}</span>
+    </div>
+    <div class="detail-row">
+      <span class="label">Servicio:</span>
+      <span class="value">{{ viaje.datos.servicio__nombre }}</span>
+    </div>
+    <div class="detail-row">
+      <span class="label">Producto:</span>
+      <span class="value">{{ viaje.datos.producto__nombre }}</span>
+    </div>
+    <div class="grid grid-cols-4 gap-1 mt-2 p-2 bg-gray-50 rounded">
+      <div class="text-center">
+        <span class="block text-xs font-bold text-gray-800">
+          {{ viaje.datos.unidades }}
+        </span>
+        <span class="text-[10px] text-gray-500 uppercase tracking-tight">Unidades</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-xs font-bold text-gray-800">{{ viaje.datos.peso }}kg</span>
+        <span class="text-[10px] text-gray-500 uppercase tracking-tight">Peso</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-xs font-bold text-gray-800">{{ viaje.datos.volumen }}kg</span>
+        <span class="text-[10px] text-gray-500 uppercase tracking-tight">Volumen</span>
+      </div>
+      <div class="text-center">
+        <span class="block text-xs font-bold text-gray-800">
+          {{ viaje.datos.puntos_entrega }}
+        </span>
+        <span class="text-[10px] text-gray-500 uppercase tracking-tight">Puntos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Proposal Section -->
+  <div class="mt-4 pt-3 border-t border-gray-200">
+    @if (viaje.propuestas.length <= 0) {
+      <div class="flex items-center space-x-2">
+        <div class="relative flex-1">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span class="text-green-500 text-sm font-medium">$</span>
+          </div>
+          <input
+            type="number"
+            class="block w-full pl-8 pr-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none placeholder-gray-400"
+            placeholder="Precio"
+            [(ngModel)]="precio"
+            min="1"
+            step="1000"
+          />
+        </div>
+        <button
+          class="btn items-center justify-center bg-primary hover:bg-primary-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-md transition-colors duration-200"
+          [disabled]="precio <= 0"
+          (click)="agregarPropuesta()"
+          title="Agregar propuesta"
+        >
+          Agregar propuesta
+        </button>
+      </div>
+    } @else {
+      @for (propuesta of viaje.propuestas; track propuesta.id) {
+        <div class="proposal-item">
+          <div class="proposal-info">
+            <div class="company-name">
+              <i class="ki-duotone ki-office-bag text-primary me-1">
+                <span class="path1"></span>
+                <span class="path2"></span>
+              </i>
+              {{ propuesta.empresa }}
+            </div>
+            <div class="proposal-price">${{ propuesta.precio | number: '1.0-0' }}</div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- @if (viaje.datos.comentario) {
+    <div class="travel-comment">
+      <i class="ki-duotone ki-message-text-2 text-primary me-2">
+        <span class="path1"></span>
+        <span class="path2"></span>
+        <span class="path3"></span>
+      </i>
+      {{ viaje.datos.comentario }}
+    </div>
+  } -->
+</div>

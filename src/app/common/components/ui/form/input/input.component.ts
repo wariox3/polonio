@@ -1,12 +1,21 @@
 // src/app/shared/ui/input/input.component.ts
-import { NgIf } from '@angular/common';
-import { Component, forwardRef, Input, Output, EventEmitter } from '@angular/core';
+import { NgClass, NgIf } from '@angular/common';
+import {
+  Component,
+  forwardRef,
+  Input,
+  Output,
+  EventEmitter,
+  signal,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgClass],
   template: `
     <div>
       <label *ngIf="label" class="block text-sm font-medium text-gray-700">
@@ -15,11 +24,14 @@ import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angul
       <input
         [type]="type"
         [placeholder]="placeholder"
-        [value]="value"
+        [value]="value()"
         (input)="onInput($event)"
         (blur)="onBlur()"
         [disabled]="disabled"
+        [readonly]="readonly"
+        [ngClass]="inputClass"
         class="input"
+        #inputEl
       />
       @if (shouldShowErrors()) {
         @for (error of getErrors(); track $index) {
@@ -44,21 +56,24 @@ export class InputComponent implements ControlValueAccessor {
   @Input() type: string = 'text'; // Tipo de input (text, email, password, etc.)
   @Input() errors: { [key: string]: string } = {}; // Mapa de errores personalizados
   @Input() disabled: boolean = false;
-
+  @Input() readonly: boolean = false; // Propiedad para hacer el input de solo lectura
+  @Input() autofocus: boolean = false; // Propiedad para hacer focus el input
+  @Input() inputClass: string | string[] | Set<string> | { [klass: string]: any } = '';
   @Input() invalid: boolean | undefined = false;
   @Input() dirty: boolean | undefined = false;
   @Input() touched: boolean | undefined = false;
   @Input() control: AbstractControl | null = null; // Nuevo input para recibir el control del formulario
 
   @Output() blurEvent = new EventEmitter<void>(); // Nuevo output para emitir evento de blur
+  @ViewChild('inputEl', { static: true }) inputEl!: ElementRef<HTMLInputElement>;
 
-  value: string = ''; // Valor interno del input
+  value = signal(''); // Valor interno del input
   onChange: any = () => {}; // Función para notificar cambios
   onTouched: any = () => {}; // Función para notificar que el input fue tocado
 
   // Escribe el valor en el input
   writeValue(value: any): void {
-    this.value = value || '';
+    this.value.set(value ?? '');
   }
 
   // Registra la función para notificar cambios
@@ -74,7 +89,7 @@ export class InputComponent implements ControlValueAccessor {
   // Maneja el evento de entrada
   onInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    this.value = value;
+    this.value.set(value);
     this.onChange(value); // Notifica el cambio
     this.dirty = true; // Marca el control como "sucio"
   }
@@ -118,6 +133,14 @@ export class InputComponent implements ControlValueAccessor {
     }
 
     return [];
+  }
+
+  focus() {
+    this.inputEl.nativeElement.focus();
+  }
+
+  select() {
+    this.inputEl.nativeElement.select();
   }
 
   // Normaliza las claves de error (convierte minlength a minLength, etc.)

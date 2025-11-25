@@ -1,8 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  ErrorHandlerStrategy,
-  ErrorInformacion,
-} from '../http-error.interface';
+import { ErrorHandlerStrategy, ErrorInformacion } from '../http-error.interface';
 
 export class UnauthorizedStrategy implements ErrorHandlerStrategy {
   handle(error: HttpErrorResponse): ErrorInformacion {

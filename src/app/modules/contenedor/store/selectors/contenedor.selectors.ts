@@ -32,3 +32,5 @@ export const obtenerContenedorPlanId = createSelector(
   ContenedorState,
   state => state.contenedor?.plan_id || null
 );
+
+export const obtenerContenedor = createSelector(ContenedorState, state => state.contenedor || null);

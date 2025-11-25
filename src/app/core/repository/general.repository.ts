@@ -1,7 +1,8 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { AlertaService } from '@app/common/services/alerta.service';
+import { Observable, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 import { QueryParams } from '../interfaces/api.interface';
 import { SubdominioService } from '../services/subdominio.service';
 import { HttpBaseRepository } from './http-base.repository';
@@ -12,6 +13,7 @@ import { HttpBaseRepository } from './http-base.repository';
 export class GeneralRepository {
   private httpBase = inject(HttpBaseRepository);
   private subdominioService = inject(SubdominioService);
+  private alertaService = inject(AlertaService);
 
   /**
    * Realiza una consulta GET a la API con el subdominio actual
@@ -74,6 +76,66 @@ export class GeneralRepository {
    */
   delete<T>(endpoint: string, id: string | number): Observable<T> {
     return this.deleteWithSubdominio<T>(`${endpoint}${id}/`);
+  }
+
+  public descargarArchivos(endpoint: string, queryParams: QueryParams = {}): void {
+    const params = this.buildHttpParams(queryParams);
+    this.alertaService.mensajaEspera('espera');
+    this.subdominioService
+      .getSubdominioUrl()
+      .pipe(
+        switchMap(subdominioUrl => {
+          const url = `${subdominioUrl}/${endpoint}`;
+          return this.httpBase.getArchivo(url, params);
+        }),
+        catchError(() => {
+          this.alertaService.cerrar();
+          this.alertaService.mostrarError(`Error 15`, 'El documento no tiene un formato');
+          return of(null);
+        })
+      )
+      .subscribe(response => {
+        if (!response) return;
+
+        const nombreArchivo = this.obtenerNombreArchivo(response.headers);
+        this.descargarBlob(response.body, nombreArchivo);
+        setTimeout(() => this.alertaService.cerrar(), 1000);
+      });
+  }
+
+  public descargarArchivosPost(endpoint: string, queryParams: QueryParams = {}): void {
+    const params = this.buildHttpParams(queryParams);
+    this.alertaService.mensajaEspera('espera');
+    this.subdominioService
+      .getSubdominioUrl()
+      .pipe(
+        switchMap(subdominioUrl => {
+          const url = `${subdominioUrl}/${endpoint}`;
+          return this.httpBase.postArchivo(url, params);
+        }),
+        catchError(() => {
+          this.alertaService.cerrar();
+          this.alertaService.mostrarError(`Error 15`, 'El documento no tiene un formato');
+          return of(null);
+        })
+      )
+      .subscribe(response => {
+        if (!response) return;
+
+        const nombreArchivo = this.obtenerNombreArchivo(response.headers);
+        this.descargarBlob(response.body, nombreArchivo);
+        setTimeout(() => this.alertaService.cerrar(), 1000);
+      });
+  }
+
+  /**
+   * Consultar un recurso mediante POST con el subdominio actual
+   * @param endpoint Ruta del endpoint
+   * @param data Datos a enviar
+   * @returns Observable con la respuesta tipada
+   */
+  public post<T>(endpoint: string, data: any): Observable<T> {
+    return this.postWithSubdominio<T>(endpoint, data);
   }
 
   /**
@@ -139,5 +201,34 @@ export class GeneralRepository {
         return this.httpBase.delete(url, {});
       })
     );
+  }
+
+  private obtenerNombreArchivo(headers: HttpHeaders): string {
+    const contentDisposition = headers.get('Content-Disposition');
+    if (!contentDisposition) {
+      throw new Error('Error no existe Content-Disposition');
+    }
+
+    let nombreArchivo = contentDisposition.split(';')[1].trim().split('=')[1];
+    nombreArchivo = decodeURI(nombreArchivo.replace(/"/g, ''));
+    if (!nombreArchivo) {
+      throw new Error('fileName error');
+    }
+    return nombreArchivo;
+  }
+
+  private descargarBlob(data: Blob | null, nombreArchivo: string): void {
+    if (!data) return;
+
+    const blob = new Blob([data], { type: data.type });
+    const objectUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = objectUrl;
+    a.download = nombreArchivo;
+    a.click();
+
+    URL.revokeObjectURL(objectUrl);
   }
 }

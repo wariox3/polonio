@@ -1,0 +1,180 @@
+<form [formGroup]="formularioDespacho" (ngSubmit)="guardar()">
+  <div class="flex gap-2 mb-4">
+    <a type="button" class="btn btn-secondary" routerLink="/movimiento/despacho/lista"> Atrás </a>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">{{ detalleID() > 0 ? 'Editar' : 'Nuevo' }} despacho</h4>
+    </div>
+    <div class="card-body">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <app-label [required]="true">Servicio</app-label>
+          <app-select-search
+            [control]="getControl('servicio')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'transporte/servicio/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioDespacho.get('servicio__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <!-- Depacho tipo -->
+        <div>
+          <app-label [required]="true">Despacho tipo</app-label>
+          <app-select-search
+            [control]="getControl('despacho_tipo')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'transporte/despacho_tipo/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioDespacho.get('despacho_tipo__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Vehículo -->
+        <div>
+          <app-label [required]="true">Vehículo</app-label>
+          <app-select-search
+            [control]="getControl('vehiculo')"
+            [label]="'placa'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'transporte/vehiculo/seleccionar/'"
+            [campoBusqueda]="'placa__icontains'"
+            [parametrosEndpoint]="{
+              placa__icontains: this.formularioDespacho.get('vehiculo__placa').value,
+              limit: 10,
+              remolque: 'False',
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Remolque -->
+        <div>
+          <app-label>Remolque</app-label>
+          <app-select-search
+            [control]="getControl('remolque')"
+            [label]="'placa'"
+            [endpoint]="'transporte/vehiculo/seleccionar/'"
+            [campoBusqueda]="'placa__icontains'"
+            [parametrosEndpoint]="{
+              placa__icontains: this.formularioDespacho.get('remolque__placa').value,
+              limit: 10,
+              remolque: 'True',
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Conductor -->
+        <div>
+          <app-label [required]="true">Conductor</app-label>
+          <app-select-search
+            [control]="getControl('conductor')"
+            [label]="'nombre_corto'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/contacto/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              limit: 10,
+              nombre__icontains: this.formularioDespacho.get('conductor__nombre_corto').value,
+              conductor: 'True',
+            }"
+          ></app-select-search>
+        </div>
+        <!-- Pago -->
+        <div>
+          <app-label [required]="true">Pago</app-label>
+          <app-input
+            formControlName="pago"
+            [type]="'number'"
+            [control]="formularioDespacho.get('pago')"
+            [errors]="{
+              required: 'Este campo es requerido.',
+              min: 'El valor debe ser mayor o igual a 0.',
+              maxLength: 'Máximo 20 caracteres.',
+            }"
+            placeholder="0.00"
+          ></app-input>
+        </div>
+        <!-- Ciudad Origen -->
+        <div>
+          <app-label [required]="true">Ciudad origen</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_origen')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioDespacho.get('ciudad_origen__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Ciudad Destino -->
+        <div>
+          <app-label [required]="true">Ciudad destino</app-label>
+          <app-select-search
+            [control]="getControl('ciudad_destino')"
+            [label]="'nombre'"
+            [errors]="{ required: 'Este campo es requerido.' }"
+            [endpoint]="'general/ciudad/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioDespacho.get('ciudad_destino__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+
+        <!-- Ruta -->
+        <div>
+          <app-label>Ruta</app-label>
+          <app-select-search
+            [control]="getControl('ruta')"
+            [label]="'nombre'"
+            [endpoint]="'transporte/ruta/seleccionar/'"
+            [campoBusqueda]="'nombre__icontains'"
+            [parametrosEndpoint]="{
+              nombre__icontains: this.formularioDespacho.get('ruta__nombre').value,
+              limit: 10,
+            }"
+          ></app-select-search>
+        </div>
+        <!-- Flete -->
+        <div>
+          <app-label>Precinto</app-label>
+          <app-input
+            formControlName="precinto"
+            [type]="'text'"
+            [control]="formularioDespacho.get('precinto')"
+            [errors]="{
+              maxLength: 'Máximo 30 caracteres.',
+            }"
+          ></app-input>
+        </div>
+        <div></div>
+
+        <!-- Comentario -->
+        <div class="md:col-span-2">
+          <app-label>Comentario</app-label>
+          <app-input
+            formControlName="comentario"
+            [type]="'textarea'"
+            [control]="formularioDespacho.get('comentario')"
+            [errors]="{ maxLength: 'Máximo 500 caracteres.' }"
+            placeholder="Comentarios adicionales..."
+          ></app-input>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

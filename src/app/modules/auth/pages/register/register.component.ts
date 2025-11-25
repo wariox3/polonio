@@ -42,8 +42,6 @@ export default class RegisterComponent {
         terminoCondicion: this.formularioRegister.get('terminoCondicion')?.value,
       })
       .pipe(finalize(() => this.registrando.set(false)))
-      .subscribe(res => {
-        console.log(res);
-      });
+      .subscribe();
   }
 }

@@ -1,0 +1,43 @@
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Filtros</h3>
+  </div>
+  <div class="card-body">
+    <app-filtro
+      (filtersApply)="onFiltersChange($event)"
+      [availableFields]="camposFiltros"
+    ></app-filtro>
+  </div>
+</div>
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Entrega guía</h3>
+  </div>
+  <div class="card-body">
+    <div class="flex justify-between mb-4 gap-2">
+      <app-paginador
+        [totalItems]="estadoPaginacion().totalItems"
+        [itemsPerPage]="estadoPaginacion().itemsPorPagina"
+        (pageChange)="onPageChange($event)"
+      ></app-paginador>
+      <div class="flex">
+        <button class="btn btn-secondary rounded-r-none" (click)="entregar()">Entregar</button>
+        <app-guia-entrega-masivo
+          (procesoCompleto)="consultarInformacion()"
+        ></app-guia-entrega-masivo>
+      </div>
+    </div>
+    <div class="flex justify-between mb-4 gap-2">
+      <app-guia-entregar-formulario [ocultarInput]="true"></app-guia-entregar-formulario>
+    </div>
+
+    <app-tabla
+      [columnas]="columnas"
+      [datos]="guias()"
+      [mostrarAcciones]="false"
+      [maxHeight]="'800px'"
+      (seleccionCambiada)="onSeleccionGuias($event)"
+    ></app-tabla>
+  </div>
+</div>

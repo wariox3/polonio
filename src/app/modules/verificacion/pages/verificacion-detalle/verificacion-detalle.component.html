@@ -1,0 +1,66 @@
+<div class="flex mb-4">
+  <a class="btn btn-secondary" routerLink="/verificacion"> Atrás </a>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="verificar()"
+    [disabled]="verificacionSignal().verificado"
+  >
+    Verificar
+  </button>
+</div>
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Detalle verificación - {{ verificacionSignal().id }}</h3>
+  </div>
+  <div class="card-body">
+    <app-tabla-detalles
+      [datos]="verificacionSignal()"
+      [campos]="camposDetalle()"
+      [columnas]="4"
+    ></app-tabla-detalles>
+  </div>
+</div>
+
+<div class="card mt-4">
+  <div class="card-header">
+    <h4>Detalles</h4>
+  </div>
+  <div class="card-body">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead>
+        <tr>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-black">ID</th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-black">Fecha verificación</th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-black">Concepto</th>
+          <th class="px-6 py-4 text-left text-xs font-semibold text-black">Verificado</th>
+          <th class="text-xs font-semibold text-black">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <tr
+          *ngFor="let verificacionDetalle of verificacionDetalles()"
+          class="hover:bg-gray-50 transition-colors duration-150 ease-in-out"
+        >
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+            {{ verificacionDetalle.id }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+            {{ verificacionDetalle.fecha_verificacion | formatDate }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+            {{ verificacionDetalle.verificacion_concepto }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+            {{ verificacionDetalle.verificado | siNo }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 text-center">
+            <button class="btn btn-primary" (click)="verificarDetalle(verificacionDetalle.id)">
+              Verificar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

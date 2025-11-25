@@ -1,0 +1,27 @@
+<a class="btn btn-primary rounded-none" (click)="openModal()"> Agregar </a>
+<app-modal-standard
+  [modalId]="'agregarGuia'"
+  [title]="'Agregar guía'"
+  [showCloseButton]="true"
+  [size]="'sm'"
+  [closeOnOutsideClick]="true"
+  [closeOnEsc]="true"
+>
+  <!-- Contenido del modal -->
+  <form [formGroup]="formularioAgregarGuia" (ngSubmit)="guardar()">
+    <div class="flex flex-row gap-2 items-start">
+      <app-label [required]="true">Guía</app-label>
+      <app-input
+        formControlName="guia_id"
+        [type]="'number'"
+        [control]="formularioAgregarGuia.get('guia_id')"
+        [errors]="{
+          required: 'Este campo es requerido.',
+          min: 'Debe ser un valor positivo.',
+        }"
+        [autofocus]="true"
+      ></app-input>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+  </form>
+</app-modal-standard>

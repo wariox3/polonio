@@ -1,0 +1,69 @@
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Filtros</h3>
+  </div>
+  <div class="card-body">
+    <app-filtro
+      (filtersApply)="onFiltersChange($event)"
+      [availableFields]="camposFiltros"
+    ></app-filtro>
+  </div>
+</div>
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3 class="card-title">Guías</h3>
+  </div>
+  <div class="card-body">
+    <div class="flex justify-between mb-4 gap-2">
+      <app-paginador
+        [totalItems]="estadoPaginacion().totalItems"
+        [itemsPerPage]="estadoPaginacion().itemsPorPagina"
+        (pageChange)="onPageChange($event)"
+      ></app-paginador>
+      <div class="flex">
+        <div
+          class="dropdown"
+          data-dropdown="true"
+          data-dropdown-trigger="click"
+          data-dropdown-dismiss="true"
+        >
+          <button class="dropdown-toggle btn btn-secondary flex items-center rounded-r-none">
+            Exportar
+          </button>
+          <div class="dropdown-content w-full max-w-56 py-2">
+            <div class="menu menu-default flex flex-col w-full">
+              <div class="menu-item">
+                <button class="menu-link" (click)="exportarExcel()">
+                  <span class="menu-icon">
+                    <i class="ki-filled ki-document"></i>
+                  </span>
+                  <span class="menu-title">Excel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="btn btn-primary rounded-none" routerLink="/movimiento/guia/nuevo"> Nuevo </a>
+        <button
+          class="btn btn-danger rounded-l-none"
+          (click)="eliminar()"
+          [disabled]="guiasSeleccionadas().length === 0"
+        >
+          Eliminar
+        </button>
+      </div>
+    </div>
+
+    <app-tabla
+      [columnas]="columnas"
+      [datos]="guias()"
+      [rutas]="{
+        editar: '/movimiento/guia/editar',
+        detalle: '/movimiento/guia/detalle',
+      }"
+      (seleccionCambiada)="onSeleccionGuias($event)"
+      [maxHeight]="'800px'"
+    ></app-tabla>
+  </div>
+</div>

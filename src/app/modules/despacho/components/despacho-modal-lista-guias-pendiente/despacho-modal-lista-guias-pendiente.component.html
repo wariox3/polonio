@@ -1,0 +1,31 @@
+<a class="btn btn-primary rounded-r-none" (click)="openModal()"> Pendiente </a>
+<ui-modal
+  [modalId]="'agregarGuiaPendiente'"
+  [title]="'Guías pendientes'"
+  [showCloseButton]="true"
+  [size]="'7xl'"
+  [closeOnOutsideClick]="true"
+  [closeOnEsc]="true"
+>
+  <div class="flex justify-between mb-2">
+    <app-paginador
+      [totalItems]="estadoPaginacion().totalItems"
+      [itemsPerPage]="estadoPaginacion().itemsPorPagina"
+      (pageChange)="onPageChange($event)"
+    ></app-paginador>
+    <button
+      class="btn btn-primary"
+      (click)="agregarGuias()"
+      [disabled]="guiasSeleccionadas().length === 0"
+    >
+      Guardar
+    </button>
+  </div>
+  <app-tabla
+    [columnas]="columnas"
+    [datos]="guias()"
+    [mostrarAcciones]="false"
+    (seleccionCambiada)="onSeleccionGuias($event)"
+    [maxHeight]="'800px'"
+  ></app-tabla>
+</ui-modal>

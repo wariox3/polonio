@@ -325,4 +325,24 @@ export class AlertaService {
         window.location.href = ruta;
       });
   }
+
+  async mensajaEspera(
+    text: string,
+    icon: 'success' | 'error' | 'warning' | 'info' | 'question' = 'info'
+  ) {
+    return await (Swal.fire({
+      html: text,
+      icon,
+      timerProgressBar: true,
+      showConfirmButton: true,
+      allowOutsideClick: false,
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown',
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp',
+      },
+    }),
+    Swal.showLoading());
+  }
 }
